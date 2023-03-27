@@ -1,12 +1,31 @@
+# Gets all the public playlists for the given
+# user. Uses Client Credentials flow
+#
+
+import sys
 import spotipy
-from spotipy.oauth2 import SpotifyOAuth
+from spotipy.oauth2 import SpotifyClientCredentials
 
-sp = spotipy.Spotify(auth_manager=SpotifyOAuth(client_id="fdbdeeb74de2412eab01a82a453a0eb3",
-                                               client_secret="d2ccf8e74aca46c888f470699ced19e4",
-                                               redirect_uri="https://github.com/Manal-jpg/csc111-group-project",
-                                               scope="user-library-read"))
+sp = spotipy.Spotify(auth_manager=SpotifyClientCredentials(client_id="fdbdeeb74de2412eab01a82a453a0eb3",
+                                                           client_secret="d2ccf8e74aca46c888f470699ced19e4"))
 
-results = sp.current_user_saved_tracks()
-for idx, item in enumerate(results['items']):
-    track = item['track']
-    print(idx*1000, track['artists'][0]['name'], " – ", track['name'])
+user = 'spotify'
+
+if len(sys.argv) > 1:
+    user = sys.argv[1]
+
+playlists = sp.user_playlists(user)
+
+while playlists:
+    for i, playlist in enumerate(playlists['items']):
+        print(
+            "%4d %s %s" %
+            (i +
+             1 +
+             playlists['offset'],
+             playlist['uri'],
+             playlist['name']))
+    if playlists['next']:
+        playlists = sp.next(playlists)
+    else:
+        playlists = None
