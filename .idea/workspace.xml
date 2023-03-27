@@ -1,11 +1,33 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
+  <component name="AutoImportSettings">
+    <option name="autoReloadType" value="SELECTIVE" />
+  </component>
   <component name="ChangeListManager">
-    <list default="true" id="7248fb5f-2c82-4bc0-a2cd-4e8a378348b9" name="Changes" comment="" />
+    <list default="true" id="7248fb5f-2c82-4bc0-a2cd-4e8a378348b9" name="Changes" comment="modified print statement" />
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
     <option name="LAST_RESOLUTION" value="IGNORE" />
+  </component>
+  <component name="Git.Settings">
+    <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
+  </component>
+  <component name="GitHubPullRequestSearchHistory"><![CDATA[{
+  "lastFilter": {
+    "state": "OPEN"
+  }
+}]]></component>
+  <component name="GithubPullRequestsUISettings">
+    <option name="selectedUrlAndAccountId">
+      <UrlAndAccount>
+        <option name="accountId" value="cb4a23fe-00d0-4a85-9a79-33095b9cf51d" />
+        <option name="url" value="https://github.com/Manal-jpg/csc111-group-project.git" />
+      </UrlAndAccount>
+    </option>
+  </component>
+  <component name="MarkdownSettingsMigration">
+    <option name="stateVersion" value="1" />
   </component>
   <component name="ProjectId" id="2Nbueqwe4qxW3IeqmRvWTXLN0LU" />
   <component name="ProjectLevelVcsManager" settingsEditedManually="true" />
@@ -28,6 +50,42 @@
       <option name="presentableId" value="Default" />
       <updated>1679945200753</updated>
     </task>
+    <task id="LOCAL-00001" summary="added print statement">
+      <created>1679945867040</created>
+      <option name="number" value="00001" />
+      <option name="presentableId" value="LOCAL-00001" />
+      <option name="project" value="LOCAL" />
+      <updated>1679945867040</updated>
+    </task>
+    <task id="LOCAL-00002" summary="modified print statement">
+      <created>1679945910538</created>
+      <option name="number" value="00002" />
+      <option name="presentableId" value="LOCAL-00002" />
+      <option name="project" value="LOCAL" />
+      <updated>1679945910538</updated>
+    </task>
+    <task id="LOCAL-00003" summary="modified print statement">
+      <created>1679945938584</created>
+      <option name="number" value="00003" />
+      <option name="presentableId" value="LOCAL-00003" />
+      <option name="project" value="LOCAL" />
+      <updated>1679945938584</updated>
+    </task>
+    <task id="LOCAL-00004" summary="modified print statement">
+      <created>1679946066375</created>
+      <option name="number" value="00004" />
+      <option name="presentableId" value="LOCAL-00004" />
+      <option name="project" value="LOCAL" />
+      <updated>1679946066375</updated>
+    </task>
+    <task id="LOCAL-00005" summary="modified print statement">
+      <created>1679946088554</created>
+      <option name="number" value="00005" />
+      <option name="presentableId" value="LOCAL-00005" />
+      <option name="project" value="LOCAL" />
+      <updated>1679946088554</updated>
+    </task>
+    <option name="localTasksCounter" value="6" />
     <servers />
   </component>
   <component name="Vcs.Log.Tabs.Properties">
@@ -40,5 +98,10 @@
         </entry>
       </map>
     </option>
+  </component>
+  <component name="VcsManagerConfiguration">
+    <MESSAGE value="added print statement" />
+    <MESSAGE value="modified print statement" />
+    <option name="LAST_COMMIT_MESSAGE" value="modified print statement" />
   </component>
 </project>
