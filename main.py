@@ -11,6 +11,9 @@ def print_hi(name):
 def sum_two(num1, num2):
     return print(num1 + num2)
 
+def sum_two(num1, num2):
+    return print(num1 + num2)
+
 # Press the green button in the gutter to run the script.
 if __name__ == '__main__':
     sum_two(2, 2)
