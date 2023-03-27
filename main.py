@@ -8,17 +8,14 @@ def print_hi(name):
     # Use a breakpoint in the code line below to debug your script.
     print(f'Hi, {name}')  # Press ⌘F8 to toggle the breakpoint.
 
-
-# pycharm github check
+def sum_two(num1, num2):
+    return print(num1 + num2)
 
 # Press the green button in the gutter to run the script.
 if __name__ == '__main__':
+    sum_two(2, 2)
     print_hi('PyCharm')
     print('Hell000o0')
     print('Hell000o0')
     print('Hell0oppoapokpko00o0')
 # See PyCharm help at https://www.jetbrains.com/help/pycharm/
-
-# mel lkmmkllmlklmlkaHELP
-
-# lakdmsalkdmsakdmlasmdsadkmldsamkldaldmasl HERE
