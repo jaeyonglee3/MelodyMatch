@@ -14,7 +14,7 @@ class Song:
         - duration:
             Duration of the track in milliseconds.
         - explicit:
-
+            Boolean that states whether the song contains swear words or not
 
         Representation Invariants:
         - self.address not in self.channels
