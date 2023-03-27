@@ -1,0 +1,33 @@
+Index: decision_tree.py
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+># Decision Tree\n\nimport csv, random\nfrom typing import Optional\n\nclass Song:\n    \"\"\"An object that represents a specific song.\n\n        Instance Attributes\n        - artist:\n            Name of the artist that created the song.\n        - name:\n            Name of the song.\n        - duration:\n            Duration of the track in milliseconds.\n        - explicit:\n            Boolean that states whether the song contains swear words or not\n\n        Representation Invariants:\n        - self.address not in self.channels\n        - all(self in channel.endpoints for channel in self.channels.values())\n\n        \"\"\"\n    address: NodeAddress\n    channels: dict[NodeAddress, Channel]\n\n\n\n\n\n\n\ndef read_and_write_csv(csv: str) -> None:\n    \"\"\"Reads data from our songs dataset\"\"\"\n
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/decision_tree.py b/decision_tree.py
+--- a/decision_tree.py	(revision e7952412e5ca08ce79c3ef6dabc665cb7f596aef)
++++ b/decision_tree.py	(date 1679950051447)
+@@ -7,14 +7,19 @@
+     """An object that represents a specific song.
+ 
+         Instance Attributes
+-        - artist:
+-            Name of the artist that created the song.
+         - name:
+             Name of the song.
++        - artist:
++            Name of the artist that created the song.
++        - year:
++            Song's year of release.
+         - duration:
+             Duration of the track in milliseconds.
+         - explicit:
+-            Boolean that states whether the song contains swear words or not
++            Boolean that states whether the song contains swear words or not.
++        - popularity:
++            Popularity of the song. The higher the value, the more popular the song is.
++
+ 
+         Representation Invariants:
+         - self.address not in self.channels
