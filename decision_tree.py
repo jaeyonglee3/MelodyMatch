@@ -4,7 +4,7 @@ import csv, random
 from typing import Optional
 
 class Song:
-    """An object that represents a specific song.
+    """An object that represents a specific song and stores its various song attributes.
 
         Instance Attributes
         - name:
