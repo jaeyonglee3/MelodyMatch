@@ -4,7 +4,10 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="5de567c6-abd9-407d-9e52-3a252da363d3" name="Changes" comment="Added print statement" />
+    <list default="true" id="5de567c6-abd9-407d-9e52-3a252da363d3" name="Changes" comment="Added Song class and some instance attributes">
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/decision_tree.py" beforeDir="false" afterPath="$PROJECT_DIR$/decision_tree.py" afterDir="false" />
+    </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -123,7 +126,14 @@
       <option name="project" value="LOCAL" />
       <updated>1679949769439</updated>
     </task>
-    <option name="localTasksCounter" value="8" />
+    <task id="LOCAL-00008" summary="Added Song class and some instance attributes">
+      <created>1679949918296</created>
+      <option name="number" value="00008" />
+      <option name="presentableId" value="LOCAL-00008" />
+      <option name="project" value="LOCAL" />
+      <updated>1679949918296</updated>
+    </task>
+    <option name="localTasksCounter" value="9" />
     <servers />
   </component>
   <component name="Vcs.Log.Tabs.Properties">
@@ -145,7 +155,8 @@
   </component>
   <component name="VcsManagerConfiguration">
     <MESSAGE value="Added print statement" />
-    <option name="LAST_COMMIT_MESSAGE" value="Added print statement" />
+    <MESSAGE value="Added Song class and some instance attributes" />
+    <option name="LAST_COMMIT_MESSAGE" value="Added Song class and some instance attributes" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
