@@ -25,6 +25,47 @@ from typing import Optional
 #     channels: dict[NodeAddress, Channel]
 
 
+class DecisionTree:
+    """A decision tree for organizing our songs.
+
+    Each node in the tree either stores a range of numbers or a set of songs.
+
+    Instance Attributes:
+        - move: the current move (guess or status), or '*' if this tree represents the start of a game
+        - guesser_win_probability: the probability that the Guesser will win from the current state of the game
+
+    Representation Invariants:
+        - self.move == GAME_START_MOVE or self.move is a valid Adversarial Wordle move
+        - all(key == self._subtrees[key].move for key in self._subtrees)
+        - GAME_START_MOVE not in self._subtrees  # since it can only appear at the very top of a game tree
+        - 0.0 <= self.guesser_win_probability <= 1.0
+    """
+    value: set[Song] | tuple[float, float]  # The vertical bar | means "or"
+    guesser_win_probability: Optional[float]
+
+    # Private Instance Attributes:
+    #  - _subtrees:
+    #      the subtrees of this tree, which represent the decision trees after sorting the song by its attribute value.
+
+    _subtrees: list[Song | tuple[float, float]]
+
+    def __init__(self, move: str | tuple[str, ...] = GAME_START_MOVE, guesser_win_probability: Optional[float] = 0.0) \
+            -> None:
+        """Initialize a new game tree.
+
+        Note that this initializer uses optional arguments.
+
+        >>> game = GameTree()
+        >>> game.move == GAME_START_MOVE
+        True
+        """
+        self.move = move
+        self._subtrees = {}
+        self.guesser_win_probability = guesser_win_probability
+
+
+
+
 def read_and_write_csv(csv_file: str) -> None:
     """Loads data from a CSV file, and writes a new CSV file called songs_final.csv.
     songs_final.csv will include only the songs and catergories we plan to use.
