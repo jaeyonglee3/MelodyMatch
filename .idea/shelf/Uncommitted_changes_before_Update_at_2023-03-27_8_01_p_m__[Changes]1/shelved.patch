@@ -1,0 +1,58 @@
+Index: decision_tree.py
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+># Decision Tree\r\n\r\nimport csv, random\r\nfrom typing import Optional\r\n\r\n# class Song:\r\n#     \"\"\"An object that represents a specific song.\r\n#\r\n#         Instance Attributes\r\n#         - artist:\r\n#             Name of the artist that created the song.\r\n#         - name:\r\n#             Name of the song.\r\n#         - duration:\r\n#             Duration of the track in milliseconds.\r\n#         - explicit:\r\n#             Boolean that states whether the song contains swear words or not\r\n#\r\n#         Representation Invariants:\r\n#         - self.address not in self.channels\r\n#         - all(self in channel.endpoints for channel in self.channels.values())\r\n#\r\n#         \"\"\"\r\n#     address: NodeAddress\r\n#     channels: dict[NodeAddress, Channel]\r\n\r\n\r\ndef read_and_write_csv(csv_file: str) -> None:\r\n    \"\"\"Loads data from a CSV file, and writes a new CSV file called songs_final.csv.\r\n    songs_final.csv will include only the songs and catergories we plan to use.\r\n\r\n    Preconditions:\r\n       - csv_file refers to a valid CSV file in the format described in the project proposal\r\n    \"\"\"\r\n    with open(csv_file) as input_file, open('data/songs_final.csv', 'w', newline='') as output_file:\r\n        reader = csv.reader(input_file)\r\n        writer = csv.writer(output_file, delimiter=',')\r\n        # Writes the Header\r\n        writer.writerow(['Artist', 'Song', 'Liveness', 'Explicit', 'Year', 'Popularity', 'Danceability',\r\n                         'Energy', 'Speechiness', 'Loudness'])\r\n        # Skips the Header\r\n        next(reader)\r\n\r\n        for row in reader:\r\n            row_to_write = [row[0], row[1], row[14], row[3], row[4], row[5], row[6], row[7], row[11], row[9]]\r\n            writer.writerow(row_to_write)\r\n
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/decision_tree.py b/decision_tree.py
+--- a/decision_tree.py	(revision d2276e656a6a39691cc21c0ed033a13fa9fa3886)
++++ b/decision_tree.py	(date 1679961683934)
+@@ -3,26 +3,27 @@
+ import csv, random
+ from typing import Optional
+ 
+-# class Song:
+-#     """An object that represents a specific song.
+-#
+-#         Instance Attributes
+-#         - artist:
+-#             Name of the artist that created the song.
+-#         - name:
+-#             Name of the song.
+-#         - duration:
+-#             Duration of the track in milliseconds.
+-#         - explicit:
+-#             Boolean that states whether the song contains swear words or not
+-#
+-#         Representation Invariants:
+-#         - self.address not in self.channels
+-#         - all(self in channel.endpoints for channel in self.channels.values())
+-#
+-#         """
+-#     address: NodeAddress
+-#     channels: dict[NodeAddress, Channel]
++
++class Song:
++    """An object that represents a specific song.
++
++        Instance Attributes
++        - artist:
++            Name of the artist that created the song.
++        - name:
++            Name of the song.
++        - duration:
++            Duration of the track in milliseconds.
++        - explicit:
++            Boolean that states whether the song contains swear words or not
++
++        Representation Invariants:
++        - self.address not in self.channels
++        - all(self in channel.endpoints for channel in self.channels.values())
++
++        """
++    address: NodeAddress
++    channels: dict[NodeAddress, Channel]
+ 
+ 
+ def read_and_write_csv(csv_file: str) -> None:
