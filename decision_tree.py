@@ -64,8 +64,6 @@ class DecisionTree:
         self.guesser_win_probability = guesser_win_probability
 
 
-
-
 def read_and_write_csv(csv_file: str) -> None:
     """Loads data from a CSV file, and writes a new CSV file called songs_final.csv.
     songs_final.csv will include only the songs and catergories we plan to use.
