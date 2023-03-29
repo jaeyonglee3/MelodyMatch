@@ -6,7 +6,8 @@ This Python module is the main module where the program is run.
 
 Contributors: Manaljav Munkhbayar, Kevin Hu, Stanley Pang, Jaeyong Lee.
 """
-top_tracks_titles = []
+# top_track_ids = []
+# top_track_energy_scores = []
 
 
 def load_spotify_data():
@@ -14,18 +15,32 @@ def load_spotify_data():
     Retrieve and save all necessery information to appropriate variables.
     """
     import user_data
-    global top_tracks_titles
+    # global top_track_ids, top_track_energy_scores
 
-    top_tracks_titles = user_data.track_names
+    top_track_ids = user_data.top_tracks_ids
+    top_track_energy_scores = user_data.top_tracks_energy
     # todo call a method like construct_user_profile() here or something that makes a User object for the code to use
 
 
-def get_top_tracks():
-    """Return the top 50 tracks of the user from the Spotify API calls"""
-    for song in top_tracks_titles:
-        print(str(song))
+def run() -> None:
+    """Run the entire program"""
+    raise NotImplementedError
 
-    return
+
+# def get_top_tracks():
+#     """Return the top 50 tracks of the user from the Spotify API calls"""
+#     for song in top_track_ids:
+#         print(str(song))
+#
+#     return
+#
+#
+# def get_energy_scores():
+#     """Return the energy scores of the top 50 tracks of the user from the Spotify API calls"""
+#     for score in top_track_energy_scores:
+#         print(str(score))
+#
+#     return
 
 
 if __name__ == '__main__':
