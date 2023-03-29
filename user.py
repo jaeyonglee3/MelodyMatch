@@ -8,6 +8,25 @@ Contributors: Manaljav Munkhbayar, Kevin Hu, Stanley Pang, Jaeyong Lee.
 """
 from decision_tree import Song
 
+
+def construct_top_songs_list(
+    top_tracks_ids: list[str], top_tracks_energy: list[float], top_tracks_danceability: list[float],
+    top_tracks_loudness: list[float], top_tracks_speechiness: list[float], top_tracks_acousticness: list[float],
+    top_tracks_instrumentalness: list[float], top_tracks_valence: list[float], top_tracks_liveness: list[float],
+    top_tracks_tempo: list[float]
+) -> list[Song]:
+    """Construct a list of Song objects from the top tracks of the user"""
+    top_songs = []
+    for i in range(len(top_tracks_ids)):
+        song = Song(name=top_tracks_ids[i], energy=top_tracks_energy[i], danceability=top_tracks_danceability[i],
+                    loudness=top_tracks_loudness[i], speechiness=top_tracks_speechiness[i],
+                    acousticness=top_tracks_acousticness[i], instrumentalness=top_tracks_instrumentalness[i],
+                    valence=top_tracks_valence[i], liveness=top_tracks_liveness[i], tempo=top_tracks_tempo[i])
+        top_songs.append(song)
+
+    return top_songs
+
+
 class User:
 
     """An object that represents the user and stores its attributes
@@ -41,6 +60,15 @@ class User:
         - type(self.username) == str
         - len(self.top_listened_songs) == 50
         - all(type(song) == Song for song in self.top_listened_songs)
+        - 0.0 <= self.user_danceability <= 1.0
+        - 0.0 <= self.user_energy <= 1.0
+        - -60.0 <= self.user_loudness <= 10.0
+        - 0.0 <= self.user_speechiness <= 1.0
+        - 0.0 <= self.user_acousticness <= 1.0
+        - 0.0 <= self.user_instrumentalness <= 1.0
+        - 0.0 <= self.user_valence <= 1.0
+        - 0.0 <= self.user_liveness <= 1.0
+        - self.user_tempo >= 0
     """
 
     username: str
@@ -55,17 +83,12 @@ class User:
     user_liveness: float
     user_tempo: float
 
-    def __init__(self, username: str) -> None:
+    def __init__(self, username: str, top_listened_songs: list[Song]) -> None:
         """Initialize a new user with given Spotify username
         """
         self.username = username
-        self.find_top_songs()
+        self.top_listened_songs = top_listened_songs
         self.create_user_profile()
-
-    def find_top_songs(self) -> list[Song]:
-        """Return the user's 50 most-listened songs"""
-        print("API call to find the user's top 50 songs")
-        return [Song()]
 
     def create_user_profile(self) -> None:
         """Create the user's profile by finding the average values of the 50 most-listened songs of the user"""
