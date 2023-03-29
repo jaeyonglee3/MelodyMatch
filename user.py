@@ -6,5 +6,3 @@ This Python module contains ...
 
 Contributors: Manaljav Munkhbayar, Kevin Hu, Stanley Pang, Jaeyong Lee.
 """
-
-from tkinter import *
