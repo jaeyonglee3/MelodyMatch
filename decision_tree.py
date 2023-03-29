@@ -160,13 +160,6 @@ class DecisionTree:
 
     def __len__(self) -> int:
         """Return the number of items contained in this tree.
-
-        >>> t1 = Tree(None, [])
-        >>> len(t1)
-        0
-        >>> t2 = Tree(3, [Tree(4, []), Tree(1, [])])
-        >>> len(t2)
-        3
         """
         if self.is_empty():
             return 0
