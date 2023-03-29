@@ -21,10 +21,10 @@ class Song:
         Instance Attributes
         - name:
             Name of the song.
-        # - genre:
-        #     Genre of the track.
-        # - artist:
-        #     Name of the artist that created the song.
+        - genre:
+            Genre of the track.
+        - artist:
+            Name of the artist that created the song.
         # - year:
         #     Song's year of release.
         # - duration:
