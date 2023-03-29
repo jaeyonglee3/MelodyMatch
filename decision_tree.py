@@ -195,3 +195,16 @@ def read_and_write_csv(csv_file: str) -> None:
         for row in reader:
             row_to_write = [row[0], row[1], row[14], row[3], row[4], row[5], row[6], row[7], row[11], row[9]]
             writer.writerow(row_to_write)
+
+    def songs_final_csv_to_songs() -> set[Song]:
+        """Reads rows from songs_final.csv and converts each row into a Song object.
+        All Song objects will be put into a set."""
+        with open('data/songs_final.csv') as file:
+            reader = csv.reader(file)
+
+            # Skips Header
+            next(reader)
+
+            songs_so_far = set()
+            for row in reader:
+                songs_so_far.add(Song())
