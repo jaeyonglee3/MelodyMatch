@@ -1,8 +1,8 @@
 # Decision Tree
+from __future__ import annotations
 import csv
 import random
-from typing import Optional
-from __future__ import annotations
+from typing import Optional, Any
 
 class Song:
     """An object that represents a specific song and stores its various song attributes.
@@ -67,7 +67,7 @@ class Song:
             is derived. Major is represented by 1 and minor is 0.
 
         Representation Invariants:
-        - 0 <= self.popularity <= 100
+        - 0.0 <= self.popularity <= 100.0
         - 0.0 <= self.danceability <= 1.0
         - 0.0 <= self.energy <= 1.0
         - -60.0 <= self.loudness <= 10.0
@@ -110,19 +110,49 @@ class DecisionTree:
     Representation Invariants:
         - all(key == self._subtrees[key].value for key in self._subtrees)
     """
-    value: Optional[Song | tuple[float, float]]
+    value: Optional[set[Song] | list[tuple]]
 
     # Private Instance Attributes:
     #  - _subtrees:
     #      the subtrees of this tree, which represent the decision trees after sorting the song by its attribute value.
 
-    _subtrees: list[DecisionTree]
+    _subtrees: [list[DecisionTree]]
 
-    def __init__(self) -> None:
+    def __init__(self, value: Optional[set[Song] | list[tuple[float, float]]], subtrees: list) -> None:
         """Initialize a new game tree.
         """
-        self.value = None
-        self._subtrees = []
+        self.value = value
+        self._subtrees = subtrees
+
+    def is_empty(self):
+        """Return whether the tree is empty or not"""
+        return self.value is None
+
+    def __str__(self) -> str:
+        """Return a string representation of this tree.
+        """
+        if self.is_empty():
+            return ''
+        else:
+            # We use newlines ('\n') to separate the different values.
+            str_so_far = f'{self.value}\n'
+            for subtree in self._subtrees:
+                str_so_far += subtree.__str__()  # equivalent to str(subtree)
+            return str_so_far
+
+    def _str_indented(self, depth: int = 0) -> str:
+        """Return an indented string representation of this tree.
+
+        The indentation level is specified by the <depth> parameter.
+        """
+        if self.is_empty():
+            return ''
+        else:
+            str_so_far = '  ' * depth + f'{self.value}\n'
+            for subtree in self._subtrees:
+                # Note that the 'depth' argument to the recursive call is modified.
+                str_so_far += subtree._str_indented(depth + 1)
+            return str_so_far
 
     def add_subtree(self, subtree: DecisionTree) -> None:
         """Add a subtree to this game tree."""
@@ -130,7 +160,19 @@ class DecisionTree:
 
     def generate_decision_tree(self) -> None:
         """Add all the tuples and empty song sets into the decision tree."""
-        # for loop
+        for depth in range(0, 10):
+            if depth == 0:
+                subtree = DecisionTree([(0, 10), (11, 20), (21, 30), (31, 40), (41, 50), (51, 60), (61, 70), (71, 80),
+                                        (81, 90), (91, 100)], [])
+                self._subtrees.append(subtree)
+            elif depth == 3:
+                subtree = DecisionTree([(-60, -50), (-49, -40), (-39, -30), (-29, -20), (-19, -10), (-9, 0), (1, 10)],
+                                       [])
+                self._subtrees.append(subtree)
+            else:
+                subtree = DecisionTree([(0.00, 0.10), (0.11, 0.20), (0.21, 0.30), (0.31, 0.40), (0.41, 0.50),
+                                        (0.51, 0.60), (0.61, 0.70), (0.71, 0.80), (0.81, 0.90), (0.91, 1.00)], [])
+                self._subtrees.append(subtree)
 
     def insert_song(self) -> None:
         """Insert a song into the decision tree by recursing through the tree until it gets added to a specific song
