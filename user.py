@@ -9,31 +9,30 @@ Contributors: Manaljav Munkhbayar, Kevin Hu, Stanley Pang, Jaeyong Lee.
 from decision_tree import Song
 
 
-def construct_top_songs_list(
-    top_tracks_ids: list[str], top_tracks_energy: list[float], top_tracks_danceability: list[float],
-    top_tracks_loudness: list[float], top_tracks_speechiness: list[float], top_tracks_acousticness: list[float],
-    top_tracks_instrumentalness: list[float], top_tracks_valence: list[float], top_tracks_liveness: list[float],
-    top_tracks_tempo: list[float]
-) -> list[Song]:
-    """Construct a list of Song objects from the top tracks of the user"""
+def construct_top_songs_list(top_tracks_ids: list[str], top_tracks_energy: list[float],
+                             top_tracks_danceability: list[float], top_tracks_loudness: list[float],
+                             top_tracks_speechiness: list[float], top_tracks_acousticness: list[float],
+                             top_tracks_instrumentalness: list[float], top_tracks_valence: list[float],
+                             top_tracks_liveness: list[float]
+                             ) -> list[Song]:
+    """Construct a list of Song objects from the top tracks of the user, later ot be used for
+    song recommendation algorithm.
+    """
     top_songs = []
     for i in range(len(top_tracks_ids)):
-        song = Song(name=top_tracks_ids[i], energy=top_tracks_energy[i], danceability=top_tracks_danceability[i],
+        song = Song(name=top_tracks_ids[i], danceability=top_tracks_danceability[i], energy=top_tracks_energy[i],
                     loudness=top_tracks_loudness[i], speechiness=top_tracks_speechiness[i],
                     acousticness=top_tracks_acousticness[i], instrumentalness=top_tracks_instrumentalness[i],
-                    valence=top_tracks_valence[i], liveness=top_tracks_liveness[i], tempo=top_tracks_tempo[i])
+                    valence=top_tracks_valence[i], liveness=top_tracks_liveness[i])
         top_songs.append(song)
 
     return top_songs
 
 
 class User:
-
     """An object that represents the user and stores its attributes
 
         Instance Attributes:
-        - username:
-            Spotify username of the user
         - top_listened_songs:
             The user's top 50 most-listened songs
         - user_danceability:
@@ -52,12 +51,8 @@ class User:
             Average valence of the 50 most-listened songs of the user
         - user_liveness:
             Average liveness of the 50 most-listened songs of the user
-        - user_tempo:
-            Average tempo of the 50 most-listened songs of the user
-
 
         Representation Invariants:
-        - type(self.username) == str
         - len(self.top_listened_songs) == 50
         - all(type(song) == Song for song in self.top_listened_songs)
         - 0.0 <= self.user_danceability <= 1.0
@@ -68,10 +63,7 @@ class User:
         - 0.0 <= self.user_instrumentalness <= 1.0
         - 0.0 <= self.user_valence <= 1.0
         - 0.0 <= self.user_liveness <= 1.0
-        - self.user_tempo >= 0
     """
-
-    username: str
     top_listened_songs: list[Song]
     user_danceability: float
     user_energy: float
@@ -81,12 +73,10 @@ class User:
     user_instrumentalness: float
     user_valence: float
     user_liveness: float
-    user_tempo: float
 
-    def __init__(self, username: str, top_listened_songs: list[Song]) -> None:
+    def __init__(self, top_listened_songs: list[Song]) -> None:
         """Initialize a new user with given Spotify username
         """
-        self.username = username
         self.top_listened_songs = top_listened_songs
         self.create_user_profile()
 
@@ -100,7 +90,6 @@ class User:
         total_instrumentalness = 0
         total_valence = 0
         total_liveness = 0
-        total_tempo = 0
 
         for song in self.top_listened_songs:
             total_danceability += song.danceability
@@ -111,7 +100,6 @@ class User:
             total_instrumentalness += song.instrumentalness
             total_valence += song.valence
             total_liveness += song.liveness
-            total_tempo += song.tempo
 
         self.user_danceability = total_danceability / len(self.top_listened_songs)
         self.user_energy = total_energy / len(self.top_listened_songs)
@@ -121,4 +109,3 @@ class User:
         self.user_instrumentalness = total_instrumentalness / len(self.top_listened_songs)
         self.user_valence = total_valence / len(self.top_listened_songs)
         self.user_liveness = total_liveness / len(self.top_listened_songs)
-        self.user_tempo = total_tempo / len(self.top_listened_songs)

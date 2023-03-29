@@ -70,7 +70,7 @@ def get_access_token():
 
     if access_token:
         sp = spotipy.Spotify(access_token)
-        top_tracks = sp.current_user_top_tracks(limit=20, offset=0, time_range='medium_term')
+        top_tracks = sp.current_user_top_tracks(limit=50, offset=0, time_range='medium_term')
         top_tracks_names = [track['name'] for track in top_tracks['items']]
         top_tracks_ids = [track['id'] for track in top_tracks['items']]
         audio_features = sp.audio_features(top_tracks_ids)  # Load the audio features of every song using its ID
@@ -125,4 +125,8 @@ def get_access_token():
                 '''
 
 
-run(host='')
+def run_server() -> None:
+    """Run the bottle server."""
+    run(host='')
+
+# run(host='')

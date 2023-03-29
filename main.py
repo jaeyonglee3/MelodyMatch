@@ -16,40 +16,24 @@ def load_user() -> User:
     After retrieving all necessary information, this function returns an instance of the User class.
     """
     import user_data
+    user_data.run_server()
     top_songs = construct_top_songs_list(user_data.top_tracks_ids, user_data.top_tracks_energy,
                                          user_data.top_tracks_danceability, user_data.top_tracks_loudness,
                                          user_data.top_tracks_speechiness, user_data.top_tracks_acousticness,
                                          user_data.top_tracks_instrumentalness, user_data.top_tracks_valence,
-                                         user_data.top_tracks_liveness, user_data.top_tracks_tempo)
+                                         user_data.top_tracks_liveness)
 
-    user_profile = User('username', top_songs)
+    user_profile = User(top_songs)  # Create an instance of the "User" class
     return user_profile
 
 
 def run() -> None:
     """Run the entire program"""
-    raise NotImplementedError
+    user = load_user()
+    return ...
 
 
-# def get_top_tracks():
-#     """Return the top 50 tracks of the user from the Spotify API calls"""
-#     for song in top_track_ids:
-#         print(str(song))
-#
-#     return
-#
-#
-# def get_energy_scores():
-#     """Return the energy scores of the top 50 tracks of the user from the Spotify API calls"""
-#     for score in top_track_energy_scores:
-#         print(str(score))
-#
-#     return
-
-
-if __name__ == '__main__':
-    load_user()
-
+# if __name__ == '__main__':
     # PythonTA stuff
     # import doctest
     # import python_ta
