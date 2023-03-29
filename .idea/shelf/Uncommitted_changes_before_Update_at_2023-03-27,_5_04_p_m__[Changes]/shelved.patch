@@ -1,0 +1,104 @@
+Index: decision_tree.py
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+># Decision Tree\n\nimport csv, random\nfrom typing import Optional\n\nclass Song:\n    \"\"\"An object that represents a specific song.\n\n        Instance Attributes\n        - name:\n            Name of the song.\n        - artist:\n            Name of the artist that created the song.\n        - year:\n            Song's year of release.\n        - duration:\n            Duration of the track in milliseconds.\n        - explicit:\n            Boolean that states whether the song contains swear words or not.\n        - popularity:\n            Popularity of the song. The higher the value, the more popular the song is.\n        - danceability:\n            Describes how suitable a track is for dancing based on a combination of musical elements including tempo,\n            rhythm stability, beat strength, and overall regularity. A value of 0.0 is least danceable and 1.0 is most\n            danceable.\n        - energy:\n            Represents a perceptual measure of intensity and activity. A value of 0.0 represents the lowest energy and\n            1.0 represents the highest energy.\n        - key:\n            The key the track is in. Integers map to pitches using standard Pitch Class notation. E.g. 0 = C, 1 = C♯/D♭,\n            2 = D, and so on. If no key was detected, the value is -1.\n        - loudness:\n            The overall loudness of a track in decibels (dB).\n            Loudness values are averaged across the entire track and is the quality of a sound that is the primary\n            psychological correlate of physical strength (amplitude). Values range between -60 and 0 db, where -60 db is\n            the quietest and 0 db is the loudest\n        -speechiness: Speechiness detects the presence of spoken words in a track. The more exclusively speech-like the\n            recording (e.g. talk show, audio book, poetry), the closer to 1.0 the attribute value. Values above 0.66\n            describe tracks that are probably made entirely of spoken words. Values between 0.33 and 0.66 describe\n            tracks that may contain both music and speech, either in sections or layered, including such cases as rap\n            music. Values below 0.33 most likely represent music and other non-speech-like tracks.\n        - mode:\n            Mode indicates the modality (major or minor) of a track, the type of scale from which its melodic content\n            is derived. Major is represented by 1 and minor is 0.\n\n\n\n\n\n\n\n\n\n        Representation Invariants:\n        - self.address not in self.channels\n        - all(self in channel.endpoints for channel in self.channels.values())\n\n        \"\"\"\n    address: NodeAddress\n    channels: dict[NodeAddress, Channel]\n\n\ndef read_and_write_csv(csv_file: str) -> None:\n    \"\"\"Reads data from the CSV file that the input refers to and loads it into a new CSV file\n    called songs_final.csv. songs_final.csv will include only the songs and catergories we plan to use.\n\n    Preconditions:\n       - csv_file refers to a valid CSV file in the format described in the project proposal\n    \"\"\"\n    with open(csv_file) as file:\n        reader = csv.reader(file, delimiter=',')\n
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/decision_tree.py b/decision_tree.py
+--- a/decision_tree.py	(revision f554edc67c65265f1b1a63cebc114789cc8b8d7b)
++++ b/decision_tree.py	(date 1679951040570)
+@@ -26,19 +26,33 @@
+         - energy:
+             Represents a perceptual measure of intensity and activity. A value of 0.0 represents the lowest energy and
+             1.0 represents the highest energy.
+-        - key:
+-            The key the track is in. Integers map to pitches using standard Pitch Class notation. E.g. 0 = C, 1 = C♯/D♭,
+-            2 = D, and so on. If no key was detected, the value is -1.
+         - loudness:
+-            The overall loudness of a track in decibels (dB).
+-            Loudness values are averaged across the entire track and is the quality of a sound that is the primary
+-            psychological correlate of physical strength (amplitude). Values range between -60 and 0 db, where -60 db is
+-            the quietest and 0 db is the loudest
+-        -speechiness: Speechiness detects the presence of spoken words in a track. The more exclusively speech-like the
++            The overall loudness of a track in decibels (dB). Loudness values are averaged across the entire track and
++            is the quality of a sound that is the primary psychological correlate of physical strength (amplitude).
++            Values range between -60 and 0 db, where -60 db is the quietest and 0 db is the loudest.
++        - speechiness:
++            Detects the presence of spoken words in a track. The more exclusively speech-like the
+             recording (e.g. talk show, audio book, poetry), the closer to 1.0 the attribute value. Values above 0.66
+             describe tracks that are probably made entirely of spoken words. Values between 0.33 and 0.66 describe
+             tracks that may contain both music and speech, either in sections or layered, including such cases as rap
+             music. Values below 0.33 most likely represent music and other non-speech-like tracks.
++        - acousticness:
++            A confidence measure from 0.0 to 1.0 of whether the track is acoustic. 1.0 represents high confidence the
++            track is acoustic.
++        - instrumentalness:
++            Predicts whether a track contains no vocals. "Ooh" and "aah" sounds are treated as instrumental in this
++            context. Rap or spoken word tracks are clearly "vocal". The closer the instrumentalness value is to 1.0,
++            the greater likelihood the track contains no vocal content. Values above 0.5 are intended to represent
++            instrumental tracks, but confidence is higher as the value approaches 1.0.
++        - liveness:
++            Detects the presence of an audience in the recording. Higher liveness values represent an increased
++            probability that the track was performed live. A value above 0.8 provides strong likelihood that the track
++            is live.
++
++
++        - key:
++            The key the track is in. Integers map to pitches using standard Pitch Class notation. E.g. 0 = C, 1 = C♯/D♭,
++            2 = D, and so on. If no key was detected, the value is -1.
+         - mode:
+             Mode indicates the modality (major or minor) of a track, the type of scale from which its melodic content
+             is derived. Major is represented by 1 and minor is 0.
+Index: .idea/workspace.xml
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+><?xml version=\"1.0\" encoding=\"UTF-8\"?>\n<project version=\"4\">\n  <component name=\"AutoImportSettings\">\n    <option name=\"autoReloadType\" value=\"SELECTIVE\" />\n  </component>\n  <component name=\"ChangeListManager\">\n    <list default=\"true\" id=\"5de567c6-abd9-407d-9e52-3a252da363d3\" name=\"Changes\" comment=\"Added print statement\">\n      <change beforePath=\"$PROJECT_DIR$/.idea/csc111-group-project.iml\" beforeDir=\"false\" afterPath=\"$PROJECT_DIR$/.idea/csc111-group-project.iml\" afterDir=\"false\" />\n      <change beforePath=\"$PROJECT_DIR$/.idea/misc.xml\" beforeDir=\"false\" afterPath=\"$PROJECT_DIR$/.idea/misc.xml\" afterDir=\"false\" />\n      <change beforePath=\"$PROJECT_DIR$/.idea/workspace.xml\" beforeDir=\"false\" afterPath=\"$PROJECT_DIR$/.idea/workspace.xml\" afterDir=\"false\" />\n      <change beforePath=\"$PROJECT_DIR$/user_data.py\" beforeDir=\"false\" afterPath=\"$PROJECT_DIR$/user_data.py\" afterDir=\"false\" />\n    </list>\n    <option name=\"SHOW_DIALOG\" value=\"false\" />\n    <option name=\"HIGHLIGHT_CONFLICTS\" value=\"true\" />\n    <option name=\"HIGHLIGHT_NON_ACTIVE_CHANGELIST\" value=\"false\" />\n    <option name=\"LAST_RESOLUTION\" value=\"IGNORE\" />\n  </component>\n  <component name=\"Git.Settings\">\n    <option name=\"RECENT_GIT_ROOT_PATH\" value=\"$PROJECT_DIR$\" />\n  </component>\n  <component name=\"GitHubPullRequestSearchHistory\">{\n  &quot;lastFilter&quot;: {\n    &quot;state&quot;: &quot;OPEN&quot;\n  }\n}</component>\n  <component name=\"GithubPullRequestsUISettings\">\n    <option name=\"selectedUrlAndAccountId\">\n      <UrlAndAccount>\n        <option name=\"accountId\" value=\"cb4a23fe-00d0-4a85-9a79-33095b9cf51d\" />\n        <option name=\"url\" value=\"https://github.com/Manal-jpg/csc111-group-project.git\" />\n      </UrlAndAccount>\n    </option>\n  </component>\n  <component name=\"MarkdownSettingsMigration\">\n    <option name=\"stateVersion\" value=\"1\" />\n  </component>\n  <component name=\"ProjectId\" id=\"2Nbv9CRghVwq4y9rxXxBpRQClJk\" />\n  <component name=\"ProjectLevelVcsManager\" settingsEditedManually=\"true\" />\n  <component name=\"ProjectViewState\">\n    <option name=\"hideEmptyMiddlePackages\" value=\"true\" />\n    <option name=\"showLibraryContents\" value=\"true\" />\n  </component>\n  <component name=\"PropertiesComponent\"><![CDATA[{\n  \"keyToString\": {\n    \"RunOnceActivity.OpenProjectViewOnStart\": \"true\",\n    \"RunOnceActivity.ShowReadmeOnStart\": \"true\",\n    \"settings.editor.selected.configurable\": \"com.jetbrains.python.configuration.PyActiveSdkModuleConfigurable\"\n  }\n}]]></component>\n  <component name=\"RunManager\" selected=\"Python.user_data\">\n    <configuration name=\"main\" type=\"PythonConfigurationType\" factoryName=\"Python\" nameIsGenerated=\"true\">\n      <module name=\"csc111-group-project\" />\n      <option name=\"INTERPRETER_OPTIONS\" value=\"\" />\n      <option name=\"PARENT_ENVS\" value=\"true\" />\n      <envs>\n        <env name=\"PYTHONUNBUFFERED\" value=\"1\" />\n      </envs>\n      <option name=\"SDK_HOME\" value=\"\" />\n      <option name=\"WORKING_DIRECTORY\" value=\"$PROJECT_DIR$\" />\n      <option name=\"IS_MODULE_SDK\" value=\"true\" />\n      <option name=\"ADD_CONTENT_ROOTS\" value=\"true\" />\n      <option name=\"ADD_SOURCE_ROOTS\" value=\"true\" />\n      <option name=\"SCRIPT_NAME\" value=\"$PROJECT_DIR$/main.py\" />\n      <option name=\"PARAMETERS\" value=\"\" />\n      <option name=\"SHOW_COMMAND_LINE\" value=\"false\" />\n      <option name=\"EMULATE_TERMINAL\" value=\"false\" />\n      <option name=\"MODULE_MODE\" value=\"false\" />\n      <option name=\"REDIRECT_INPUT\" value=\"false\" />\n      <option name=\"INPUT_FILE\" value=\"\" />\n      <method v=\"2\" />\n    </configuration>\n    <configuration name=\"user_data\" type=\"PythonConfigurationType\" factoryName=\"Python\" temporary=\"true\" nameIsGenerated=\"true\">\n      <module name=\"csc111-group-project\" />\n      <option name=\"INTERPRETER_OPTIONS\" value=\"\" />\n      <option name=\"PARENT_ENVS\" value=\"true\" />\n      <option name=\"SDK_HOME\" value=\"\" />\n      <option name=\"WORKING_DIRECTORY\" value=\"$PROJECT_DIR$\" />\n      <option name=\"IS_MODULE_SDK\" value=\"true\" />\n      <option name=\"ADD_CONTENT_ROOTS\" value=\"true\" />\n      <option name=\"ADD_SOURCE_ROOTS\" value=\"true\" />\n      <option name=\"SCRIPT_NAME\" value=\"$PROJECT_DIR$/user_data.py\" />\n      <option name=\"PARAMETERS\" value=\"\" />\n      <option name=\"SHOW_COMMAND_LINE\" value=\"true\" />\n      <option name=\"EMULATE_TERMINAL\" value=\"false\" />\n      <option name=\"MODULE_MODE\" value=\"false\" />\n      <option name=\"REDIRECT_INPUT\" value=\"false\" />\n      <option name=\"INPUT_FILE\" value=\"\" />\n      <method v=\"2\" />\n    </configuration>\n    <recent_temporary>\n      <list>\n        <item itemvalue=\"Python.user_data\" />\n      </list>\n    </recent_temporary>\n  </component>\n  <component name=\"SpellCheckerSettings\" RuntimeDictionaries=\"0\" Folders=\"0\" CustomDictionaries=\"0\" DefaultDictionary=\"application-level\" UseSingleDictionary=\"true\" transferred=\"true\" />\n  <component name=\"TaskManager\">\n    <task active=\"true\" id=\"Default\" summary=\"Default task\">\n      <changelist id=\"5de567c6-abd9-407d-9e52-3a252da363d3\" name=\"Changes\" comment=\"Added print statement\" />\n      <created>1679945443319</created>\n      <option name=\"number\" value=\"Default\" />\n      <option name=\"presentableId\" value=\"Default\" />\n      <updated>1679945443319</updated>\n    </task>\n    <task id=\"LOCAL-00001\" summary=\"Added print statement\">\n      <created>1679946594846</created>\n      <option name=\"number\" value=\"00001\" />\n      <option name=\"presentableId\" value=\"LOCAL-00001\" />\n      <option name=\"project\" value=\"LOCAL\" />\n      <updated>1679946594846</updated>\n    </task>\n    <task id=\"LOCAL-00002\" summary=\"Added print statement\">\n      <created>1679946692011</created>\n      <option name=\"number\" value=\"00002\" />\n      <option name=\"presentableId\" value=\"LOCAL-00002\" />\n      <option name=\"project\" value=\"LOCAL\" />\n      <updated>1679946692011</updated>\n    </task>\n    <task id=\"LOCAL-00003\" summary=\"Added print statement\">\n      <created>1679946925936</created>\n      <option name=\"number\" value=\"00003\" />\n      <option name=\"presentableId\" value=\"LOCAL-00003\" />\n      <option name=\"project\" value=\"LOCAL\" />\n      <updated>1679946925936</updated>\n    </task>\n    <task id=\"LOCAL-00004\" summary=\"Added print statement\">\n      <created>1679947052707</created>\n      <option name=\"number\" value=\"00004\" />\n      <option name=\"presentableId\" value=\"LOCAL-00004\" />\n      <option name=\"project\" value=\"LOCAL\" />\n      <updated>1679947052707</updated>\n    </task>\n    <option name=\"localTasksCounter\" value=\"5\" />\n    <servers />\n  </component>\n  <component name=\"Vcs.Log.Tabs.Properties\">\n    <option name=\"TAB_STATES\">\n      <map>\n        <entry key=\"MAIN\">\n          <value>\n            <State>\n              <option name=\"CUSTOM_BOOLEAN_PROPERTIES\">\n                <map>\n                  <entry key=\"Show.Git.Branches\" value=\"true\" />\n                </map>\n              </option>\n            </State>\n          </value>\n        </entry>\n      </map>\n    </option>\n  </component>\n  <component name=\"VcsManagerConfiguration\">\n    <MESSAGE value=\"Added print statement\" />\n    <option name=\"LAST_COMMIT_MESSAGE\" value=\"Added print statement\" />\n  </component>\n  <component name=\"XDebuggerManager\">\n    <breakpoint-manager>\n      <breakpoints>\n        <line-breakpoint enabled=\"true\" suspend=\"THREAD\" type=\"python-line\">\n          <url>file://$PROJECT_DIR$/main.py</url>\n          <line>8</line>\n          <option name=\"timeStamp\" value=\"1\" />\n        </line-breakpoint>\n      </breakpoints>\n    </breakpoint-manager>\n  </component>\n</project>
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/.idea/workspace.xml b/.idea/workspace.xml
+--- a/.idea/workspace.xml	(revision f554edc67c65265f1b1a63cebc114789cc8b8d7b)
++++ b/.idea/workspace.xml	(date 1679950882452)
+@@ -5,10 +5,8 @@
+   </component>
+   <component name="ChangeListManager">
+     <list default="true" id="5de567c6-abd9-407d-9e52-3a252da363d3" name="Changes" comment="Added print statement">
+-      <change beforePath="$PROJECT_DIR$/.idea/csc111-group-project.iml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/csc111-group-project.iml" afterDir="false" />
+-      <change beforePath="$PROJECT_DIR$/.idea/misc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
+       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+-      <change beforePath="$PROJECT_DIR$/user_data.py" beforeDir="false" afterPath="$PROJECT_DIR$/user_data.py" afterDir="false" />
++      <change beforePath="$PROJECT_DIR$/decision_tree.py" beforeDir="false" afterPath="$PROJECT_DIR$/decision_tree.py" afterDir="false" />
+     </list>
+     <option name="SHOW_DIALOG" value="false" />
+     <option name="HIGHLIGHT_CONFLICTS" value="true" />
+@@ -40,13 +38,13 @@
+     <option name="hideEmptyMiddlePackages" value="true" />
+     <option name="showLibraryContents" value="true" />
+   </component>
+-  <component name="PropertiesComponent"><![CDATA[{
+-  "keyToString": {
+-    "RunOnceActivity.OpenProjectViewOnStart": "true",
+-    "RunOnceActivity.ShowReadmeOnStart": "true",
+-    "settings.editor.selected.configurable": "com.jetbrains.python.configuration.PyActiveSdkModuleConfigurable"
++  <component name="PropertiesComponent">{
++  &quot;keyToString&quot;: {
++    &quot;RunOnceActivity.OpenProjectViewOnStart&quot;: &quot;true&quot;,
++    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
++    &quot;settings.editor.selected.configurable&quot;: &quot;com.jetbrains.python.configuration.PyActiveSdkModuleConfigurable&quot;
+   }
+-}]]></component>
++}</component>
+   <component name="RunManager" selected="Python.user_data">
+     <configuration name="main" type="PythonConfigurationType" factoryName="Python" nameIsGenerated="true">
+       <module name="csc111-group-project" />
+@@ -73,6 +71,9 @@
+       <module name="csc111-group-project" />
+       <option name="INTERPRETER_OPTIONS" value="" />
+       <option name="PARENT_ENVS" value="true" />
++      <envs>
++        <env name="PYTHONUNBUFFERED" value="1" />
++      </envs>
+       <option name="SDK_HOME" value="" />
+       <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$" />
+       <option name="IS_MODULE_SDK" value="true" />
