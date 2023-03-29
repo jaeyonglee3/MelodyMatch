@@ -80,11 +80,12 @@ class Song:
     valence: float
     liveness: float
 
-    def __init__(self, name, genre, artist, danceability, energy, loudness,
-                 speechiness, acousticness, instrumentalness, valence, liveness) -> None:
+    def __init__(self, name: str, danceability: float, energy: float, loudness: float, speechiness: float,
+                 acousticness: float, instrumentalness: float, valence: float, liveness: float,
+                 genre: Optional[str] = None, artist: Optional[str] = None) -> None:
+        """Initialize a Song object"""
+
         self.name = name
-        self.genre = genre
-        self.artist = artist
         self.danceability = danceability
         self.energy = energy
         self.loudness = loudness
@@ -93,6 +94,8 @@ class Song:
         self.instrumentalness = instrumentalness
         self.valence = valence
         self.liveness = liveness
+        self.genre = genre
+        self.artist = artist
 
 
 class DecisionTree:
@@ -160,11 +163,11 @@ class DecisionTree:
         set.
 
         >>> tree = generate_decision_tree((0,0), 1)
-        >>> song1 = Song('I hate MAT137', 'Pop', 'Kevin', 0, 0, -60, 0, 0, 0, 0, 0)
+        >>> song1 = Song('I hate MAT137', 0, 0, -60, 0, 0, 0, 0, 0)
         >>> tree.insert_song(song1, 1)
-        >>> song2 = Song('I hate MAT223', 'Pop', 'Kevin', 0.5, 0.3, -8, 1.0, 0.9, 0.4, 0.3, 0.2)
+        >>> song2 = Song('I hate MAT223', 0.5, 0.3, -8, 1.0, 0.9, 0.4, 0.3, 0.2)
         >>> tree.insert_song(song2, 1)
-        >>> song3 = Song('I hate IMM250', 'Pop', 'Kevin', 0.5, 0.3, -8, 1.0, 0.9, 0.4, 0.3, 0.2)
+        >>> song3 = Song('I hate IMM250', 0.5, 0.3, -8, 1.0, 0.9, 0.4, 0.3, 0.2)
         >>> tree.insert_song(song3, 1)
         """
         score = 0
@@ -211,9 +214,17 @@ class DecisionTree:
             else:
                 self._subtrees[2].insert_song(song, depth + 1)
 
-    def insert_songs(self) -> None:
-        """Insert a list of songs into the decision tree so that each song gets sorted into a specific song set."""
-        # for loop and call recursive helper
+    def insert_songs(self, list_songs: list[Song]) -> None:
+        """Insert a list of songs into the decision tree so that each song gets sorted into a specific song set.
+
+        >>> tree = generate_decision_tree((0,0), 1)
+        >>> song1 = Song('I hate MAT137', 0, 0, -60, 0, 0, 0, 0, 0)
+        >>> song2 = Song('I hate MAT223', 0.5, 0.3, -8, 1.0, 0.9, 0.4, 0.3, 0.2)
+        >>> song3 = Song('I hate IMM250', 0.5, 0.3, -8, 1.0, 0.9, 0.4, 0.3, 0.2)
+        >>> tree.insert_songs([song1, song2, song3])
+        """
+        for song in list_songs:
+            self.insert_song(song)
 
 
 def generate_decision_tree(value: set[Song] | tuple, depth: int = 1) -> DecisionTree:
