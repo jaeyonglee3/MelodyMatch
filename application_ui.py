@@ -6,7 +6,7 @@ This Python module contains ...
 
 Contributors: Manaljav Munkhbayar, Kevin Hu, Stanley Pang, Jaeyong Lee.
 """
-
+import main
 from math import ceil, floor
 from tkinter import *
 from PIL import ImageTk, Image
@@ -51,7 +51,13 @@ desc = Label(root,
              font=('Arial', 14))
 desc.pack()
 
+
 # Button
+def button_event() -> None:
+    """The event that happens when the following button is pressed"""
+    main.run()
+
+
 button = Button(root, text='Start', font=('Arial', 10))
 button.pack()
 button.config(width=10, height=2)
