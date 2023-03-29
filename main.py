@@ -2,24 +2,28 @@
 CSC111 Winter 2023 Project:
 MelodyMatch: Tailored Music Recommendations Derived From Your Spotify Habits
 
-This Python module is the main module where the program is run.
+This is the main module where the entire program is run.
 
 Contributors: Manaljav Munkhbayar, Kevin Hu, Stanley Pang, Jaeyong Lee.
 """
-# top_track_ids = []
-# top_track_energy_scores = []
+from user import User, construct_top_songs_list
 
 
-def load_spotify_data():
-    """Start the bottle server to log in with Spotify credentials on browser
-    Retrieve and save all necessery information to appropriate variables.
+def load_user() -> User:
+    """ This function runs user_data.py which will start the Bottle server used to log in with
+    Spotify credentials on the user's browser.
+
+    After retrieving all necessary information, this function returns an instance of the User class.
     """
     import user_data
-    # global top_track_ids, top_track_energy_scores
+    top_songs = construct_top_songs_list(user_data.top_tracks_ids, user_data.top_tracks_energy,
+                                         user_data.top_tracks_danceability, user_data.top_tracks_loudness,
+                                         user_data.top_tracks_speechiness, user_data.top_tracks_acousticness,
+                                         user_data.top_tracks_instrumentalness, user_data.top_tracks_valence,
+                                         user_data.top_tracks_liveness, user_data.top_tracks_tempo)
 
-    top_track_ids = user_data.top_tracks_ids
-    top_track_energy_scores = user_data.top_tracks_energy
-    # todo call a method like construct_user_profile() here or something that makes a User object for the code to use
+    user_profile = User('username', top_songs)
+    return user_profile
 
 
 def run() -> None:
@@ -44,7 +48,7 @@ def run() -> None:
 
 
 if __name__ == '__main__':
-    load_spotify_data()
+    load_user()
 
     # PythonTA stuff
     # import doctest

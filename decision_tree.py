@@ -11,25 +11,29 @@ import csv
 import random
 from typing import Optional, Any
 
+
+DECISION_TREE_ROOT = (0, 0)
+
+
 class Song:
     """An object that represents a specific song and stores its various song attributes.
 
         Instance Attributes
         - name:
             Name of the song.
-        - genre:
-            Genre of the track.
-        - artist:
-            Name of the artist that created the song.
-        - year:
-            Song's year of release.
-        - duration:
-            Duration of the track in milliseconds.
-        - explicit:
-            Boolean that states whether the song contains swear words or not.
-        - popularity:
-            Popularity of the song. The higher the value, the more popular the song is. 0 represents the lowest
-            popularity while 100 represnets the highest popularity.
+        # - genre:
+        #     Genre of the track.
+        # - artist:
+        #     Name of the artist that created the song.
+        # - year:
+        #     Song's year of release.
+        # - duration:
+        #     Duration of the track in milliseconds.
+        # - explicit:
+        #     Boolean that states whether the song contains swear words or not.
+        # - popularity:
+        #     Popularity of the song. The higher the value, the more popular the song is. 0 represents the lowest
+        #     popularity while 100 represnets the highest popularity.
         - danceability:
             Describes how suitable a track is for dancing based on a combination of musical elements including tempo,
             rhythm stability, beat strength, and overall regularity. A value of 0.0 is least danceable and 1.0 is most
@@ -66,15 +70,15 @@ class Song:
         - tempo:
             The overall estimated tempo of a track in beats per minute (BPM). In musical terminology, tempo is the
             speed or pace of a given piece and derives directly from the average beat duration.
-        - key:
-            The key the track is in. Integers map to pitches using standard Pitch Class notation. E.g. 0 = C, 1 = C♯/D♭,
-            2 = D, and so on. If no key was detected, the value is -1.
-        - mode:
-            Mode indicates the modality (major or minor) of a track, the type of scale from which its melodic content
-            is derived. Major is represented by 1 and minor is 0.
+        # - key:
+        #     The key the track is in. Integers map to pitches using standard Pitch Class notation. E.g. 0 = C, 1 = C♯/D♭,
+        #     2 = D, and so on. If no key was detected, the value is -1.
+        # - mode:
+        #     Mode indicates the modality (major or minor) of a track, the type of scale from which its melodic content
+        #     is derived. Major is represented by 1 and minor is 0.
 
         Representation Invariants:
-        - 0.0 <= self.popularity <= 100.0
+        # - 0.0 <= self.popularity <= 100.0
         - 0.0 <= self.danceability <= 1.0
         - 0.0 <= self.energy <= 1.0
         - -60.0 <= self.loudness <= 10.0
@@ -84,15 +88,15 @@ class Song:
         - 0.0 <= self.valence <= 1.0
         - 0.0 <= self.liveness <= 1.0
         - self.tempo >= 0
-        - self.mode == 1 or self.mode == 0
+        # - self.mode == 1 or self.mode == 0
         """
     name: str
-    genre: str
-    artist: str
-    year: int
-    duration: int
-    explicit: bool
-    popularity: int
+    # genre: str
+    # artist: str
+    # year: int
+    # duration: int
+    # explicit: bool
+    # popularity: int
     danceability: float
     energy: float
     loudness: float
@@ -102,8 +106,8 @@ class Song:
     valence: float
     liveness: float
     tempo: float
-    key: int
-    mode: int
+    # key: int
+    # mode: int
 
 
 class DecisionTree:
@@ -117,7 +121,7 @@ class DecisionTree:
     Representation Invariants:
         - all(key == self._subtrees[key].value for key in self._subtrees)
     """
-    value: Optional[set[Song] | list[tuple]]
+    value: Optional[set[Song] | tuple]
 
     # Private Instance Attributes:
     #  - _subtrees:
@@ -125,7 +129,7 @@ class DecisionTree:
 
     _subtrees: [list[DecisionTree]]
 
-    def __init__(self, value: Optional[set[Song] | list[tuple[float, float]]], subtrees: list) -> None:
+    def __init__(self, subtrees: list, value: set[Song] | tuple = DECISION_TREE_ROOT) -> None:
         """Initialize a new game tree.
         """
         self.value = value
@@ -134,18 +138,6 @@ class DecisionTree:
     def is_empty(self):
         """Return whether the tree is empty or not"""
         return self.value is None
-
-    def __str__(self) -> str:
-        """Return a string representation of this tree.
-        """
-        if self.is_empty():
-            return ''
-        else:
-            # We use newlines ('\n') to separate the different values.
-            str_so_far = f'{self.value}\n'
-            for subtree in self._subtrees:
-                str_so_far += subtree.__str__()  # equivalent to str(subtree)
-            return str_so_far
 
     def _str_indented(self, depth: int = 0) -> str:
         """Return an indented string representation of this tree.
@@ -161,35 +153,57 @@ class DecisionTree:
                 str_so_far += subtree._str_indented(depth + 1)
             return str_so_far
 
+    def __str__(self) -> str:
+        """Return a string representation of this tree.
+        """
+        return self._str_indented(0)
+
     def add_subtree(self, subtree: DecisionTree) -> None:
         """Add a subtree to this game tree."""
         self._subtrees.append(subtree)
 
-    def generate_decision_tree(self) -> None:
-        """Add all the tuples and empty song sets into the decision tree."""
-        for depth in range(0, 10):
-            if depth == 0:
-                subtree = DecisionTree([(0, 10), (11, 20), (21, 30), (31, 40), (41, 50), (51, 60), (61, 70), (71, 80),
-                                        (81, 90), (91, 100)], [])
-                self._subtrees.append(subtree)
-            elif depth == 3:
-                subtree = DecisionTree([(-60, -50), (-49, -40), (-39, -30), (-29, -20), (-19, -10), (-9, 0), (1, 10)],
-                                       [])
-                self._subtrees.append(subtree)
-            else:
-                subtree = DecisionTree([(0.00, 0.10), (0.11, 0.20), (0.21, 0.30), (0.31, 0.40), (0.41, 0.50),
-                                        (0.51, 0.60), (0.61, 0.70), (0.71, 0.80), (0.81, 0.90), (0.91, 1.00)], [])
-                self._subtrees.append(subtree)
 
-    def insert_song(self) -> None:
-        """Insert a song into the decision tree by recursing through the tree until it gets added to a specific song
-        set.
-        """
-        # recursive
+def generate_decision_tree(value: set[Song] | tuple, depth: int = 1) -> DecisionTree:
+    """Add all the tuples and empty song sets into the decision tree."""
+    decision_tree = DecisionTree(value=value, subtrees=[])
 
-    def insert_songs(self) -> None:
-        """Insert a list of songs into the decision tree so that each song gets sorted into a specific song set."""
-        # for loop and call recursive helper
+    # if depth == 10:
+    #     return decision_tree
+    # else:
+    #     if depth == 3:
+    #         ranges = [(-60, -37), (-36, -13), (-12, 10)]
+    #         subtrees = [generate_decision_tree(value, depth + 1) for value in ranges]
+    #
+    #     elif depth == 9:
+    #         ranges = [(0, 83), (84, 167), (168, 250)]
+    #         subtrees = [generate_decision_tree(value, depth + 1) for value in ranges]
+    #
+    #     else:
+    ranges = [(0.0, 0.3), (0.4, 0.7), (0.8, 1.0)]
+    #         subtrees = [generate_decision_tree(value, depth + 1) for value in ranges]
+
+    for range in ranges:
+        decision_tree.add_subtree(DecisionTree(value=range, subtrees=[]))
+    depth += 1
+
+    return decision_tree
+
+        # for subtree in subtrees:
+        #     decision_tree.add_subtree(subtree)
+        #
+        # return decision_tree
+
+
+def insert_song() -> None:
+    """Insert a song into the decision tree by recursing through the tree until it gets added to a specific song
+    set.
+    """
+    # recursive
+
+
+def insert_songs() -> None:
+    """Insert a list of songs into the decision tree so that each song gets sorted into a specific song set."""
+    # for loop and call recursive helper
 
 
 def read_and_write_csv(csv_file: str) -> None:

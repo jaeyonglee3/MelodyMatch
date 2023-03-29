@@ -4,8 +4,9 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="7248fb5f-2c82-4bc0-a2cd-4e8a378348b9" name="Changes" comment="spotify api calls working">
+    <list default="true" id="7248fb5f-2c82-4bc0-a2cd-4e8a378348b9" name="Changes" comment="updated user_data.py for all song attributes">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/decision_tree.py" beforeDir="false" afterPath="$PROJECT_DIR$/decision_tree.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/main.py" beforeDir="false" afterPath="$PROJECT_DIR$/main.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/user_data.py" beforeDir="false" afterPath="$PROJECT_DIR$/user_data.py" afterDir="false" />
     </list>
@@ -187,7 +188,21 @@
       <option name="project" value="LOCAL" />
       <updated>1680051508305</updated>
     </task>
-    <option name="localTasksCounter" value="4" />
+    <task id="LOCAL-00004" summary="small changes">
+      <created>1680053006498</created>
+      <option name="number" value="00004" />
+      <option name="presentableId" value="LOCAL-00004" />
+      <option name="project" value="LOCAL" />
+      <updated>1680053006498</updated>
+    </task>
+    <task id="LOCAL-00005" summary="updated user_data.py for all song attributes">
+      <created>1680056613931</created>
+      <option name="number" value="00005" />
+      <option name="presentableId" value="LOCAL-00005" />
+      <option name="project" value="LOCAL" />
+      <updated>1680056613931</updated>
+    </task>
+    <option name="localTasksCounter" value="6" />
     <servers />
   </component>
   <component name="Vcs.Log.Tabs.Properties">
@@ -216,6 +231,8 @@
   <component name="VcsManagerConfiguration">
     <MESSAGE value="sum_two function added" />
     <MESSAGE value="spotify api calls working" />
-    <option name="LAST_COMMIT_MESSAGE" value="spotify api calls working" />
+    <MESSAGE value="small changes" />
+    <MESSAGE value="updated user_data.py for all song attributes" />
+    <option name="LAST_COMMIT_MESSAGE" value="updated user_data.py for all song attributes" />
   </component>
 </project>

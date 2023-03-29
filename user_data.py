@@ -14,7 +14,7 @@ can be found at the following link.
 Contributors: Manaljav Munkhbayar, Kevin Hu, Stanley Pang, Jaeyong Lee.
 """
 
-from bottle import route, run, request, WSGIRefServer, Bottle
+from bottle import route, run, request
 from spotipy import oauth2
 import spotipy
 
@@ -86,8 +86,17 @@ def get_access_token():
             top_tracks_liveness.append(audio_features[i]['liveness'])
             top_tracks_tempo.append(audio_features[i]['tempo'])
 
-        print(top_tracks_names)
-        print(top_tracks_ids)
+        print('top_tracks_ids:  ' + str(top_tracks_ids))
+        print('top_tracks_names:  ' + str(top_tracks_names))
+        print("top_tracks_danceability:  " + str(top_tracks_danceability))
+        print('top_tracks_energy:  ' + str(top_tracks_energy))
+        print('top_tracks_loudness:  ' + str(top_tracks_loudness))
+        print('top_tracks_speechiness:  ' + str(top_tracks_speechiness))
+        print('top_tracks_acousticness:  ' + str(top_tracks_acousticness))
+        print('top_tracks_instrumentalness:  ' + str(top_tracks_instrumentalness))
+        print('top_tracks_valence:  ' + str(top_tracks_valence))
+        print('top_tracks_liveness:  ' + str(top_tracks_liveness))
+        print('top_tracks_tempo:  ' + str(top_tracks_tempo))
 
         return '''
         <html>
