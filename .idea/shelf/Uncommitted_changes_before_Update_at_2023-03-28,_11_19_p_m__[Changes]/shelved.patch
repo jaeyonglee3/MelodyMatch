@@ -1,0 +1,150 @@
+Index: ../../Desktop/csc111-group-project/user_data.py
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+>\"\"\"\nCSC111 Winter 2023 Project:\nMelodyMatch: Tailored Music Recommendations Derived From Your Spotify Habits\n\nThis Python module contains the code that will run the local server used by the user to\nlog in with their Spotify account credentials.\n\nNotes\n===============================\nThis file contains code borrowed directly from the Spotipy library documentation, which\ncan be found at the following link.\n    - https://spotipy.readthedocs.io/en/2.22.1/#\n\nContributors: Manaljav Munkhbayar, Kevin Hu, Stanley Pang, Jaeyong Lee.\n\"\"\"\n\nfrom bottle import route, run, request, WSGIRefServer, Bottle\nfrom spotipy import oauth2\nimport spotipy\n\n# The Spotify OAuth object contains the access token and refresh\n# token required to make authenticated requests to the Spotify Web API\nsp_oauth = oauth2.SpotifyOAuth(client_id='2aef90bcdc834c17b59ff1358099865a',\n                               client_secret='2ab27bed30c441aab581dbac673736f2',\n                               redirect_uri='http://localhost:8080',\n                               scope='user-library-read, user-top-read',\n                               )\n\n# Initialize empty lists to store the attributes of the user's top songs\ntop_tracks_ids = []\ntop_tracks_names = []\ntop_tracks_danceability = []\ntop_tracks_energy = []\ntop_tracks_loudness = []\ntop_tracks_speechiness = []\ntop_tracks_acousticness = []\ntop_tracks_instrumentalness = []\ntop_tracks_valence = []\ntop_tracks_liveness = []\ntop_tracks_tempo = []\n\n\n# The decorator maps the specified function to the root URL path\n@route('/')\ndef get_access_token():\n    \"\"\"\n    This function does several things:\n        - Obtain an access token by calling the get_access_token method on the Spotify OAuth object.\n        - If an access token is successfully retrieved, create a \"Spotify\" object with said token.\n        - Make the API call to obtain the user's top 50 tracks.\n        - The return value of this function is what gets sent back to the client that made the request, in\n            this case being HTML code displayed in the user's browser.\n    \"\"\"\n    global top_tracks_ids, top_tracks_names, top_tracks_danceability, top_tracks_energy, top_tracks_loudness, \\\n        top_tracks_speechiness, top_tracks_acousticness, top_tracks_instrumentalness, top_tracks_valence, \\\n        top_tracks_liveness, top_tracks_tempo\n\n    token_info = sp_oauth.get_access_token()\n    access_token = \"\"\n\n    if token_info:\n        print(\"Access token found.\")\n        access_token = token_info['access_token']\n    else:\n        code = sp_oauth.parse_response_code(request.url)\n        if code:\n            print(\"Found Spotify auth code in Request URL. Trying to get valid access token...\")\n            token_info = sp_oauth.get_access_token(code)\n            access_token = token_info['access_token']\n\n    if access_token:\n        sp = spotipy.Spotify(access_token)\n        top_tracks = sp.current_user_top_tracks(limit=20, offset=0, time_range='medium_term')\n        top_tracks_names = [track['name'] for track in top_tracks['items']]\n        top_tracks_ids = [track['id'] for track in top_tracks['items']]\n        audio_features = sp.audio_features(top_tracks_ids)  # Load the audio features of every song using its ID\n\n        for i in range(len(top_tracks_ids)):\n            top_tracks_danceability.append(audio_features[i]['danceability'])\n            top_tracks_energy.append(audio_features[i]['energy'])\n            top_tracks_loudness.append(audio_features[i]['loudness'])\n            top_tracks_speechiness.append(audio_features[i]['speechiness'])\n            top_tracks_acousticness.append(audio_features[i]['acousticness'])\n            top_tracks_instrumentalness.append(audio_features[i]['instrumentalness'])\n            top_tracks_valence.append(audio_features[i]['valence'])\n            top_tracks_liveness.append(audio_features[i]['liveness'])\n            top_tracks_tempo.append(audio_features[i]['tempo'])\n\n        print(top_tracks_names)\n        print(top_tracks_ids)\n\n        return '''\n        <html>\n            <head>\n                <title>MelodyMatch</title>\n            </head>\n            <body>\n                <h1>Got it! We've collected the data we need</h1>\n                <p>You may now close this tab and hit ctrl+c to stop the server!</p>\n            </body>\n        </html>\n        '''\n\n    else:\n        # return \"<a href='\" + sp_oauth.get_authorize_url() + \"'>Login to Spotify</a>\"\n        return '''\n                <html>\n                    <head>\n                        <title>MelodyMatch</title>\n                    </head>\n                    <body>\n                        <h1>Error Obtaining Access Token</h1>\n                        <p>We were unable to gain access to your Spotify account.</p>\n                    </body>\n                </html>\n                '''\n\n\nrun(host='')\n
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/../../Desktop/csc111-group-project/user_data.py b/../../Desktop/csc111-group-project/user_data.py
+--- a/../../Desktop/csc111-group-project/user_data.py	(revision 465cc8186c155a29625ef173e45fc1f16bcca298)
++++ b/../../Desktop/csc111-group-project/user_data.py	(date 1680056900001)
+@@ -14,7 +14,7 @@
+ Contributors: Manaljav Munkhbayar, Kevin Hu, Stanley Pang, Jaeyong Lee.
+ """
+ 
+-from bottle import route, run, request, WSGIRefServer, Bottle
++from bottle import route, run, request
+ from spotipy import oauth2
+ import spotipy
+ 
+@@ -86,8 +86,17 @@
+             top_tracks_liveness.append(audio_features[i]['liveness'])
+             top_tracks_tempo.append(audio_features[i]['tempo'])
+ 
+-        print(top_tracks_names)
+-        print(top_tracks_ids)
++        print('top_tracks_ids:  ' + str(top_tracks_ids))
++        print('top_tracks_names:  ' + str(top_tracks_names))
++        print("top_tracks_danceability:  " + str(top_tracks_danceability))
++        print('top_tracks_energy:  ' + str(top_tracks_energy))
++        print('top_tracks_loudness:  ' + str(top_tracks_loudness))
++        print('top_tracks_speechiness:  ' + str(top_tracks_speechiness))
++        print('top_tracks_acousticness:  ' + str(top_tracks_acousticness))
++        print('top_tracks_instrumentalness:  ' + str(top_tracks_instrumentalness))
++        print('top_tracks_valence:  ' + str(top_tracks_valence))
++        print('top_tracks_liveness:  ' + str(top_tracks_liveness))
++        print('top_tracks_tempo:  ' + str(top_tracks_tempo))
+ 
+         return '''
+         <html>
+Index: ../../Desktop/csc111-group-project/main.py
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+>\"\"\"\nCSC111 Winter 2023 Project:\nMelodyMatch: Tailored Music Recommendations Derived From Your Spotify Habits\n\nThis Python module is the main module where the program is run.\n\nContributors: Manaljav Munkhbayar, Kevin Hu, Stanley Pang, Jaeyong Lee.\n\"\"\"\n# top_track_ids = []\n# top_track_energy_scores = []\n\n\ndef load_spotify_data():\n    \"\"\"Start the bottle server to log in with Spotify credentials on browser\n    Retrieve and save all necessery information to appropriate variables.\n    \"\"\"\n    import user_data\n    # global top_track_ids, top_track_energy_scores\n\n    top_track_ids = user_data.top_tracks_ids\n    top_track_energy_scores = user_data.top_tracks_energy\n    # todo call a method like construct_user_profile() here or something that makes a User object for the code to use\n\n\ndef run() -> None:\n    \"\"\"Run the entire program\"\"\"\n    raise NotImplementedError\n\n\n# def get_top_tracks():\n#     \"\"\"Return the top 50 tracks of the user from the Spotify API calls\"\"\"\n#     for song in top_track_ids:\n#         print(str(song))\n#\n#     return\n#\n#\n# def get_energy_scores():\n#     \"\"\"Return the energy scores of the top 50 tracks of the user from the Spotify API calls\"\"\"\n#     for score in top_track_energy_scores:\n#         print(str(score))\n#\n#     return\n\n\nif __name__ == '__main__':\n    load_spotify_data()\n\n    # PythonTA stuff\n    # import doctest\n    # import python_ta\n    # import python_ta.contracts\n    # doctest.testmod(verbose=True)\n    #\n    # python_ta.contracts.DEBUG_CONTRACTS = False\n    # python_ta.contracts.check_all_contracts()\n    # python_ta.check_all(config={\n    #     'extra-imports': ['python_ta.contracts', 'data_computations', 'recommendation_system'],\n    #     'allowed-io': [],\n    #     'max-line-length': 100,\n    #     'disable': [],\n    # })\n
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/../../Desktop/csc111-group-project/main.py b/../../Desktop/csc111-group-project/main.py
+--- a/../../Desktop/csc111-group-project/main.py	(revision 465cc8186c155a29625ef173e45fc1f16bcca298)
++++ b/../../Desktop/csc111-group-project/main.py	(date 1680059524690)
+@@ -2,24 +2,28 @@
+ CSC111 Winter 2023 Project:
+ MelodyMatch: Tailored Music Recommendations Derived From Your Spotify Habits
+ 
+-This Python module is the main module where the program is run.
++This is the main module where the entire program is run.
+ 
+ Contributors: Manaljav Munkhbayar, Kevin Hu, Stanley Pang, Jaeyong Lee.
+ """
+-# top_track_ids = []
+-# top_track_energy_scores = []
++from user import User, construct_top_songs_list
+ 
+ 
+-def load_spotify_data():
+-    """Start the bottle server to log in with Spotify credentials on browser
+-    Retrieve and save all necessery information to appropriate variables.
++def load_user() -> User:
++    """ This function runs user_data.py which will start the Bottle server used to log in with
++    Spotify credentials on the user's browser.
++
++    After retrieving all necessary information, this function returns an instance of the User class.
+     """
+     import user_data
+-    # global top_track_ids, top_track_energy_scores
++    top_songs = construct_top_songs_list(user_data.top_tracks_ids, user_data.top_tracks_energy,
++                                         user_data.top_tracks_danceability, user_data.top_tracks_loudness,
++                                         user_data.top_tracks_speechiness, user_data.top_tracks_acousticness,
++                                         user_data.top_tracks_instrumentalness, user_data.top_tracks_valence,
++                                         user_data.top_tracks_liveness, user_data.top_tracks_tempo)
+ 
+-    top_track_ids = user_data.top_tracks_ids
+-    top_track_energy_scores = user_data.top_tracks_energy
+-    # todo call a method like construct_user_profile() here or something that makes a User object for the code to use
++    user_profile = User('username', top_songs)
++    return user_profile
+ 
+ 
+ def run() -> None:
+@@ -44,7 +48,7 @@
+ 
+ 
+ if __name__ == '__main__':
+-    load_spotify_data()
++    load_user()
+ 
+     # PythonTA stuff
+     # import doctest
+Index: ../../Desktop/csc111-group-project/.idea/workspace.xml
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+><?xml version=\"1.0\" encoding=\"UTF-8\"?>\n<project version=\"4\">\n  <component name=\"AutoImportSettings\">\n    <option name=\"autoReloadType\" value=\"SELECTIVE\" />\n  </component>\n  <component name=\"ChangeListManager\">\n    <list default=\"true\" id=\"7248fb5f-2c82-4bc0-a2cd-4e8a378348b9\" name=\"Changes\" comment=\"spotify api calls working\">\n      <change beforePath=\"$PROJECT_DIR$/.idea/workspace.xml\" beforeDir=\"false\" afterPath=\"$PROJECT_DIR$/.idea/workspace.xml\" afterDir=\"false\" />\n      <change beforePath=\"$PROJECT_DIR$/main.py\" beforeDir=\"false\" afterPath=\"$PROJECT_DIR$/main.py\" afterDir=\"false\" />\n      <change beforePath=\"$PROJECT_DIR$/user_data.py\" beforeDir=\"false\" afterPath=\"$PROJECT_DIR$/user_data.py\" afterDir=\"false\" />\n    </list>\n    <option name=\"SHOW_DIALOG\" value=\"false\" />\n    <option name=\"HIGHLIGHT_CONFLICTS\" value=\"true\" />\n    <option name=\"HIGHLIGHT_NON_ACTIVE_CHANGELIST\" value=\"false\" />\n    <option name=\"LAST_RESOLUTION\" value=\"IGNORE\" />\n  </component>\n  <component name=\"FileTemplateManagerImpl\">\n    <option name=\"RECENT_TEMPLATES\">\n      <list>\n        <option value=\"Python Script\" />\n      </list>\n    </option>\n  </component>\n  <component name=\"Git.Settings\">\n    <option name=\"RECENT_GIT_ROOT_PATH\" value=\"$PROJECT_DIR$\" />\n  </component>\n  <component name=\"GitHubPullRequestSearchHistory\">{\n  &quot;lastFilter&quot;: {\n    &quot;state&quot;: &quot;OPEN&quot;\n  }\n}</component>\n  <component name=\"GithubPullRequestsUISettings\">\n    <option name=\"selectedUrlAndAccountId\">\n      <UrlAndAccount>\n        <option name=\"accountId\" value=\"c4746029-3dde-49bc-9260-824331293f0a\" />\n        <option name=\"url\" value=\"https://github.com/Manal-jpg/csc111-group-project.git\" />\n      </UrlAndAccount>\n    </option>\n  </component>\n  <component name=\"MarkdownSettingsMigration\">\n    <option name=\"stateVersion\" value=\"1\" />\n  </component>\n  <component name=\"ProjectId\" id=\"2Nbueqwe4qxW3IeqmRvWTXLN0LU\" />\n  <component name=\"ProjectLevelVcsManager\" settingsEditedManually=\"true\" />\n  <component name=\"ProjectViewState\">\n    <option name=\"hideEmptyMiddlePackages\" value=\"true\" />\n    <option name=\"showLibraryContents\" value=\"true\" />\n  </component>\n  <component name=\"PropertiesComponent\">{\n  &quot;keyToString&quot;: {\n    &quot;RunOnceActivity.OpenProjectViewOnStart&quot;: &quot;true&quot;,\n    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,\n    &quot;settings.editor.selected.configurable&quot;: &quot;reference.settings.ide.settings.new.ui&quot;\n  }\n}</component>\n  <component name=\"RunManager\" selected=\"Python.main\">\n    <configuration name=\"main\" type=\"PythonConfigurationType\" factoryName=\"Python\" temporary=\"true\" nameIsGenerated=\"true\">\n      <module name=\"csc111-group-project\" />\n      <option name=\"INTERPRETER_OPTIONS\" value=\"\" />\n      <option name=\"PARENT_ENVS\" value=\"true\" />\n      <option name=\"SDK_HOME\" value=\"\" />\n      <option name=\"WORKING_DIRECTORY\" value=\"$PROJECT_DIR$\" />\n      <option name=\"IS_MODULE_SDK\" value=\"true\" />\n      <option name=\"ADD_CONTENT_ROOTS\" value=\"true\" />\n      <option name=\"ADD_SOURCE_ROOTS\" value=\"true\" />\n      <option name=\"SCRIPT_NAME\" value=\"$PROJECT_DIR$/main.py\" />\n      <option name=\"PARAMETERS\" value=\"\" />\n      <option name=\"SHOW_COMMAND_LINE\" value=\"false\" />\n      <option name=\"EMULATE_TERMINAL\" value=\"false\" />\n      <option name=\"MODULE_MODE\" value=\"false\" />\n      <option name=\"REDIRECT_INPUT\" value=\"false\" />\n      <option name=\"INPUT_FILE\" value=\"\" />\n      <method v=\"2\" />\n    </configuration>\n    <configuration name=\"test\" type=\"PythonConfigurationType\" factoryName=\"Python\" temporary=\"true\" nameIsGenerated=\"true\">\n      <module name=\"csc111-group-project\" />\n      <option name=\"INTERPRETER_OPTIONS\" value=\"\" />\n      <option name=\"PARENT_ENVS\" value=\"true\" />\n      <option name=\"SDK_HOME\" value=\"\" />\n      <option name=\"WORKING_DIRECTORY\" value=\"$PROJECT_DIR$\" />\n      <option name=\"IS_MODULE_SDK\" value=\"true\" />\n      <option name=\"ADD_CONTENT_ROOTS\" value=\"true\" />\n      <option name=\"ADD_SOURCE_ROOTS\" value=\"true\" />\n      <option name=\"SCRIPT_NAME\" value=\"$PROJECT_DIR$/test.py\" />\n      <option name=\"PARAMETERS\" value=\"\" />\n      <option name=\"SHOW_COMMAND_LINE\" value=\"false\" />\n      <option name=\"EMULATE_TERMINAL\" value=\"false\" />\n      <option name=\"MODULE_MODE\" value=\"false\" />\n      <option name=\"REDIRECT_INPUT\" value=\"false\" />\n      <option name=\"INPUT_FILE\" value=\"\" />\n      <method v=\"2\" />\n    </configuration>\n    <configuration name=\"user_data\" type=\"PythonConfigurationType\" factoryName=\"Python\" temporary=\"true\" nameIsGenerated=\"true\">\n      <module name=\"csc111-group-project\" />\n      <option name=\"INTERPRETER_OPTIONS\" value=\"\" />\n      <option name=\"PARENT_ENVS\" value=\"true\" />\n      <option name=\"SDK_HOME\" value=\"\" />\n      <option name=\"WORKING_DIRECTORY\" value=\"$PROJECT_DIR$\" />\n      <option name=\"IS_MODULE_SDK\" value=\"true\" />\n      <option name=\"ADD_CONTENT_ROOTS\" value=\"true\" />\n      <option name=\"ADD_SOURCE_ROOTS\" value=\"true\" />\n      <option name=\"SCRIPT_NAME\" value=\"$PROJECT_DIR$/user_data.py\" />\n      <option name=\"PARAMETERS\" value=\"\" />\n      <option name=\"SHOW_COMMAND_LINE\" value=\"false\" />\n      <option name=\"EMULATE_TERMINAL\" value=\"false\" />\n      <option name=\"MODULE_MODE\" value=\"false\" />\n      <option name=\"REDIRECT_INPUT\" value=\"false\" />\n      <option name=\"INPUT_FILE\" value=\"\" />\n      <method v=\"2\" />\n    </configuration>\n    <configuration name=\"user_data2\" type=\"PythonConfigurationType\" factoryName=\"Python\" temporary=\"true\" nameIsGenerated=\"true\">\n      <module name=\"csc111-group-project\" />\n      <option name=\"INTERPRETER_OPTIONS\" value=\"\" />\n      <option name=\"PARENT_ENVS\" value=\"true\" />\n      <envs>\n        <env name=\"PYTHONUNBUFFERED\" value=\"1\" />\n      </envs>\n      <option name=\"SDK_HOME\" value=\"\" />\n      <option name=\"WORKING_DIRECTORY\" value=\"$PROJECT_DIR$\" />\n      <option name=\"IS_MODULE_SDK\" value=\"true\" />\n      <option name=\"ADD_CONTENT_ROOTS\" value=\"true\" />\n      <option name=\"ADD_SOURCE_ROOTS\" value=\"true\" />\n      <option name=\"SCRIPT_NAME\" value=\"$PROJECT_DIR$/user_data2.py\" />\n      <option name=\"PARAMETERS\" value=\"\" />\n      <option name=\"SHOW_COMMAND_LINE\" value=\"false\" />\n      <option name=\"EMULATE_TERMINAL\" value=\"false\" />\n      <option name=\"MODULE_MODE\" value=\"false\" />\n      <option name=\"REDIRECT_INPUT\" value=\"false\" />\n      <option name=\"INPUT_FILE\" value=\"\" />\n      <method v=\"2\" />\n    </configuration>\n    <configuration name=\"user_data3\" type=\"PythonConfigurationType\" factoryName=\"Python\" temporary=\"true\" nameIsGenerated=\"true\">\n      <module name=\"csc111-group-project\" />\n      <option name=\"INTERPRETER_OPTIONS\" value=\"\" />\n      <option name=\"PARENT_ENVS\" value=\"true\" />\n      <option name=\"SDK_HOME\" value=\"\" />\n      <option name=\"WORKING_DIRECTORY\" value=\"$PROJECT_DIR$\" />\n      <option name=\"IS_MODULE_SDK\" value=\"true\" />\n      <option name=\"ADD_CONTENT_ROOTS\" value=\"true\" />\n      <option name=\"ADD_SOURCE_ROOTS\" value=\"true\" />\n      <option name=\"SCRIPT_NAME\" value=\"$PROJECT_DIR$/user_data3.py\" />\n      <option name=\"PARAMETERS\" value=\"\" />\n      <option name=\"SHOW_COMMAND_LINE\" value=\"false\" />\n      <option name=\"EMULATE_TERMINAL\" value=\"false\" />\n      <option name=\"MODULE_MODE\" value=\"false\" />\n      <option name=\"REDIRECT_INPUT\" value=\"false\" />\n      <option name=\"INPUT_FILE\" value=\"\" />\n      <method v=\"2\" />\n    </configuration>\n    <recent_temporary>\n      <list>\n        <item itemvalue=\"Python.main\" />\n        <item itemvalue=\"Python.user_data\" />\n        <item itemvalue=\"Python.test\" />\n        <item itemvalue=\"Python.user_data3\" />\n        <item itemvalue=\"Python.user_data3\" />\n      </list>\n    </recent_temporary>\n  </component>\n  <component name=\"SpellCheckerSettings\" RuntimeDictionaries=\"0\" Folders=\"0\" CustomDictionaries=\"0\" DefaultDictionary=\"application-level\" UseSingleDictionary=\"true\" transferred=\"true\" />\n  <component name=\"TaskManager\">\n    <task active=\"true\" id=\"Default\" summary=\"Default task\">\n      <changelist id=\"7248fb5f-2c82-4bc0-a2cd-4e8a378348b9\" name=\"Changes\" comment=\"\" />\n      <created>1679945200753</created>\n      <option name=\"number\" value=\"Default\" />\n      <option name=\"presentableId\" value=\"Default\" />\n      <updated>1679945200753</updated>\n    </task>\n    <task id=\"LOCAL-00001\" summary=\"sum_two function added\">\n      <created>1679947425320</created>\n      <option name=\"number\" value=\"00001\" />\n      <option name=\"presentableId\" value=\"LOCAL-00001\" />\n      <option name=\"project\" value=\"LOCAL\" />\n      <updated>1679947425321</updated>\n    </task>\n    <task id=\"LOCAL-00002\" summary=\"spotify api calls working\">\n      <created>1680051438797</created>\n      <option name=\"number\" value=\"00002\" />\n      <option name=\"presentableId\" value=\"LOCAL-00002\" />\n      <option name=\"project\" value=\"LOCAL\" />\n      <updated>1680051438797</updated>\n    </task>\n    <task id=\"LOCAL-00003\" summary=\"spotify api calls working\">\n      <created>1680051508305</created>\n      <option name=\"number\" value=\"00003\" />\n      <option name=\"presentableId\" value=\"LOCAL-00003\" />\n      <option name=\"project\" value=\"LOCAL\" />\n      <updated>1680051508305</updated>\n    </task>\n    <option name=\"localTasksCounter\" value=\"4\" />\n    <servers />\n  </component>\n  <component name=\"Vcs.Log.Tabs.Properties\">\n    <option name=\"TAB_STATES\">\n      <map>\n        <entry key=\"MAIN\">\n          <value>\n            <State>\n              <option name=\"FILTERS\">\n                <map>\n                  <entry key=\"branch\">\n                    <value>\n                      <list>\n                        <option value=\"main\" />\n                      </list>\n                    </value>\n                  </entry>\n                </map>\n              </option>\n            </State>\n          </value>\n        </entry>\n      </map>\n    </option>\n  </component>\n  <component name=\"VcsManagerConfiguration\">\n    <MESSAGE value=\"sum_two function added\" />\n    <MESSAGE value=\"spotify api calls working\" />\n    <option name=\"LAST_COMMIT_MESSAGE\" value=\"spotify api calls working\" />\n  </component>\n</project>
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/../../Desktop/csc111-group-project/.idea/workspace.xml b/../../Desktop/csc111-group-project/.idea/workspace.xml
+--- a/../../Desktop/csc111-group-project/.idea/workspace.xml	(revision 465cc8186c155a29625ef173e45fc1f16bcca298)
++++ b/../../Desktop/csc111-group-project/.idea/workspace.xml	(date 1680059840379)
+@@ -4,7 +4,7 @@
+     <option name="autoReloadType" value="SELECTIVE" />
+   </component>
+   <component name="ChangeListManager">
+-    <list default="true" id="7248fb5f-2c82-4bc0-a2cd-4e8a378348b9" name="Changes" comment="spotify api calls working">
++    <list default="true" id="7248fb5f-2c82-4bc0-a2cd-4e8a378348b9" name="Changes" comment="updated user_data.py for all song attributes">
+       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+       <change beforePath="$PROJECT_DIR$/main.py" beforeDir="false" afterPath="$PROJECT_DIR$/main.py" afterDir="false" />
+       <change beforePath="$PROJECT_DIR$/user_data.py" beforeDir="false" afterPath="$PROJECT_DIR$/user_data.py" afterDir="false" />
+@@ -187,7 +187,21 @@
+       <option name="project" value="LOCAL" />
+       <updated>1680051508305</updated>
+     </task>
+-    <option name="localTasksCounter" value="4" />
++    <task id="LOCAL-00004" summary="small changes">
++      <created>1680053006498</created>
++      <option name="number" value="00004" />
++      <option name="presentableId" value="LOCAL-00004" />
++      <option name="project" value="LOCAL" />
++      <updated>1680053006498</updated>
++    </task>
++    <task id="LOCAL-00005" summary="updated user_data.py for all song attributes">
++      <created>1680056613931</created>
++      <option name="number" value="00005" />
++      <option name="presentableId" value="LOCAL-00005" />
++      <option name="project" value="LOCAL" />
++      <updated>1680056613931</updated>
++    </task>
++    <option name="localTasksCounter" value="6" />
+     <servers />
+   </component>
+   <component name="Vcs.Log.Tabs.Properties">
+@@ -216,6 +230,8 @@
+   <component name="VcsManagerConfiguration">
+     <MESSAGE value="sum_two function added" />
+     <MESSAGE value="spotify api calls working" />
+-    <option name="LAST_COMMIT_MESSAGE" value="spotify api calls working" />
++    <MESSAGE value="small changes" />
++    <MESSAGE value="updated user_data.py for all song attributes" />
++    <option name="LAST_COMMIT_MESSAGE" value="updated user_data.py for all song attributes" />
+   </component>
+ </project>
+\ No newline at end of file
