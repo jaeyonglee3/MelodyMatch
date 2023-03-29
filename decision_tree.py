@@ -58,9 +58,6 @@ class Song:
             Detects the presence of an audience in the recording. Higher liveness values represent an increased
             probability that the track was performed live. A value above 0.8 provides strong likelihood that the track
             is live.
-        - tempo:
-            The overall estimated tempo of a track in beats per minute (BPM). In musical terminology, tempo is the
-            speed or pace of a given piece and derives directly from the average beat duration.
 
         Representation Invariants:
         - 0.0 <= self.danceability <= 1.0
@@ -71,7 +68,6 @@ class Song:
         - 0.0 <= self.instrumentalness <= 1.0
         - 0.0 <= self.valence <= 1.0
         - 0.0 <= self.liveness <= 1.0
-        - self.tempo >= 0
         """
     name: str
     genre: str
@@ -84,7 +80,6 @@ class Song:
     instrumentalness: float
     valence: float
     liveness: float
-    tempo: float
 
 
 class DecisionTree:
@@ -152,15 +147,11 @@ def generate_decision_tree(value: set[Song] | tuple, depth: int = 1) -> Decision
     """Add all the tuples and empty song sets into the decision tree."""
     decision_tree = DecisionTree(value=value, subtrees=[])
 
-    if depth == 10:
+    if depth == 9:
         return decision_tree
     else:
-        if depth == 3:
+        if depth == 3:  # Loudness
             ranges = [(-60, -37), (-36, -13), (-12, 10)]
-            subtrees = [generate_decision_tree(value, depth + 1) for value in ranges]
-
-        elif depth == 9:
-            ranges = [(0, 83), (84, 167), (168, 250)]
             subtrees = [generate_decision_tree(value, depth + 1) for value in ranges]
 
         else:
