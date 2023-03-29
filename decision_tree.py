@@ -158,6 +158,21 @@ class DecisionTree:
         """
         return self._str_indented(0)
 
+    def __len__(self) -> int:
+        """Return the number of items contained in this tree.
+
+        >>> t1 = Tree(None, [])
+        >>> len(t1)
+        0
+        >>> t2 = Tree(3, [Tree(4, []), Tree(1, [])])
+        >>> len(t2)
+        3
+        """
+        if self.is_empty():
+            return 0
+        else:
+            return 1 + sum(subtree.__len__() for subtree in self._subtrees)
+
     def add_subtree(self, subtree: DecisionTree) -> None:
         """Add a subtree to this game tree."""
         self._subtrees.append(subtree)
@@ -167,31 +182,25 @@ def generate_decision_tree(value: set[Song] | tuple, depth: int = 1) -> Decision
     """Add all the tuples and empty song sets into the decision tree."""
     decision_tree = DecisionTree(value=value, subtrees=[])
 
-    # if depth == 10:
-    #     return decision_tree
-    # else:
-    #     if depth == 3:
-    #         ranges = [(-60, -37), (-36, -13), (-12, 10)]
-    #         subtrees = [generate_decision_tree(value, depth + 1) for value in ranges]
-    #
-    #     elif depth == 9:
-    #         ranges = [(0, 83), (84, 167), (168, 250)]
-    #         subtrees = [generate_decision_tree(value, depth + 1) for value in ranges]
-    #
-    #     else:
-    ranges = [(0.0, 0.3), (0.4, 0.7), (0.8, 1.0)]
-    #         subtrees = [generate_decision_tree(value, depth + 1) for value in ranges]
+    if depth == 10:
+        return decision_tree
+    else:
+        if depth == 3:
+            ranges = [(-60, -37), (-36, -13), (-12, 10)]
+            subtrees = [generate_decision_tree(value, depth + 1) for value in ranges]
 
-    for range in ranges:
-        decision_tree.add_subtree(DecisionTree(value=range, subtrees=[]))
-    depth += 1
+        elif depth == 9:
+            ranges = [(0, 83), (84, 167), (168, 250)]
+            subtrees = [generate_decision_tree(value, depth + 1) for value in ranges]
 
-    return decision_tree
+        else:
+            ranges = [(0.0, 0.3), (0.4, 0.7), (0.8, 1.0)]
+            subtrees = [generate_decision_tree(value, depth + 1) for value in ranges]
 
-        # for subtree in subtrees:
-        #     decision_tree.add_subtree(subtree)
-        #
-        # return decision_tree
+        for subtree in subtrees:
+            decision_tree.add_subtree(subtree)
+
+        return decision_tree
 
 
 def insert_song() -> None:
