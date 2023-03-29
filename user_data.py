@@ -17,14 +17,13 @@ Contributors: Manaljav Munkhbayar, Kevin Hu, Stanley Pang, Jaeyong Lee.
 from bottle import route, run, request, WSGIRefServer, Bottle
 from spotipy import oauth2
 import spotipy
-import os
 
 # The Spotify OAuth object contains the access token and refresh
 # token required to make authenticated requests to the Spotify Web API
 sp_oauth = oauth2.SpotifyOAuth(client_id='2aef90bcdc834c17b59ff1358099865a',
                                client_secret='2ab27bed30c441aab581dbac673736f2',
                                redirect_uri='http://localhost:8080',
-                               scope='user-library-read',
+                               scope='user-library-read, user-top-read',
                                )
 
 track_names = []
@@ -50,8 +49,8 @@ def get_access_token():
     if access_token:
         print("Access token available! Trying to get user information...")
         sp = spotipy.Spotify(access_token)  # create a Spotify object authenticated with our acess token
-        saved_tracks = sp.current_user_saved_tracks(limit=50)
-        track_names = [track['track']['name'] for track in saved_tracks['items']]
+        top_tracks = sp.current_user_top_tracks(limit=20, offset=0, time_range='medium_term')
+        track_names = [track['name'] for track in top_tracks['items']]
         print(track_names)
         return '''
         <html>
