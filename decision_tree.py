@@ -11,7 +11,6 @@ import csv
 import random
 from typing import Optional, Any
 
-
 DECISION_TREE_ROOT = (0, 0)
 
 
@@ -80,6 +79,20 @@ class Song:
     instrumentalness: float
     valence: float
     liveness: float
+
+    def __init__(self, name, genre, artist, danceability, energy, loudness,
+                 speechiness, acousticness, instrumentalness, valence, liveness) -> None:
+        self.name = name
+        self.genre = genre
+        self.artist = artist
+        self.danceability = danceability
+        self.energy = energy
+        self.loudness = loudness
+        self.speechiness = speechiness
+        self.acousticness = acousticness
+        self.instrumentalness = instrumentalness
+        self.valence = valence
+        self.liveness = liveness
 
 
 class DecisionTree:
@@ -154,7 +167,7 @@ def generate_decision_tree(value: set[Song] | tuple, depth: int = 1) -> Decision
             ranges = [(-60, -37), (-36, -13), (-12, 10)]
             subtrees = [generate_decision_tree(value, depth + 1) for value in ranges]
 
-        else:   # Everything else
+        else:  # Everything else
             ranges = [(0.0, 0.3), (0.4, 0.7), (0.8, 1.0)]
             subtrees = [generate_decision_tree(value, depth + 1) for value in ranges]
 
@@ -162,7 +175,7 @@ def generate_decision_tree(value: set[Song] | tuple, depth: int = 1) -> Decision
             decision_tree.add_subtree(subtree)
 
         return decision_tree
-#
+
 
 def insert_song() -> None:
     """Insert a song into the decision tree by recursing through the tree until it gets added to a specific song
@@ -187,24 +200,38 @@ def read_and_write_csv(csv_file: str) -> None:
         reader = csv.reader(input_file)
         writer = csv.writer(output_file, delimiter=',')
         # Writes the Header
-        writer.writerow(['Artist', 'Song', 'Liveness', 'Explicit', 'Year', 'Popularity', 'Danceability',
-                         'Energy', 'Speechiness', 'Loudness'])
+        writer.writerow(['Name', 'Genre', 'Artist', 'Danceability', 'Energy', 'Loudness', 'Speechiness', 'Acousticness',
+                         'Instrumentalness', 'Valence', 'Liveness'])
         # Skips the Header
         next(reader)
 
         for row in reader:
-            row_to_write = [row[0], row[1], row[14], row[3], row[4], row[5], row[6], row[7], row[11], row[9]]
+            row_to_write = [row[1], row[17], row[0], row[6], row[7], row[9],
+                            row[11], row[12], row[13], row[15], row[14]]
             writer.writerow(row_to_write)
 
-    def songs_final_csv_to_songs() -> set[Song]:
-        """Reads rows from songs_final.csv and converts each row into a Song object.
-        All Song objects will be put into a set."""
-        with open('data/songs_final.csv') as file:
-            reader = csv.reader(file)
 
-            # Skips Header
-            next(reader)
+def songs_final_csv_to_songs() -> set[Song]:
+    """Reads rows from songs_final.csv and converts each row into a Song object.
+    All Song objects will be put into a set."""
+    with open('data/songs_final.csv') as file:
+        final_csv_reader = csv.reader(file)
 
-            songs_so_far = set()
-            for row in reader:
-                songs_so_far.add(Song())
+        # Skips Header
+        next(final_csv_reader)
+
+        songs_so_far = set()
+        for song in final_csv_reader:
+            songs_so_far.add(Song(name=song[0],
+                                  genre=song[1],
+                                  artist=song[2],
+                                  danceability=song[3],
+                                  energy=song[4],
+                                  loudness=song[5],
+                                  speechiness=song[6],
+                                  acousticness=song[7],
+                                  instrumentalness=song[8],
+                                  valence=song[9],
+                                  liveness=song[10])
+                             )
+        return songs_so_far
