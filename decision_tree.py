@@ -154,7 +154,7 @@ def generate_decision_tree(value: set[Song] | tuple, depth: int = 1) -> Decision
             ranges = [(-60, -37), (-36, -13), (-12, 10)]
             subtrees = [generate_decision_tree(value, depth + 1) for value in ranges]
 
-        else:
+        else:   # Everything else
             ranges = [(0.0, 0.3), (0.4, 0.7), (0.8, 1.0)]
             subtrees = [generate_decision_tree(value, depth + 1) for value in ranges]
 
