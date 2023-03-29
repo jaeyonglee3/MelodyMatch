@@ -1,0 +1,646 @@
+Index: ../../Desktop/csc111-group-project/decision_tree.py
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+># Decision Tree\nimport csv\nimport random\nfrom typing import Optional\nfrom __future__ import annotations\n\nclass Song:\n    \"\"\"An object that represents a specific song and stores its various song attributes.\n\n        Instance Attributes\n        - name:\n            Name of the song.\n        - genre:\n            Genre of the track.\n        - artist:\n            Name of the artist that created the song.\n        - year:\n            Song's year of release.\n        - duration:\n            Duration of the track in milliseconds.\n        - explicit:\n            Boolean that states whether the song contains swear words or not.\n        - popularity:\n            Popularity of the song. The higher the value, the more popular the song is. 0 represents the lowest\n            popularity while 100 represnets the highest popularity.\n        - danceability:\n            Describes how suitable a track is for dancing based on a combination of musical elements including tempo,\n            rhythm stability, beat strength, and overall regularity. A value of 0.0 is least danceable and 1.0 is most\n            danceable.\n        - energy:\n            Represents a perceptual measure of intensity and activity. A value of 0.0 represents the lowest energy and\n            1.0 represents the highest energy.\n        - loudness:\n            The overall loudness of a track in decibels (dB). Loudness values are averaged across the entire track and\n            is the quality of a sound that is the primary psychological correlate of physical strength (amplitude).\n            Values range between -60 and 10 db where -60 db is the quietest and 10 db is the loudest.\n        - speechiness:\n            Detects the presence of spoken words in a track. The more exclusively speech-like the\n            recording (e.g. talk show, audio book, poetry), the closer to 1.0 the attribute value. Values above 0.66\n            describe tracks that are probably made entirely of spoken words. Values between 0.33 and 0.66 describe\n            tracks that may contain both music and speech, either in sections or layered, including such cases as rap\n            music. Values below 0.33 most likely represent music and other non-speech-like tracks.\n        - acousticness:\n            A confidence measure from 0.0 to 1.0 of whether the track is acoustic. 0.0 represents low confidence the\n            track is acoustic and 1.0 represents high confidence the track is acoustic.\n        - instrumentalness:\n            Predicts whether a track contains no vocals. \"Ooh\" and \"aah\" sounds are treated as instrumental in this\n            context. Rap or spoken word tracks are clearly \"vocal\". The closer the instrumentalness value is to 1.0,\n            the greater likelihood the track contains no vocal content. Values above 0.5 are intended to represent\n            instrumental tracks, but confidence is higher as the value approaches 1.0.\n        - valence:\n            A measure from 0.0 to 1.0 describing the musical positiveness conveyed by a track. Tracks with high valence\n            sound more positive (e.g. happy, cheerful, euphoric), while tracks with low valence sound more negative\n            (e.g. sad, depressed, angry).\n        - liveness:\n            Detects the presence of an audience in the recording. Higher liveness values represent an increased\n            probability that the track was performed live. A value above 0.8 provides strong likelihood that the track\n            is live.\n        - tempo:\n            The overall estimated tempo of a track in beats per minute (BPM). In musical terminology, tempo is the\n            speed or pace of a given piece and derives directly from the average beat duration.\n        - key:\n            The key the track is in. Integers map to pitches using standard Pitch Class notation. E.g. 0 = C, 1 = C♯/D♭,\n            2 = D, and so on. If no key was detected, the value is -1.\n        - mode:\n            Mode indicates the modality (major or minor) of a track, the type of scale from which its melodic content\n            is derived. Major is represented by 1 and minor is 0.\n\n        Representation Invariants:\n        - 0 <= self.popularity <= 100\n        - 0.0 <= self.danceability <= 1.0\n        - 0.0 <= self.energy <= 1.0\n        - -60.0 <= self.loudness <= 10.0\n        - 0.0 <= self.speechiness <= 1.0\n        - 0.0 <= self.acousticness <= 1.0\n        - 0.0 <= self.instrumentalness <= 1.0\n        - 0.0 <= self.valence <= 1.0\n        - 0.0 <= self.liveness <= 1.0\n        - self.tempo >= 0\n        - self.mode == 1 or self.mode == 0\n        \"\"\"\n    name: str\n    genre: str\n    artist: str\n    year: int\n    duration: int\n    explicit: bool\n    popularity: int\n    danceability: float\n    energy: float\n    loudness: float\n    speechiness: float\n    acousticness: float\n    instrumentalness: float\n    valence: float\n    liveness: float\n    tempo: float\n    key: int\n    mode: int\n\n\nclass DecisionTree:\n    \"\"\"A decision tree for organizing our songs.\n\n    Each node in the tree either stores a range of numbers or a set of songs.\n\n    Instance Attributes:\n        - value: the current range of numbers or a set of songs if its is the leaf of the tree.\n\n    Representation Invariants:\n        - all(key == self._subtrees[key].value for key in self._subtrees)\n    \"\"\"\n    value: Optional[Song | tuple[float, float]]\n\n    # Private Instance Attributes:\n    #  - _subtrees:\n    #      the subtrees of this tree, which represent the decision trees after sorting the song by its attribute value.\n\n    _subtrees: list[DecisionTree]\n\n    def __init__(self) -> None:\n        \"\"\"Initialize a new game tree.\n        \"\"\"\n        self.value = None\n        self._subtrees = []\n\n    def add_subtree(self, subtree: DecisionTree) -> None:\n        \"\"\"Add a subtree to this game tree.\"\"\"\n        self._subtrees.append(subtree)\n\n    def generate_decision_tree(self) -> None:\n        \"\"\"Add all the tuples and empty song sets into the decision tree.\"\"\"\n        # for loop\n\n    def insert_song(self) -> None:\n        \"\"\"Insert a song into the decision tree by recursing through the tree until it gets added to a specific song\n        set.\n        \"\"\"\n        # recursive\n\n    def insert_songs(self) -> None:\n        \"\"\"Insert a list of songs into the decision tree so that each song gets sorted into a specific song set.\"\"\"\n        # for loop and call recursive helper\n\n\ndef read_and_write_csv(csv_file: str) -> None:\n    \"\"\"Loads data from a CSV file, and writes a new CSV file called songs_final.csv.\n    songs_final.csv will include only the songs and catergories we plan to use.\n\n    Preconditions:\n       - csv_file refers to a valid CSV file in the format described in the project proposal\n    \"\"\"\n    with open(csv_file) as input_file, open('data/songs_final.csv', 'w', newline='') as output_file:\n        reader = csv.reader(input_file)\n        writer = csv.writer(output_file, delimiter=',')\n        # Writes the Header\n        writer.writerow(['Artist', 'Song', 'Liveness', 'Explicit', 'Year', 'Popularity', 'Danceability',\n                         'Energy', 'Speechiness', 'Loudness'])\n        # Skips the Header\n        next(reader)\n\n        for row in reader:\n            row_to_write = [row[0], row[1], row[14], row[3], row[4], row[5], row[6], row[7], row[11], row[9]]\n            writer.writerow(row_to_write)\n
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/../../Desktop/csc111-group-project/decision_tree.py b/../../Desktop/csc111-group-project/decision_tree.py
+--- a/../../Desktop/csc111-group-project/decision_tree.py	(revision 1931b8f2e835d3a44138043e9f708eee5840b339)
++++ b/../../Desktop/csc111-group-project/decision_tree.py	(date 1680051163861)
+@@ -1,164 +1,0 @@
+-# Decision Tree
+-import csv
+-import random
+-from typing import Optional
+-from __future__ import annotations
+-
+-class Song:
+-    """An object that represents a specific song and stores its various song attributes.
+-
+-        Instance Attributes
+-        - name:
+-            Name of the song.
+-        - genre:
+-            Genre of the track.
+-        - artist:
+-            Name of the artist that created the song.
+-        - year:
+-            Song's year of release.
+-        - duration:
+-            Duration of the track in milliseconds.
+-        - explicit:
+-            Boolean that states whether the song contains swear words or not.
+-        - popularity:
+-            Popularity of the song. The higher the value, the more popular the song is. 0 represents the lowest
+-            popularity while 100 represnets the highest popularity.
+-        - danceability:
+-            Describes how suitable a track is for dancing based on a combination of musical elements including tempo,
+-            rhythm stability, beat strength, and overall regularity. A value of 0.0 is least danceable and 1.0 is most
+-            danceable.
+-        - energy:
+-            Represents a perceptual measure of intensity and activity. A value of 0.0 represents the lowest energy and
+-            1.0 represents the highest energy.
+-        - loudness:
+-            The overall loudness of a track in decibels (dB). Loudness values are averaged across the entire track and
+-            is the quality of a sound that is the primary psychological correlate of physical strength (amplitude).
+-            Values range between -60 and 10 db where -60 db is the quietest and 10 db is the loudest.
+-        - speechiness:
+-            Detects the presence of spoken words in a track. The more exclusively speech-like the
+-            recording (e.g. talk show, audio book, poetry), the closer to 1.0 the attribute value. Values above 0.66
+-            describe tracks that are probably made entirely of spoken words. Values between 0.33 and 0.66 describe
+-            tracks that may contain both music and speech, either in sections or layered, including such cases as rap
+-            music. Values below 0.33 most likely represent music and other non-speech-like tracks.
+-        - acousticness:
+-            A confidence measure from 0.0 to 1.0 of whether the track is acoustic. 0.0 represents low confidence the
+-            track is acoustic and 1.0 represents high confidence the track is acoustic.
+-        - instrumentalness:
+-            Predicts whether a track contains no vocals. "Ooh" and "aah" sounds are treated as instrumental in this
+-            context. Rap or spoken word tracks are clearly "vocal". The closer the instrumentalness value is to 1.0,
+-            the greater likelihood the track contains no vocal content. Values above 0.5 are intended to represent
+-            instrumental tracks, but confidence is higher as the value approaches 1.0.
+-        - valence:
+-            A measure from 0.0 to 1.0 describing the musical positiveness conveyed by a track. Tracks with high valence
+-            sound more positive (e.g. happy, cheerful, euphoric), while tracks with low valence sound more negative
+-            (e.g. sad, depressed, angry).
+-        - liveness:
+-            Detects the presence of an audience in the recording. Higher liveness values represent an increased
+-            probability that the track was performed live. A value above 0.8 provides strong likelihood that the track
+-            is live.
+-        - tempo:
+-            The overall estimated tempo of a track in beats per minute (BPM). In musical terminology, tempo is the
+-            speed or pace of a given piece and derives directly from the average beat duration.
+-        - key:
+-            The key the track is in. Integers map to pitches using standard Pitch Class notation. E.g. 0 = C, 1 = C♯/D♭,
+-            2 = D, and so on. If no key was detected, the value is -1.
+-        - mode:
+-            Mode indicates the modality (major or minor) of a track, the type of scale from which its melodic content
+-            is derived. Major is represented by 1 and minor is 0.
+-
+-        Representation Invariants:
+-        - 0 <= self.popularity <= 100
+-        - 0.0 <= self.danceability <= 1.0
+-        - 0.0 <= self.energy <= 1.0
+-        - -60.0 <= self.loudness <= 10.0
+-        - 0.0 <= self.speechiness <= 1.0
+-        - 0.0 <= self.acousticness <= 1.0
+-        - 0.0 <= self.instrumentalness <= 1.0
+-        - 0.0 <= self.valence <= 1.0
+-        - 0.0 <= self.liveness <= 1.0
+-        - self.tempo >= 0
+-        - self.mode == 1 or self.mode == 0
+-        """
+-    name: str
+-    genre: str
+-    artist: str
+-    year: int
+-    duration: int
+-    explicit: bool
+-    popularity: int
+-    danceability: float
+-    energy: float
+-    loudness: float
+-    speechiness: float
+-    acousticness: float
+-    instrumentalness: float
+-    valence: float
+-    liveness: float
+-    tempo: float
+-    key: int
+-    mode: int
+-
+-
+-class DecisionTree:
+-    """A decision tree for organizing our songs.
+-
+-    Each node in the tree either stores a range of numbers or a set of songs.
+-
+-    Instance Attributes:
+-        - value: the current range of numbers or a set of songs if its is the leaf of the tree.
+-
+-    Representation Invariants:
+-        - all(key == self._subtrees[key].value for key in self._subtrees)
+-    """
+-    value: Optional[Song | tuple[float, float]]
+-
+-    # Private Instance Attributes:
+-    #  - _subtrees:
+-    #      the subtrees of this tree, which represent the decision trees after sorting the song by its attribute value.
+-
+-    _subtrees: list[DecisionTree]
+-
+-    def __init__(self) -> None:
+-        """Initialize a new game tree.
+-        """
+-        self.value = None
+-        self._subtrees = []
+-
+-    def add_subtree(self, subtree: DecisionTree) -> None:
+-        """Add a subtree to this game tree."""
+-        self._subtrees.append(subtree)
+-
+-    def generate_decision_tree(self) -> None:
+-        """Add all the tuples and empty song sets into the decision tree."""
+-        # for loop
+-
+-    def insert_song(self) -> None:
+-        """Insert a song into the decision tree by recursing through the tree until it gets added to a specific song
+-        set.
+-        """
+-        # recursive
+-
+-    def insert_songs(self) -> None:
+-        """Insert a list of songs into the decision tree so that each song gets sorted into a specific song set."""
+-        # for loop and call recursive helper
+-
+-
+-def read_and_write_csv(csv_file: str) -> None:
+-    """Loads data from a CSV file, and writes a new CSV file called songs_final.csv.
+-    songs_final.csv will include only the songs and catergories we plan to use.
+-
+-    Preconditions:
+-       - csv_file refers to a valid CSV file in the format described in the project proposal
+-    """
+-    with open(csv_file) as input_file, open('data/songs_final.csv', 'w', newline='') as output_file:
+-        reader = csv.reader(input_file)
+-        writer = csv.writer(output_file, delimiter=',')
+-        # Writes the Header
+-        writer.writerow(['Artist', 'Song', 'Liveness', 'Explicit', 'Year', 'Popularity', 'Danceability',
+-                         'Energy', 'Speechiness', 'Loudness'])
+-        # Skips the Header
+-        next(reader)
+-
+-        for row in reader:
+-            row_to_write = [row[0], row[1], row[14], row[3], row[4], row[5], row[6], row[7], row[11], row[9]]
+-            writer.writerow(row_to_write)
+Index: ../../Desktop/csc111-group-project/user_data.py
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+>from flask import Flask, url_for, session, request, redirect\nimport spotipy\nimport time\nfrom spotipy.oauth2 import SpotifyOAuth\n\napp = Flask(__name__)\n\n# secret key used to sign the session cookie\napp.secret_key = 'Dmd2nI8H34fds'\napp.config['SESSION_COOKIE_NAME'] = 'spotify-login-session'\nTOKEN_INFO = \"token_info\"\n\n\n@app.route('/')\ndef login():\n    sp_oauth = create_spotify_oauth()\n    auth_url = sp_oauth.get_authorize_url()\n    return redirect(auth_url)\n\n\n@app.route('/redirect')\ndef redirectPage():\n    sp_oauth = create_spotify_oauth()\n    session.clear()\n    code = request.args.get('code')  # use the request object to get an access code\n    token_info = sp_oauth.get_access_token(code)  # use the code to retrieve an access token\n    session[TOKEN_INFO] = token_info  # save the token info into the session\n    return redirect(url_for('get_tracks', _external=True))\n\n\n@app.route('/getTracks')\ndef get_tracks():\n    # todo video @6:30\n    try:\n        token_info = get_token()\n    except:\n        print(\"user not logged in\")\n        return redirect(url_for(\"login\", _external=False))  # get redirected to the login page if no token data found\n\n    # Now, create a spotify api client instance.\n    # It can be used to authenticate a user with Spotify, and to make requests to the API on behalf of that user.\n    sp = spotipy.Spotify(auth=token_info['access_token'])\n    return str(sp.current_user_saved_tracks(limit=50, offset=0)['items'][0])\n\n\ndef get_token():\n    token_info = session.get(TOKEN_INFO, None)  # get the value from the dictionary\n    if not token_info:\n        raise Exception(\"The token does not exist\")\n\n    # check if token is expired\n    curr_time = int(time.time())\n    if token_info['expires_at'] - curr_time < 60:\n        sp_oauth = create_spotify_oauth()\n        token_info = sp_oauth.refresh_access_token(token_info['refresh_token'])\n\n    return token_info\n\n\ndef create_spotify_oauth():\n    return SpotifyOAuth(\n            client_id=\"2aef90bcdc834c17b59ff1358099865a\",\n            client_secret=\"2ab27bed30c441aab581dbac673736f2\",\n            redirect_uri=url_for('redirectPage', _external=True),\n            scope=\"user-library-read\")\n\n\nif __name__ == '__main__':\n    app.run()\n
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/../../Desktop/csc111-group-project/user_data.py b/../../Desktop/csc111-group-project/user_data.py
+--- a/../../Desktop/csc111-group-project/user_data.py	(revision 1931b8f2e835d3a44138043e9f708eee5840b339)
++++ b/../../Desktop/csc111-group-project/user_data.py	(date 1680051091067)
+@@ -1,69 +1,72 @@
+-from flask import Flask, url_for, session, request, redirect
++"""
++CSC111 Winter 2023 Project:
++MelodyMatch: Tailored Music Recommendations Derived From Your Spotify Habits
++
++This Python module contains the code that will run the local server used by the user to
++log in with their Spotify account credentials.
++
++Notes
++===============================
++This file contains code borrowed directly from the Spotipy library documentation, which
++can be found at the following link.
++    -
++
++Contributors: Manaljav Munkhbayar, Kevin Hu, Stanley Pang, Jaeyong Lee.
++"""
++
++from bottle import route, run, request, WSGIRefServer, Bottle
++from spotipy import oauth2
+ import spotipy
+-import time
+-from spotipy.oauth2 import SpotifyOAuth
+-
+-app = Flask(__name__)
+-
+-# secret key used to sign the session cookie
+-app.secret_key = 'Dmd2nI8H34fds'
+-app.config['SESSION_COOKIE_NAME'] = 'spotify-login-session'
+-TOKEN_INFO = "token_info"
+-
+-
+-@app.route('/')
+-def login():
+-    sp_oauth = create_spotify_oauth()
+-    auth_url = sp_oauth.get_authorize_url()
+-    return redirect(auth_url)
+-
+-
+-@app.route('/redirect')
+-def redirectPage():
+-    sp_oauth = create_spotify_oauth()
+-    session.clear()
+-    code = request.args.get('code')  # use the request object to get an access code
+-    token_info = sp_oauth.get_access_token(code)  # use the code to retrieve an access token
+-    session[TOKEN_INFO] = token_info  # save the token info into the session
+-    return redirect(url_for('get_tracks', _external=True))
+-
++import os
+ 
+-@app.route('/getTracks')
+-def get_tracks():
+-    # todo video @6:30
+-    try:
+-        token_info = get_token()
+-    except:
+-        print("user not logged in")
+-        return redirect(url_for("login", _external=False))  # get redirected to the login page if no token data found
++# The Spotify OAuth object contains the access token and refresh
++# token required to make authenticated requests to the Spotify Web API
++sp_oauth = oauth2.SpotifyOAuth(client_id='2aef90bcdc834c17b59ff1358099865a',
++                               client_secret='2ab27bed30c441aab581dbac673736f2',
++                               redirect_uri='http://localhost:8080',
++                               scope='user-library-read',
++                               )
+ 
+-    # Now, create a spotify api client instance.
+-    # It can be used to authenticate a user with Spotify, and to make requests to the API on behalf of that user.
+-    sp = spotipy.Spotify(auth=token_info['access_token'])
+-    return str(sp.current_user_saved_tracks(limit=50, offset=0)['items'][0])
++track_names = []
+ 
++# The decorator maps the specified function to the root URL path
++@route('/')
++def get_access_token():
++    token_info = sp_oauth.get_access_token()
++    access_token = ""
+ 
+-def get_token():
+-    token_info = session.get(TOKEN_INFO, None)  # get the value from the dictionary
+-    if not token_info:
+-        raise Exception("The token does not exist")
++    global track_names
+ 
+-    # check if token is expired
+-    curr_time = int(time.time())
+-    if token_info['expires_at'] - curr_time < 60:
+-        sp_oauth = create_spotify_oauth()
+-        token_info = sp_oauth.refresh_access_token(token_info['refresh_token'])
++    if token_info:
++        print("Found access token!")
++        access_token = token_info['access_token']
++    else:
++        code = sp_oauth.parse_response_code(request.url)
++        if code:
++            print("Found Spotify auth code in Request URL! Trying to get valid access token...")
++            token_info = sp_oauth.get_access_token(code)
++            access_token = token_info['access_token']
+ 
+-    return token_info
++    if access_token:
++        print("Access token available! Trying to get user information...")
++        sp = spotipy.Spotify(access_token)  # create a Spotify object authenticated with our acess token
++        saved_tracks = sp.current_user_saved_tracks(limit=50)
++        track_names = [track['track']['name'] for track in saved_tracks['items']]
++        print(track_names)
++        return '''
++        <html>
++            <head>
++                <title>MelodyMatch</title>
++            </head>
++            <body>
++                <h1>Got it! We've collected the data we need</h1>
++                <p>You may now close this tab and hit ctrl+c to stop the server!</p>
++            </body>
++        </html>
++        '''
+ 
++    else:
++        return "<a href='" + sp_oauth.get_authorize_url() + "'>Login to Spotify</a>"
+ 
+-def create_spotify_oauth():
+-    return SpotifyOAuth(
+-            client_id="2aef90bcdc834c17b59ff1358099865a",
+-            client_secret="2ab27bed30c441aab581dbac673736f2",
+-            redirect_uri=url_for('redirectPage', _external=True),
+-            scope="user-library-read")
+ 
+-
+-if __name__ == '__main__':
+-    app.run()
++run(host='')  # this starts the server
+Index: ../../Desktop/csc111-group-project/main.py
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+># This is a sample Python script.\n\n# Press ⌃R to execute it or replace it with your code.\n# Press Double ⇧ to search everywhere for classes, files, tool windows, actions, and settings.\n\n\ndef print_hi(name):\n    # Use a breakpoint in the code line below to debug your script.\n    print(f'Hi, {name}')  # Press ⌘F8 to toggle the breakpoint.\n\n\n# pycharm github check\n\ndef sum_two(num1, num2):\n    return print(num1 + num2)\n\n# Press the green button in the gutter to run the script.\nif __name__ == '__main__':\n    print_hi('PyCharm')\n    print('Hell000o0')\n    print('Hell000o0')\n    print('Hell0oppoapokpko00o0')\n# See PyCharm help at https://www.jetbrains.com/help/pycharm/\n\n# mel lkmmkllmlklmlkaHELP\n\n# lakdmsalkdmsakdmlasmdsadkmldsamkldaldmasl HERE\n
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/../../Desktop/csc111-group-project/main.py b/../../Desktop/csc111-group-project/main.py
+--- a/../../Desktop/csc111-group-project/main.py	(revision 1931b8f2e835d3a44138043e9f708eee5840b339)
++++ b/../../Desktop/csc111-group-project/main.py	(date 1680051106928)
+@@ -1,27 +1,41 @@
+-# This is a sample Python script.
++"""
++CSC111 Winter 2023 Project:
++MelodyMatch: Tailored Music Recommendations Derived From Your Spotify Habits
+ 
+-# Press ⌃R to execute it or replace it with your code.
+-# Press Double ⇧ to search everywhere for classes, files, tool windows, actions, and settings.
++This Python module is the main module where the program is run.
+ 
++Contributors: Manaljav Munkhbayar, Kevin Hu, Stanley Pang, Jaeyong Lee.
++"""
++track_names = []
+ 
+-def print_hi(name):
+-    # Use a breakpoint in the code line below to debug your script.
+-    print(f'Hi, {name}')  # Press ⌘F8 to toggle the breakpoint.
+ 
++def load_spotify_data():
++    """Start the bottle server to log in with Spotify credentials on browser
++    Retrieve and save all necessery information to appropriate variables.
++    """
++    import user_data
++    global track_names
+ 
+-# pycharm github check
++    track_names = user_data.track_names
++    # todo call a method like construct_user_profile() here or something that makes a User object for the code to use
+ 
+-def sum_two(num1, num2):
+-    return print(num1 + num2)
++def get_track_names():
++    return track_names
+ 
+-# Press the green button in the gutter to run the script.
++
+ if __name__ == '__main__':
+-    print_hi('PyCharm')
+-    print('Hell000o0')
+-    print('Hell000o0')
+-    print('Hell0oppoapokpko00o0')
+-# See PyCharm help at https://www.jetbrains.com/help/pycharm/
++    import doctest
++    import python_ta
++    import python_ta.contracts
+ 
+-# mel lkmmkllmlklmlkaHELP
++    load_spotify_data()
++    doctest.testmod(verbose=True)
+ 
+-# lakdmsalkdmsakdmlasmdsadkmldsamkldaldmasl HERE
++    python_ta.contracts.DEBUG_CONTRACTS = False
++    python_ta.contracts.check_all_contracts()
++    python_ta.check_all(config={
++        'extra-imports': ['python_ta.contracts', 'data_computations', 'recommendation_system'],
++        'allowed-io': [],
++        'max-line-length': 100,
++        'disable': [],
++    })
+Index: ../../Desktop/csc111-group-project/.idea/workspace.xml
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+><?xml version=\"1.0\" encoding=\"UTF-8\"?>\n<project version=\"4\">\n  <component name=\"AutoImportSettings\">\n    <option name=\"autoReloadType\" value=\"SELECTIVE\" />\n  </component>\n  <component name=\"ChangeListManager\">\n    <list default=\"true\" id=\"5de567c6-abd9-407d-9e52-3a252da363d3\" name=\"Changes\" comment=\"modified docstring\">\n      <change beforePath=\"$PROJECT_DIR$/.idea/workspace.xml\" beforeDir=\"false\" afterPath=\"$PROJECT_DIR$/.idea/workspace.xml\" afterDir=\"false\" />\n      <change beforePath=\"$PROJECT_DIR$/decision_tree.py\" beforeDir=\"false\" afterPath=\"$PROJECT_DIR$/decision_tree.py\" afterDir=\"false\" />\n      <change beforePath=\"$PROJECT_DIR$/user_data.py\" beforeDir=\"false\" afterPath=\"$PROJECT_DIR$/user_data.py\" afterDir=\"false\" />\n    </list>\n    <option name=\"SHOW_DIALOG\" value=\"false\" />\n    <option name=\"HIGHLIGHT_CONFLICTS\" value=\"true\" />\n    <option name=\"HIGHLIGHT_NON_ACTIVE_CHANGELIST\" value=\"false\" />\n    <option name=\"LAST_RESOLUTION\" value=\"IGNORE\" />\n  </component>\n  <component name=\"Git.Settings\">\n    <option name=\"RECENT_GIT_ROOT_PATH\" value=\"$PROJECT_DIR$\" />\n  </component>\n  <component name=\"GitHubPullRequestSearchHistory\">{\n  &quot;lastFilter&quot;: {\n    &quot;state&quot;: &quot;OPEN&quot;\n  }\n}</component>\n  <component name=\"GithubPullRequestsUISettings\">\n    <option name=\"selectedUrlAndAccountId\">\n      <UrlAndAccount>\n        <option name=\"accountId\" value=\"cb4a23fe-00d0-4a85-9a79-33095b9cf51d\" />\n        <option name=\"url\" value=\"https://github.com/Manal-jpg/csc111-group-project.git\" />\n      </UrlAndAccount>\n    </option>\n  </component>\n  <component name=\"MarkdownSettingsMigration\">\n    <option name=\"stateVersion\" value=\"1\" />\n  </component>\n  <component name=\"ProjectId\" id=\"2Nbv9CRghVwq4y9rxXxBpRQClJk\" />\n  <component name=\"ProjectLevelVcsManager\" settingsEditedManually=\"true\" />\n  <component name=\"ProjectViewState\">\n    <option name=\"hideEmptyMiddlePackages\" value=\"true\" />\n    <option name=\"showLibraryContents\" value=\"true\" />\n  </component>\n  <component name=\"PropertiesComponent\">{\n  &quot;keyToString&quot;: {\n    &quot;RunOnceActivity.OpenProjectViewOnStart&quot;: &quot;true&quot;,\n    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,\n    &quot;settings.editor.selected.configurable&quot;: &quot;com.jetbrains.python.configuration.PyActiveSdkModuleConfigurable&quot;\n  }\n}</component>\n  <component name=\"RunManager\" selected=\"Python.user_data\">\n    <configuration name=\"main\" type=\"PythonConfigurationType\" factoryName=\"Python\" nameIsGenerated=\"true\">\n      <module name=\"csc111-group-project\" />\n      <option name=\"INTERPRETER_OPTIONS\" value=\"\" />\n      <option name=\"PARENT_ENVS\" value=\"true\" />\n      <envs>\n        <env name=\"PYTHONUNBUFFERED\" value=\"1\" />\n      </envs>\n      <option name=\"SDK_HOME\" value=\"\" />\n      <option name=\"WORKING_DIRECTORY\" value=\"$PROJECT_DIR$\" />\n      <option name=\"IS_MODULE_SDK\" value=\"true\" />\n      <option name=\"ADD_CONTENT_ROOTS\" value=\"true\" />\n      <option name=\"ADD_SOURCE_ROOTS\" value=\"true\" />\n      <option name=\"SCRIPT_NAME\" value=\"$PROJECT_DIR$/main.py\" />\n      <option name=\"PARAMETERS\" value=\"\" />\n      <option name=\"SHOW_COMMAND_LINE\" value=\"false\" />\n      <option name=\"EMULATE_TERMINAL\" value=\"false\" />\n      <option name=\"MODULE_MODE\" value=\"false\" />\n      <option name=\"REDIRECT_INPUT\" value=\"false\" />\n      <option name=\"INPUT_FILE\" value=\"\" />\n      <method v=\"2\" />\n    </configuration>\n    <configuration name=\"user_data\" type=\"PythonConfigurationType\" factoryName=\"Python\" temporary=\"true\" nameIsGenerated=\"true\">\n      <module name=\"csc111-group-project\" />\n      <option name=\"INTERPRETER_OPTIONS\" value=\"\" />\n      <option name=\"PARENT_ENVS\" value=\"true\" />\n      <option name=\"SDK_HOME\" value=\"\" />\n      <option name=\"WORKING_DIRECTORY\" value=\"$PROJECT_DIR$\" />\n      <option name=\"IS_MODULE_SDK\" value=\"true\" />\n      <option name=\"ADD_CONTENT_ROOTS\" value=\"true\" />\n      <option name=\"ADD_SOURCE_ROOTS\" value=\"true\" />\n      <option name=\"SCRIPT_NAME\" value=\"$PROJECT_DIR$/user_data.py\" />\n      <option name=\"PARAMETERS\" value=\"\" />\n      <option name=\"SHOW_COMMAND_LINE\" value=\"true\" />\n      <option name=\"EMULATE_TERMINAL\" value=\"false\" />\n      <option name=\"MODULE_MODE\" value=\"false\" />\n      <option name=\"REDIRECT_INPUT\" value=\"false\" />\n      <option name=\"INPUT_FILE\" value=\"\" />\n      <method v=\"2\" />\n    </configuration>\n    <recent_temporary>\n      <list>\n        <item itemvalue=\"Python.user_data\" />\n      </list>\n    </recent_temporary>\n  </component>\n  <component name=\"SpellCheckerSettings\" RuntimeDictionaries=\"0\" Folders=\"0\" CustomDictionaries=\"0\" DefaultDictionary=\"application-level\" UseSingleDictionary=\"true\" transferred=\"true\" />\n  <component name=\"TaskManager\">\n    <task active=\"true\" id=\"Default\" summary=\"Default task\">\n      <changelist id=\"5de567c6-abd9-407d-9e52-3a252da363d3\" name=\"Changes\" comment=\"Added print statement\" />\n      <created>1679945443319</created>\n      <option name=\"number\" value=\"Default\" />\n      <option name=\"presentableId\" value=\"Default\" />\n      <updated>1679945443319</updated>\n    </task>\n    <task id=\"LOCAL-00001\" summary=\"Added print statement\">\n      <created>1679946594846</created>\n      <option name=\"number\" value=\"00001\" />\n      <option name=\"presentableId\" value=\"LOCAL-00001\" />\n      <option name=\"project\" value=\"LOCAL\" />\n      <updated>1679946594846</updated>\n    </task>\n    <task id=\"LOCAL-00002\" summary=\"Added print statement\">\n      <created>1679946692011</created>\n      <option name=\"number\" value=\"00002\" />\n      <option name=\"presentableId\" value=\"LOCAL-00002\" />\n      <option name=\"project\" value=\"LOCAL\" />\n      <updated>1679946692011</updated>\n    </task>\n    <task id=\"LOCAL-00003\" summary=\"Added print statement\">\n      <created>1679946925936</created>\n      <option name=\"number\" value=\"00003\" />\n      <option name=\"presentableId\" value=\"LOCAL-00003\" />\n      <option name=\"project\" value=\"LOCAL\" />\n      <updated>1679946925936</updated>\n    </task>\n    <task id=\"LOCAL-00004\" summary=\"Added print statement\">\n      <created>1679947052707</created>\n      <option name=\"number\" value=\"00004\" />\n      <option name=\"presentableId\" value=\"LOCAL-00004\" />\n      <option name=\"project\" value=\"LOCAL\" />\n      <updated>1679947052707</updated>\n    </task>\n    <task id=\"LOCAL-00005\" summary=\"user_data changes\">\n      <created>1679950453129</created>\n      <option name=\"number\" value=\"00005\" />\n      <option name=\"presentableId\" value=\"LOCAL-00005\" />\n      <option name=\"project\" value=\"LOCAL\" />\n      <updated>1679950453129</updated>\n    </task>\n    <task id=\"LOCAL-00006\" summary=\"Added some instance attributes and representation invariants to the Song class\">\n      <created>1679952689052</created>\n      <option name=\"number\" value=\"00006\" />\n      <option name=\"presentableId\" value=\"LOCAL-00006\" />\n      <option name=\"project\" value=\"LOCAL\" />\n      <updated>1679952689052</updated>\n    </task>\n    <option name=\"localTasksCounter\" value=\"7\" />\n    <servers />\n  </component>\n  <component name=\"Vcs.Log.Tabs.Properties\">\n    <option name=\"TAB_STATES\">\n      <map>\n        <entry key=\"MAIN\">\n          <value>\n            <State>\n              <option name=\"CUSTOM_BOOLEAN_PROPERTIES\">\n                <map>\n                  <entry key=\"Show.Git.Branches\" value=\"true\" />\n                </map>\n              </option>\n              <option name=\"FILTERS\">\n                <map>\n                  <entry key=\"branch\">\n                    <value>\n                      <list>\n                        <option value=\"main\" />\n                      </list>\n                    </value>\n                  </entry>\n                </map>\n              </option>\n            </State>\n          </value>\n        </entry>\n      </map>\n    </option>\n  </component>\n  <component name=\"VcsManagerConfiguration\">\n    <MESSAGE value=\"Added print statement\" />\n    <MESSAGE value=\"user_data changes\" />\n    <MESSAGE value=\"Added some instance attributes and representation invariants to the Song class\" />\n    <option name=\"LAST_COMMIT_MESSAGE\" value=\"Added some instance attributes and representation invariants to the Song class\" />\n  </component>\n  <component name=\"XDebuggerManager\">\n    <breakpoint-manager>\n      <breakpoints>\n        <line-breakpoint enabled=\"true\" suspend=\"THREAD\" type=\"python-line\">\n          <url>file://$PROJECT_DIR$/main.py</url>\n          <line>8</line>\n          <option name=\"timeStamp\" value=\"1\" />\n        </line-breakpoint>\n      </breakpoints>\n    </breakpoint-manager>\n  </component>\n</project>
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/../../Desktop/csc111-group-project/.idea/workspace.xml b/../../Desktop/csc111-group-project/.idea/workspace.xml
+--- a/../../Desktop/csc111-group-project/.idea/workspace.xml	(revision 1931b8f2e835d3a44138043e9f708eee5840b339)
++++ b/../../Desktop/csc111-group-project/.idea/workspace.xml	(date 1680051163904)
+@@ -4,9 +4,10 @@
+     <option name="autoReloadType" value="SELECTIVE" />
+   </component>
+   <component name="ChangeListManager">
+-    <list default="true" id="5de567c6-abd9-407d-9e52-3a252da363d3" name="Changes" comment="modified docstring">
++    <list default="true" id="7248fb5f-2c82-4bc0-a2cd-4e8a378348b9" name="Changes" comment="sum_two function added">
+       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+       <change beforePath="$PROJECT_DIR$/decision_tree.py" beforeDir="false" afterPath="$PROJECT_DIR$/decision_tree.py" afterDir="false" />
++      <change beforePath="$PROJECT_DIR$/main.py" beforeDir="false" afterPath="$PROJECT_DIR$/main.py" afterDir="false" />
+       <change beforePath="$PROJECT_DIR$/user_data.py" beforeDir="false" afterPath="$PROJECT_DIR$/user_data.py" afterDir="false" />
+     </list>
+     <option name="SHOW_DIALOG" value="false" />
+@@ -14,6 +15,13 @@
+     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
+     <option name="LAST_RESOLUTION" value="IGNORE" />
+   </component>
++  <component name="FileTemplateManagerImpl">
++    <option name="RECENT_TEMPLATES">
++      <list>
++        <option value="Python Script" />
++      </list>
++    </option>
++  </component>
+   <component name="Git.Settings">
+     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
+   </component>
+@@ -25,7 +33,7 @@
+   <component name="GithubPullRequestsUISettings">
+     <option name="selectedUrlAndAccountId">
+       <UrlAndAccount>
+-        <option name="accountId" value="cb4a23fe-00d0-4a85-9a79-33095b9cf51d" />
++        <option name="accountId" value="c4746029-3dde-49bc-9260-824331293f0a" />
+         <option name="url" value="https://github.com/Manal-jpg/csc111-group-project.git" />
+       </UrlAndAccount>
+     </option>
+@@ -33,7 +41,7 @@
+   <component name="MarkdownSettingsMigration">
+     <option name="stateVersion" value="1" />
+   </component>
+-  <component name="ProjectId" id="2Nbv9CRghVwq4y9rxXxBpRQClJk" />
++  <component name="ProjectId" id="2Nbueqwe4qxW3IeqmRvWTXLN0LU" />
+   <component name="ProjectLevelVcsManager" settingsEditedManually="true" />
+   <component name="ProjectViewState">
+     <option name="hideEmptyMiddlePackages" value="true" />
+@@ -43,11 +51,11 @@
+   &quot;keyToString&quot;: {
+     &quot;RunOnceActivity.OpenProjectViewOnStart&quot;: &quot;true&quot;,
+     &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
+-    &quot;settings.editor.selected.configurable&quot;: &quot;com.jetbrains.python.configuration.PyActiveSdkModuleConfigurable&quot;
++    &quot;settings.editor.selected.configurable&quot;: &quot;reference.settings.ide.settings.new.ui&quot;
+   }
+ }</component>
+-  <component name="RunManager" selected="Python.user_data">
+-    <configuration name="main" type="PythonConfigurationType" factoryName="Python" nameIsGenerated="true">
++  <component name="RunManager" selected="Python.test">
++    <configuration name="main" type="PythonConfigurationType" factoryName="Python" temporary="true" nameIsGenerated="true">
+       <module name="csc111-group-project" />
+       <option name="INTERPRETER_OPTIONS" value="" />
+       <option name="PARENT_ENVS" value="true" />
+@@ -68,10 +76,31 @@
+       <option name="INPUT_FILE" value="" />
+       <method v="2" />
+     </configuration>
++    <configuration name="test" type="PythonConfigurationType" factoryName="Python" temporary="true" nameIsGenerated="true">
++      <module name="csc111-group-project" />
++      <option name="INTERPRETER_OPTIONS" value="" />
++      <option name="PARENT_ENVS" value="true" />
++      <option name="SDK_HOME" value="" />
++      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$" />
++      <option name="IS_MODULE_SDK" value="true" />
++      <option name="ADD_CONTENT_ROOTS" value="true" />
++      <option name="ADD_SOURCE_ROOTS" value="true" />
++      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/test.py" />
++      <option name="PARAMETERS" value="" />
++      <option name="SHOW_COMMAND_LINE" value="false" />
++      <option name="EMULATE_TERMINAL" value="false" />
++      <option name="MODULE_MODE" value="false" />
++      <option name="REDIRECT_INPUT" value="false" />
++      <option name="INPUT_FILE" value="" />
++      <method v="2" />
++    </configuration>
+     <configuration name="user_data" type="PythonConfigurationType" factoryName="Python" temporary="true" nameIsGenerated="true">
+       <module name="csc111-group-project" />
+       <option name="INTERPRETER_OPTIONS" value="" />
+       <option name="PARENT_ENVS" value="true" />
++      <envs>
++        <env name="PYTHONUNBUFFERED" value="1" />
++      </envs>
+       <option name="SDK_HOME" value="" />
+       <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$" />
+       <option name="IS_MODULE_SDK" value="true" />
+@@ -79,7 +108,46 @@
+       <option name="ADD_SOURCE_ROOTS" value="true" />
+       <option name="SCRIPT_NAME" value="$PROJECT_DIR$/user_data.py" />
+       <option name="PARAMETERS" value="" />
+-      <option name="SHOW_COMMAND_LINE" value="true" />
++      <option name="SHOW_COMMAND_LINE" value="false" />
++      <option name="EMULATE_TERMINAL" value="false" />
++      <option name="MODULE_MODE" value="false" />
++      <option name="REDIRECT_INPUT" value="false" />
++      <option name="INPUT_FILE" value="" />
++      <method v="2" />
++    </configuration>
++    <configuration name="user_data2" type="PythonConfigurationType" factoryName="Python" temporary="true" nameIsGenerated="true">
++      <module name="csc111-group-project" />
++      <option name="INTERPRETER_OPTIONS" value="" />
++      <option name="PARENT_ENVS" value="true" />
++      <envs>
++        <env name="PYTHONUNBUFFERED" value="1" />
++      </envs>
++      <option name="SDK_HOME" value="" />
++      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$" />
++      <option name="IS_MODULE_SDK" value="true" />
++      <option name="ADD_CONTENT_ROOTS" value="true" />
++      <option name="ADD_SOURCE_ROOTS" value="true" />
++      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/user_data2.py" />
++      <option name="PARAMETERS" value="" />
++      <option name="SHOW_COMMAND_LINE" value="false" />
++      <option name="EMULATE_TERMINAL" value="false" />
++      <option name="MODULE_MODE" value="false" />
++      <option name="REDIRECT_INPUT" value="false" />
++      <option name="INPUT_FILE" value="" />
++      <method v="2" />
++    </configuration>
++    <configuration name="user_data3" type="PythonConfigurationType" factoryName="Python" temporary="true" nameIsGenerated="true">
++      <module name="csc111-group-project" />
++      <option name="INTERPRETER_OPTIONS" value="" />
++      <option name="PARENT_ENVS" value="true" />
++      <option name="SDK_HOME" value="" />
++      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$" />
++      <option name="IS_MODULE_SDK" value="true" />
++      <option name="ADD_CONTENT_ROOTS" value="true" />
++      <option name="ADD_SOURCE_ROOTS" value="true" />
++      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/user_data3.py" />
++      <option name="PARAMETERS" value="" />
++      <option name="SHOW_COMMAND_LINE" value="false" />
+       <option name="EMULATE_TERMINAL" value="false" />
+       <option name="MODULE_MODE" value="false" />
+       <option name="REDIRECT_INPUT" value="false" />
+@@ -88,62 +156,31 @@
+     </configuration>
+     <recent_temporary>
+       <list>
+-        <item itemvalue="Python.user_data" />
++        <item itemvalue="Python.test" />
++        <item itemvalue="Python.user_data3" />
++        <item itemvalue="Python.user_data3" />
++        <item itemvalue="Python.test" />
++        <item itemvalue="Python.user_data2" />
+       </list>
+     </recent_temporary>
+   </component>
+   <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="application-level" UseSingleDictionary="true" transferred="true" />
+   <component name="TaskManager">
+     <task active="true" id="Default" summary="Default task">
+-      <changelist id="5de567c6-abd9-407d-9e52-3a252da363d3" name="Changes" comment="Added print statement" />
+-      <created>1679945443319</created>
++      <changelist id="7248fb5f-2c82-4bc0-a2cd-4e8a378348b9" name="Changes" comment="" />
++      <created>1679945200753</created>
+       <option name="number" value="Default" />
+       <option name="presentableId" value="Default" />
+-      <updated>1679945443319</updated>
++      <updated>1679945200753</updated>
+     </task>
+-    <task id="LOCAL-00001" summary="Added print statement">
+-      <created>1679946594846</created>
++    <task id="LOCAL-00001" summary="sum_two function added">
++      <created>1679947425320</created>
+       <option name="number" value="00001" />
+       <option name="presentableId" value="LOCAL-00001" />
+       <option name="project" value="LOCAL" />
+-      <updated>1679946594846</updated>
+-    </task>
+-    <task id="LOCAL-00002" summary="Added print statement">
+-      <created>1679946692011</created>
+-      <option name="number" value="00002" />
+-      <option name="presentableId" value="LOCAL-00002" />
+-      <option name="project" value="LOCAL" />
+-      <updated>1679946692011</updated>
+-    </task>
+-    <task id="LOCAL-00003" summary="Added print statement">
+-      <created>1679946925936</created>
+-      <option name="number" value="00003" />
+-      <option name="presentableId" value="LOCAL-00003" />
+-      <option name="project" value="LOCAL" />
+-      <updated>1679946925936</updated>
+-    </task>
+-    <task id="LOCAL-00004" summary="Added print statement">
+-      <created>1679947052707</created>
+-      <option name="number" value="00004" />
+-      <option name="presentableId" value="LOCAL-00004" />
+-      <option name="project" value="LOCAL" />
+-      <updated>1679947052707</updated>
++      <updated>1679947425321</updated>
+     </task>
+-    <task id="LOCAL-00005" summary="user_data changes">
+-      <created>1679950453129</created>
+-      <option name="number" value="00005" />
+-      <option name="presentableId" value="LOCAL-00005" />
+-      <option name="project" value="LOCAL" />
+-      <updated>1679950453129</updated>
+-    </task>
+-    <task id="LOCAL-00006" summary="Added some instance attributes and representation invariants to the Song class">
+-      <created>1679952689052</created>
+-      <option name="number" value="00006" />
+-      <option name="presentableId" value="LOCAL-00006" />
+-      <option name="project" value="LOCAL" />
+-      <updated>1679952689052</updated>
+-    </task>
+-    <option name="localTasksCounter" value="7" />
++    <option name="localTasksCounter" value="2" />
+     <servers />
+   </component>
+   <component name="Vcs.Log.Tabs.Properties">
+@@ -152,11 +189,6 @@
+         <entry key="MAIN">
+           <value>
+             <State>
+-              <option name="CUSTOM_BOOLEAN_PROPERTIES">
+-                <map>
+-                  <entry key="Show.Git.Branches" value="true" />
+-                </map>
+-              </option>
+               <option name="FILTERS">
+                 <map>
+                   <entry key="branch">
+@@ -175,20 +207,7 @@
+     </option>
+   </component>
+   <component name="VcsManagerConfiguration">
+-    <MESSAGE value="Added print statement" />
+-    <MESSAGE value="user_data changes" />
+-    <MESSAGE value="Added some instance attributes and representation invariants to the Song class" />
+-    <option name="LAST_COMMIT_MESSAGE" value="Added some instance attributes and representation invariants to the Song class" />
+-  </component>
+-  <component name="XDebuggerManager">
+-    <breakpoint-manager>
+-      <breakpoints>
+-        <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
+-          <url>file://$PROJECT_DIR$/main.py</url>
+-          <line>8</line>
+-          <option name="timeStamp" value="1" />
+-        </line-breakpoint>
+-      </breakpoints>
+-    </breakpoint-manager>
++    <MESSAGE value="sum_two function added" />
++    <option name="LAST_COMMIT_MESSAGE" value="sum_two function added" />
+   </component>
+ </project>
+\ No newline at end of file
