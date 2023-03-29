@@ -25,15 +25,6 @@ class Song:
             Genre of the track.
         - artist:
             Name of the artist that created the song.
-        # - year:
-        #     Song's year of release.
-        # - duration:
-        #     Duration of the track in milliseconds.
-        # - explicit:
-        #     Boolean that states whether the song contains swear words or not.
-        # - popularity:
-        #     Popularity of the song. The higher the value, the more popular the song is. 0 represents the lowest
-        #     popularity while 100 represnets the highest popularity.
         - danceability:
             Describes how suitable a track is for dancing based on a combination of musical elements including tempo,
             rhythm stability, beat strength, and overall regularity. A value of 0.0 is least danceable and 1.0 is most
@@ -70,15 +61,8 @@ class Song:
         - tempo:
             The overall estimated tempo of a track in beats per minute (BPM). In musical terminology, tempo is the
             speed or pace of a given piece and derives directly from the average beat duration.
-        # - key:
-        #     The key the track is in. Integers map to pitches using standard Pitch Class notation. E.g. 0 = C, 1 = C♯/D♭,
-        #     2 = D, and so on. If no key was detected, the value is -1.
-        # - mode:
-        #     Mode indicates the modality (major or minor) of a track, the type of scale from which its melodic content
-        #     is derived. Major is represented by 1 and minor is 0.
 
         Representation Invariants:
-        # - 0.0 <= self.popularity <= 100.0
         - 0.0 <= self.danceability <= 1.0
         - 0.0 <= self.energy <= 1.0
         - -60.0 <= self.loudness <= 10.0
@@ -88,15 +72,10 @@ class Song:
         - 0.0 <= self.valence <= 1.0
         - 0.0 <= self.liveness <= 1.0
         - self.tempo >= 0
-        # - self.mode == 1 or self.mode == 0
         """
     name: str
-    # genre: str
-    # artist: str
-    # year: int
-    # duration: int
-    # explicit: bool
-    # popularity: int
+    genre: str
+    artist: str
     danceability: float
     energy: float
     loudness: float
@@ -106,8 +85,6 @@ class Song:
     valence: float
     liveness: float
     tempo: float
-    # key: int
-    # mode: int
 
 
 class DecisionTree:
