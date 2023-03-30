@@ -6,6 +6,7 @@ This Python module contains ...
 
 Contributors: Manaljav Munkhbayar, Kevin Hu, Stanley Pang, Jaeyong Lee.
 """
+
 import main
 from math import ceil, floor
 from tkinter import *
@@ -42,23 +43,29 @@ desc = Label(root,
                   "MelodyMatch is a personalized music recommendation app that analyzes your spotify \nlistening "
                   "history to suggest new songs that match your individual taste. By connecting \nyour Spotify "
                   "account, MelodyMatch will access your listening history. MelodyMatch then \nanalyzes your data to "
-                  "suggest new songs and artists that are tailored specifically to your\n taste. MelodyMatch provides "
+                  "suggest new songs that are tailored to your taste. \n MelodyMatch provides"
                   "an intuitive user experience, with a clean interface that is \neasy to navigate. Whether you're "
                   "looking to add new tracks to your favorite playlist or \nwant to explore new genres, MelodyMatch is "
                   "the perfect tool for discovering your next \nfavorite song.\n\n",
              bg='#0b2437',
              fg='White',
-             font=('Arial', 14))
+             font=('Verdana', 18))
 desc.pack()
 
+
+def create_label():
+    new_label = Label(root, text="New label", bg='#0b2437', fg='White')
+    new_label.pack()
 
 # Button
 def button_event() -> None:
     """The event that happens when the following button is pressed"""
     main.run()
+    print('test')
+    create_label()
 
 
-button = Button(root, text='Start', font=('Arial', 10))
+button = Button(root, text='Start', font=('Verdana', 12), command=(button_event))
 button.pack()
 button.config(width=10, height=2)
 
