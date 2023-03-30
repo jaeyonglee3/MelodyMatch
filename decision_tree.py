@@ -161,6 +161,17 @@ class DecisionTree:
         """Add a subtree to this game tree."""
         self._subtrees.append(subtree)
 
+    def insert_songs(self, list_songs: list[Song]) -> None:
+        """Insert a list of songs into the decision tree so that each song gets sorted into a specific song set.
+        >>> tree = generate_decision_tree([0], (0,0), 1)
+        >>> song1 = Song('I hate MAT137', 0, 0, -60, 0, 0, 0, 0, 0)
+        >>> song2 = Song('I hate MAT223', 0.5, 0.3, -8, 1.0, 0.9, 0.4, 0.3, 0.2)
+        >>> song3 = Song('I hate IMM250', 0.5, 0.3, -8, 1.0, 0.9, 0.4, 0.3, 0.2)
+        >>> tree.insert_songs([song1, song2, song3])
+        """
+        for song in list_songs:
+            self.insert_song(song)
+
     def insert_song(self, song: Song, depth: int = 1) -> None:
         """Insert a song into the decision tree by recursing through the tree until it gets added to a specific song
         set.
