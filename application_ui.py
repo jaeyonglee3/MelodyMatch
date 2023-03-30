@@ -35,7 +35,7 @@ root['bg'] = '#0b2437'
 # Logo
 full_logo = ImageTk.PhotoImage(Image.open('gui/logo.png'))
 full_logo_label = Label(root, image=full_logo, borderwidth=0)
-full_logo_label.pack(pady=window_height * 0.08)
+full_logo_label.pack(pady=window_height * 0.05)
 
 # Description
 desc = Label(root,
@@ -46,7 +46,7 @@ desc = Label(root,
                   "suggest new songs that are tailored to your taste. \n MelodyMatch provides"
                   "an intuitive user experience, with a clean interface that is \neasy to navigate. Whether you're "
                   "looking to add new tracks to your favorite playlist or \nwant to explore new genres, MelodyMatch is "
-                  "the perfect tool for discovering your next \nfavorite song.\n\n",
+                  "the perfect tool for discovering your next \nfavorite song.\n",
              bg='#0b2437',
              fg='White',
              font=('Verdana', 18))
@@ -56,6 +56,7 @@ desc.pack()
 def create_label():
     new_label = Label(root, text="New label", bg='#0b2437', fg='White')
     new_label.pack()
+
 
 # Button
 def button_event() -> None:
