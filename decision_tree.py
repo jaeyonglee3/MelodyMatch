@@ -176,7 +176,7 @@ class DecisionTree:
         """Insert a song into the decision tree by recursing through the tree until it gets added to a specific song
         set.
 
-        >>> tree = generate_decision_tree((0,0), 1)
+        >>> tree = generate_decision_tree([0], (0,0), 1)
         >>> song1 = Song('I hate MAT137', 0, 0, -60, 0, 0, 0, 0, 0)
         >>> tree.insert_song(song1, 1)
         >>> song2 = Song('I hate MAT223', 0.5, 0.3, -8, 1.0, 0.9, 0.4, 0.3, 0.2)
@@ -259,6 +259,15 @@ def generate_decision_tree(indexes_so_far: list, value: tuple[int, set[Song]] | 
 
     >>> tree = generate_decision_tree([0], (0,0), 1, 0)
     >>> get_song_sets(tree)
+
+    >>> read_and_write_csv("/Users/jaeyonglee/Desktop/csc111-group-project/data/songs_normalize.csv")
+    >>> songs = songs_final_csv_to_songs()
+    >>> songs = list(songs)
+    >>> tree = generate_decision_tree([0], (0,0), 1, 0)
+    >>> tree.insert_songs(songs)
+    >>> list_of_leafs = get_song_sets(tree)
+    >>> songs = [tuple[1] for tuple in list_of_leafs if tuple[1] != set()]
+    >>> sum([len(set) for set in songs])
     """
     decision_tree = DecisionTree(value=value, subtrees=[])
 
