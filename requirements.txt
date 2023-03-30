@@ -1,0 +1,11 @@
+# CSC111 Winter 2023 Project:
+# MelodyMatch: Tailored Music Recommendations Derived From Your Spotify Habits
+
+# Testing and code checking
+pytest
+python-ta~=2.4.1
+
+# Others
+spotipy>=2.22.1
+bottle>=0.12.25
+Pillow>=9.4.0

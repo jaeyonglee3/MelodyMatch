@@ -71,8 +71,6 @@ class Song:
         - 0.0 <= self.liveness <= 1.0
         """
     name: str
-    genre: str
-    artist: str
     danceability: float
     energy: float
     loudness: float
@@ -81,6 +79,8 @@ class Song:
     instrumentalness: float
     valence: float
     liveness: float
+    genre: str
+    artist: str
 
     def __init__(self, name: str, danceability: float, energy: float, loudness: float, speechiness: float,
                  acousticness: float, instrumentalness: float, valence: float, liveness: float,
@@ -159,66 +159,6 @@ class DecisionTree:
     def add_subtree(self, subtree: DecisionTree) -> None:
         """Add a subtree to this game tree."""
         self._subtrees.append(subtree)
-
-    # def find_songs(self, user: User, depth: int = 1) -> set[Song]:
-    #     """Return a set of songs tailored to the user's preference values
-    #
-    #     """
-        # score = 0
-        #
-        # if depth == 10:
-        #     return self.value
-        # else:
-        #     if depth == 1:
-        #         score = song
-        #
-        #     elif depth == 2:
-        #         score = song
-        #
-        #     elif depth == 3:
-        #         score = song
-        #
-        #         if -60 <= score <= -37:
-        #             self._subtrees[0].insert_song(song, depth + 1)
-        #         elif -36 <= score <= -13:
-        #             self._subtrees[1].insert_song(song, depth + 1)
-        #         else:
-        #             self._subtrees[2].insert_song(song, depth + 1)
-        #
-        #     elif depth == 4:
-        #         score = song
-        #
-        #     elif depth == 5:
-        #         score = song
-        #
-        #     elif depth == 6:
-        #         score = song
-        #
-        #     elif depth == 7:
-        #         score = song
-        #
-        #     elif depth == 8:
-        #         score = song
-        #
-        # if depth != 3 and depth <= 9:
-        #     if 0 <= score <= 0.3:
-        #         self._subtrees[0].insert_song(user, depth + 1)
-        #     elif 0.4 <= score <= 0.7:
-        #         self._subtrees[1].insert_song(user, depth + 1)
-        #     else:
-        #         self._subtrees[2].insert_song(user, depth + 1)
-
-    def insert_songs(self, list_songs: list[Song]) -> None:
-        """Insert a list of songs into the decision tree so that each song gets sorted into a specific song set.
-
-        >>> tree = generate_decision_tree((0,0), 1)
-        >>> song1 = Song('I hate MAT137', 0, 0, -60, 0, 0, 0, 0, 0)
-        >>> song2 = Song('I hate MAT223', 0.5, 0.3, -8, 1.0, 0.9, 0.4, 0.3, 0.2)
-        >>> song3 = Song('I hate IMM250', 0.5, 0.3, -8, 1.0, 0.9, 0.4, 0.3, 0.2)
-        >>> tree.insert_songs([song1, song2, song3])
-        """
-        for song in list_songs:
-            self.insert_song(song)
 
     def insert_song(self, song: Song, depth: int = 1) -> None:
         """Insert a song into the decision tree by recursing through the tree until it gets added to a specific song
