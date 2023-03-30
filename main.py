@@ -31,20 +31,3 @@ def run() -> None:
     """Run the entire program"""
     user = load_user()
     return ...
-
-
-# if __name__ == '__main__':
-    # PythonTA stuff
-    # import doctest
-    # import python_ta
-    # import python_ta.contracts
-    # doctest.testmod(verbose=True)
-    #
-    # python_ta.contracts.DEBUG_CONTRACTS = False
-    # python_ta.contracts.check_all_contracts()
-    # python_ta.check_all(config={
-    #     'extra-imports': ['python_ta.contracts', 'data_computations', 'recommendation_system'],
-    #     'allowed-io': [],
-    #     'max-line-length': 100,
-    #     'disable': [],
-    # })
