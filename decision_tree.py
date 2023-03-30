@@ -8,6 +8,7 @@ Contributors: Manaljav Munkhbayar, Kevin Hu, Stanley Pang, Jaeyong Lee.
 """
 from __future__ import annotations
 import csv
+import itertools
 import random
 # from user import User
 from typing import Optional, Any
@@ -111,7 +112,7 @@ class DecisionTree:
     Representation Invariants:
         - all(key == self._subtrees[key].value for key in self._subtrees)
     """
-    value: Optional[set[Song] | tuple]
+    value: Optional[tuple[int, set[Song]] | tuple]
 
     # Private Instance Attributes:
     #  - _subtrees:
@@ -119,7 +120,7 @@ class DecisionTree:
 
     _subtrees: [list[DecisionTree]]
 
-    def __init__(self, subtrees: list, value: set[Song] | tuple = DECISION_TREE_ROOT) -> None:
+    def __init__(self, subtrees: list, value: tuple[int, set[Song]] | tuple = DECISION_TREE_ROOT) -> None:
         """Initialize a new game tree.
         """
         self.value = value
@@ -175,7 +176,7 @@ class DecisionTree:
         score = 0
 
         if depth == 10:
-            self.value.add(song)  #### CHANGE
+            self.value[1].add(song)
         else:
             if depth == 1:
                 score = song.danceability
@@ -221,21 +222,48 @@ class DecisionTree:
                 self._subtrees[3].insert_song(song, depth + 1)
 
 
-def generate_decision_tree(value: set[Song] | tuple, depth: int = 1) -> DecisionTree:
-    """Add all the tuples and empty song sets into the decision tree."""
+# def generate_decision_tree(value: tuple[int, set[Song]] | tuple, depth: int = 1, i: int = 0) -> DecisionTree:
+#     """Add all the tuples and empty song sets into the decision tree."""
+#     decision_tree = DecisionTree(value=value, subtrees=[])
+#
+#     if depth == 9:
+#         decision_tree.add_subtree(DecisionTree(value=(i, set()), subtrees=[]))
+#         return decision_tree
+#     else:
+#         if depth == 3:  # Loudness
+#             ranges = [(-60.0, -42.5), (-42.4, -25.0), (-24.9, -7.50), (-7.40, 10.0)]
+#             subtrees = [generate_decision_tree(value, depth + 1) for value in ranges]
+#
+#         else:  # Everything else
+#             ranges = [(0.00, 0.25), (0.26, 0.50), (0.51, 0.75), (0.76, 1.00)]
+#             subtrees = [generate_decision_tree(value, depth + 1) for value in ranges]
+#
+#         for subtree in subtrees:
+#             decision_tree.add_subtree(subtree)
+#
+#         return decision_tree
+
+def generate_decision_tree(indexes_so_far: list, value: tuple[int, set[Song]] | tuple, depth: int = 1, index: int = 0) -> DecisionTree:
+    """Add all the tuples and empty song sets into the decision tree.
+
+    >>> tree = generate_decision_tree([0], (0,0), 1, 0)
+    >>> get_song_sets(tree)
+    """
     decision_tree = DecisionTree(value=value, subtrees=[])
 
     if depth == 9:
-        decision_tree.add_subtree(DecisionTree(value=set(), subtrees=[]))
-        return decision_tree  ### CHANGE
+        index = indexes_so_far[len(indexes_so_far) - 1] + 1
+        indexes_so_far.append(index)
+        decision_tree.add_subtree(DecisionTree(value=(index, set()), subtrees=[]))
+        return decision_tree
     else:
         if depth == 3:  # Loudness
             ranges = [(-60.0, -42.5), (-42.4, -25.0), (-24.9, -7.50), (-7.40, 10.0)]
-            subtrees = [generate_decision_tree(value, depth + 1) for value in ranges]
+            subtrees = [generate_decision_tree(indexes_so_far, value, depth + 1, index) for value in ranges]
 
         else:  # Everything else
             ranges = [(0.00, 0.25), (0.26, 0.50), (0.51, 0.75), (0.76, 1.00)]
-            subtrees = [generate_decision_tree(value, depth + 1) for value in ranges]
+            subtrees = [generate_decision_tree(indexes_so_far, value, depth + 1, index) for value in ranges]
 
         for subtree in subtrees:
             decision_tree.add_subtree(subtree)
@@ -256,6 +284,19 @@ def get_song_sets(decision_tree: DecisionTree) -> list:
 
     return song_sets
 
+
+#todo: delete function later
+def check_correctedness(decision_tree: DecisionTree) -> bool:
+    """Temporary. Checks if leaves are correct."""
+    leaves = get_song_sets(decision_tree)
+    value = 1
+
+    for leaf in leaves:
+        if leaf[0] != value:
+            return False
+        value += 1
+
+    return True
 
 
 def read_and_write_csv(csv_file: str) -> None:
@@ -302,6 +343,6 @@ def songs_final_csv_to_songs() -> set[Song]:
                                   liveness=round(float(song[10]), 2),
                                   genre=song[1],
                                   artist=song[2]
-                                )
+                                  )
                              )
         return songs_so_far
