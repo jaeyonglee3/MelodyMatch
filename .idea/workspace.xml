@@ -4,7 +4,22 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="7248fb5f-2c82-4bc0-a2cd-4e8a378348b9" name="Changes" comment="swag" />
+    <list default="true" id="7248fb5f-2c82-4bc0-a2cd-4e8a378348b9" name="Changes" comment="working find_songs_for_user(), separate file for song class">
+      <change afterPath="$PROJECT_DIR$/data/songs_final.csv" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/multithread_user_data.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/song.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.cache" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/csc111-group-project.iml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/csc111-group-project.iml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/application_ui.py" beforeDir="false" afterPath="$PROJECT_DIR$/application_ui.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/decision_tree.py" beforeDir="false" afterPath="$PROJECT_DIR$/decision_tree.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/main.py" beforeDir="false" afterPath="$PROJECT_DIR$/main.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/user.py" beforeDir="false" afterPath="$PROJECT_DIR$/user.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/user_data.py" beforeDir="false" afterPath="$PROJECT_DIR$/user_data.py" afterDir="false" />
+    </list>
+    <list id="096a0d87-0408-4c11-a3b1-65d9ebc266da" name="Changes by kevinhu" comment="Changes by kevinhu">
+      <change beforePath="$PROJECT_DIR$/decision_tree.py" beforeDir="false" afterPath="$PROJECT_DIR$/decision_tree.py" afterDir="false" />
+    </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -18,6 +33,12 @@
     </option>
   </component>
   <component name="Git.Settings">
+    <option name="PREVIOUS_COMMIT_AUTHORS">
+      <list>
+        <option value="Jaeyong Lee &lt;lee.j1533@gmail.com&gt; &lt;kevin.hu0921@gmail.com&gt;" />
+        <option value="kev0921 &lt;kevin.hu0921@gmail.com&gt;" />
+      </list>
+    </option>
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
   </component>
   <component name="GitHubPullRequestSearchHistory">{
@@ -33,6 +54,19 @@
       </UrlAndAccount>
     </option>
   </component>
+  <component name="LineStatusTrackerManager">
+    <file path="$PROJECT_DIR$/decision_tree.py">
+      <ranges>
+        <range start1="4" end1="5" start2="4" end2="5" changelist="7248fb5f-2c82-4bc0-a2cd-4e8a378348b9" />
+        <range start1="12" end1="13" start2="12" end2="14" changelist="7248fb5f-2c82-4bc0-a2cd-4e8a378348b9" />
+        <range start1="14" end1="14" start2="15" end2="17" changelist="7248fb5f-2c82-4bc0-a2cd-4e8a378348b9" />
+        <range start1="17" end1="102" start2="20" end2="20" changelist="7248fb5f-2c82-4bc0-a2cd-4e8a378348b9" />
+        <range start1="237" end1="237" start2="155" end2="157" changelist="096a0d87-0408-4c11-a3b1-65d9ebc266da" />
+        <range start1="238" end1="238" start2="158" end2="214" changelist="7248fb5f-2c82-4bc0-a2cd-4e8a378348b9" />
+        <range start1="396" end1="397" start2="372" end2="372" changelist="7248fb5f-2c82-4bc0-a2cd-4e8a378348b9" />
+      </ranges>
+    </file>
+  </component>
   <component name="MarkdownSettingsMigration">
     <option name="stateVersion" value="1" />
   </component>
@@ -46,10 +80,31 @@
   &quot;keyToString&quot;: {
     &quot;RunOnceActivity.OpenProjectViewOnStart&quot;: &quot;true&quot;,
     &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
-    &quot;settings.editor.selected.configurable&quot;: &quot;reference.settings.ide.settings.new.ui&quot;
+    &quot;settings.editor.selected.configurable&quot;: &quot;preferences.keymap&quot;
   }
 }</component>
-  <component name="RunManager">
+  <component name="RunManager" selected="Python.main">
+    <configuration name="decision_tree" type="PythonConfigurationType" factoryName="Python" temporary="true" nameIsGenerated="true">
+      <module name="csc111-group-project" />
+      <option name="INTERPRETER_OPTIONS" value="" />
+      <option name="PARENT_ENVS" value="true" />
+      <envs>
+        <env name="PYTHONUNBUFFERED" value="1" />
+      </envs>
+      <option name="SDK_HOME" value="" />
+      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$" />
+      <option name="IS_MODULE_SDK" value="true" />
+      <option name="ADD_CONTENT_ROOTS" value="true" />
+      <option name="ADD_SOURCE_ROOTS" value="true" />
+      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/decision_tree.py" />
+      <option name="PARAMETERS" value="" />
+      <option name="SHOW_COMMAND_LINE" value="false" />
+      <option name="EMULATE_TERMINAL" value="false" />
+      <option name="MODULE_MODE" value="false" />
+      <option name="REDIRECT_INPUT" value="false" />
+      <option name="INPUT_FILE" value="" />
+      <method v="2" />
+    </configuration>
     <configuration name="main" type="PythonConfigurationType" factoryName="Python" temporary="true" nameIsGenerated="true">
       <module name="csc111-group-project" />
       <option name="INTERPRETER_OPTIONS" value="" />
@@ -63,6 +118,27 @@
       <option name="ADD_CONTENT_ROOTS" value="true" />
       <option name="ADD_SOURCE_ROOTS" value="true" />
       <option name="SCRIPT_NAME" value="$PROJECT_DIR$/main.py" />
+      <option name="PARAMETERS" value="" />
+      <option name="SHOW_COMMAND_LINE" value="false" />
+      <option name="EMULATE_TERMINAL" value="false" />
+      <option name="MODULE_MODE" value="false" />
+      <option name="REDIRECT_INPUT" value="false" />
+      <option name="INPUT_FILE" value="" />
+      <method v="2" />
+    </configuration>
+    <configuration name="multithread_user_data" type="PythonConfigurationType" factoryName="Python" temporary="true" nameIsGenerated="true">
+      <module name="csc111-group-project" />
+      <option name="INTERPRETER_OPTIONS" value="" />
+      <option name="PARENT_ENVS" value="true" />
+      <envs>
+        <env name="PYTHONUNBUFFERED" value="1" />
+      </envs>
+      <option name="SDK_HOME" value="" />
+      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$" />
+      <option name="IS_MODULE_SDK" value="true" />
+      <option name="ADD_CONTENT_ROOTS" value="true" />
+      <option name="ADD_SOURCE_ROOTS" value="true" />
+      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/multithread_user_data.py" />
       <option name="PARAMETERS" value="" />
       <option name="SHOW_COMMAND_LINE" value="false" />
       <option name="EMULATE_TERMINAL" value="false" />
@@ -113,55 +189,13 @@
       <option name="INPUT_FILE" value="" />
       <method v="2" />
     </configuration>
-    <configuration name="user_data2" type="PythonConfigurationType" factoryName="Python" temporary="true" nameIsGenerated="true">
-      <module name="csc111-group-project" />
-      <option name="INTERPRETER_OPTIONS" value="" />
-      <option name="PARENT_ENVS" value="true" />
-      <envs>
-        <env name="PYTHONUNBUFFERED" value="1" />
-      </envs>
-      <option name="SDK_HOME" value="" />
-      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$" />
-      <option name="IS_MODULE_SDK" value="true" />
-      <option name="ADD_CONTENT_ROOTS" value="true" />
-      <option name="ADD_SOURCE_ROOTS" value="true" />
-      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/user_data2.py" />
-      <option name="PARAMETERS" value="" />
-      <option name="SHOW_COMMAND_LINE" value="false" />
-      <option name="EMULATE_TERMINAL" value="false" />
-      <option name="MODULE_MODE" value="false" />
-      <option name="REDIRECT_INPUT" value="false" />
-      <option name="INPUT_FILE" value="" />
-      <method v="2" />
-    </configuration>
-    <configuration name="user_data3" type="PythonConfigurationType" factoryName="Python" temporary="true" nameIsGenerated="true">
-      <module name="csc111-group-project" />
-      <option name="INTERPRETER_OPTIONS" value="" />
-      <option name="PARENT_ENVS" value="true" />
-      <envs>
-        <env name="PYTHONUNBUFFERED" value="1" />
-      </envs>
-      <option name="SDK_HOME" value="" />
-      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$" />
-      <option name="IS_MODULE_SDK" value="true" />
-      <option name="ADD_CONTENT_ROOTS" value="true" />
-      <option name="ADD_SOURCE_ROOTS" value="true" />
-      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/user_data3.py" />
-      <option name="PARAMETERS" value="" />
-      <option name="SHOW_COMMAND_LINE" value="false" />
-      <option name="EMULATE_TERMINAL" value="false" />
-      <option name="MODULE_MODE" value="false" />
-      <option name="REDIRECT_INPUT" value="false" />
-      <option name="INPUT_FILE" value="" />
-      <method v="2" />
-    </configuration>
     <recent_temporary>
       <list>
         <item itemvalue="Python.main" />
         <item itemvalue="Python.user_data" />
-        <item itemvalue="Python.test" />
-        <item itemvalue="Python.user_data3" />
-        <item itemvalue="Python.user_data3" />
+        <item itemvalue="Python.decision_tree" />
+        <item itemvalue="Python.multithread_user_data" />
+        <item itemvalue="Python.user_data" />
       </list>
     </recent_temporary>
   </component>
@@ -195,14 +229,77 @@
       <option name="project" value="LOCAL" />
       <updated>1680051508305</updated>
     </task>
-    <task id="LOCAL-00004" summary="swag">
-      <created>1680122754237</created>
+    <task id="LOCAL-00004" summary="small changes">
+      <created>1680053006498</created>
       <option name="number" value="00004" />
       <option name="presentableId" value="LOCAL-00004" />
       <option name="project" value="LOCAL" />
-      <updated>1680122754237</updated>
+      <updated>1680053006498</updated>
     </task>
-    <option name="localTasksCounter" value="5" />
+    <task id="LOCAL-00005" summary="updated user_data.py for all song attributes">
+      <created>1680056613931</created>
+      <option name="number" value="00005" />
+      <option name="presentableId" value="LOCAL-00005" />
+      <option name="project" value="LOCAL" />
+      <updated>1680056613931</updated>
+    </task>
+    <task id="LOCAL-00006" summary="lol">
+      <created>1680060440701</created>
+      <option name="number" value="00006" />
+      <option name="presentableId" value="LOCAL-00006" />
+      <option name="project" value="LOCAL" />
+      <updated>1680060440701</updated>
+    </task>
+    <task id="LOCAL-00007" summary="lol">
+      <created>1680060484413</created>
+      <option name="number" value="00007" />
+      <option name="presentableId" value="LOCAL-00007" />
+      <option name="project" value="LOCAL" />
+      <updated>1680060484413</updated>
+    </task>
+    <task id="LOCAL-00008" summary="lol">
+      <created>1680060523064</created>
+      <option name="number" value="00008" />
+      <option name="presentableId" value="LOCAL-00008" />
+      <option name="project" value="LOCAL" />
+      <updated>1680060523064</updated>
+    </task>
+    <task id="LOCAL-00009" summary="loading user is good">
+      <created>1680133931472</created>
+      <option name="number" value="00009" />
+      <option name="presentableId" value="LOCAL-00009" />
+      <option name="project" value="LOCAL" />
+      <updated>1680133931472</updated>
+    </task>
+    <task id="LOCAL-00010" summary="4 ranges for tree and a requirements.txt">
+      <created>1680142605314</created>
+      <option name="number" value="00010" />
+      <option name="presentableId" value="LOCAL-00010" />
+      <option name="project" value="LOCAL" />
+      <updated>1680142605314</updated>
+    </task>
+    <task id="LOCAL-00011" summary="tried and failed at working gui">
+      <created>1680147832451</created>
+      <option name="number" value="00011" />
+      <option name="presentableId" value="LOCAL-00011" />
+      <option name="project" value="LOCAL" />
+      <updated>1680147832451</updated>
+    </task>
+    <task id="LOCAL-00012" summary="nice doctest for decision tree">
+      <created>1680149274337</created>
+      <option name="number" value="00012" />
+      <option name="presentableId" value="LOCAL-00012" />
+      <option name="project" value="LOCAL" />
+      <updated>1680149274337</updated>
+    </task>
+    <task id="LOCAL-00013" summary="working find_songs_for_user(), separate file for song class">
+      <created>1680232799148</created>
+      <option name="number" value="00013" />
+      <option name="presentableId" value="LOCAL-00013" />
+      <option name="project" value="LOCAL" />
+      <updated>1680232799148</updated>
+    </task>
+    <option name="localTasksCounter" value="14" />
     <servers />
   </component>
   <component name="Vcs.Log.Tabs.Properties">
@@ -231,7 +328,14 @@
   <component name="VcsManagerConfiguration">
     <MESSAGE value="sum_two function added" />
     <MESSAGE value="spotify api calls working" />
-    <MESSAGE value="swag" />
-    <option name="LAST_COMMIT_MESSAGE" value="swag" />
+    <MESSAGE value="small changes" />
+    <MESSAGE value="updated user_data.py for all song attributes" />
+    <MESSAGE value="lol" />
+    <MESSAGE value="loading user is good" />
+    <MESSAGE value="4 ranges for tree and a requirements.txt" />
+    <MESSAGE value="tried and failed at working gui" />
+    <MESSAGE value="nice doctest for decision tree" />
+    <MESSAGE value="working find_songs_for_user(), separate file for song class" />
+    <option name="LAST_COMMIT_MESSAGE" value="working find_songs_for_user(), separate file for song class" />
   </component>
 </project>
