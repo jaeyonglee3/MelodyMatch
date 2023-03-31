@@ -8,6 +8,7 @@ Contributors: Manaljav Munkhbayar, Kevin Hu, Stanley Pang, Jaeyong Lee.
 """
 
 import main
+# import user_data
 from math import ceil, floor
 from tkinter import *
 from PIL import ImageTk, Image
@@ -54,20 +55,27 @@ desc.pack()
 
 
 def create_label():
-    new_label = Label(root, text="New label", bg='#0b2437', fg='White')
+    new_label = Label(root, text="Stop server", bg='#0b2437', fg='White', font=('Verdana', 18))
     new_label.pack()
 
 
 # Button
-def button_event() -> None:
+def start_button_event() -> None:
     """The event that happens when the following button is pressed"""
     main.run()
-    print('test')
-    create_label()
+
+def end_button_event() -> None:
+    """The event that happens when the following button is pressed"""
+    user_data.stop_server()
 
 
-button = Button(root, text='Start', font=('Verdana', 12), command=(button_event))
+button = Button(root, text='Start', font=('Verdana', 12), command=(start_button_event))
 button.pack()
 button.config(width=10, height=2)
+
+stop_button = Button(root, text='Stop', font=('Verdana', 12), command=(end_button_event))
+stop_button.pack()
+stop_button.config(width=10, height=2)
+stop_button.place(x=50, y=50)
 
 root.mainloop()

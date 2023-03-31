@@ -18,6 +18,12 @@ from bottle import route, run, request
 from spotipy import oauth2
 import spotipy
 
+import bottle
+
+app = bottle.default_app()
+
+# global server
+
 # The Spotify OAuth object contains the access token and refresh
 # token required to make authenticated requests to the Spotify Web API
 sp_oauth = oauth2.SpotifyOAuth(client_id='2aef90bcdc834c17b59ff1358099865a',
@@ -86,18 +92,10 @@ def get_access_token():
             top_tracks_liveness.append(audio_features[i]['liveness'])
             top_tracks_tempo.append(audio_features[i]['tempo'])
 
-        print('top_tracks_ids:  ' + str(top_tracks_ids))
-        print('top_tracks_names:  ' + str(top_tracks_names))
-        print("top_tracks_danceability:  " + str(top_tracks_danceability))
-        print('top_tracks_energy:  ' + str(top_tracks_energy))
-        print('top_tracks_loudness:  ' + str(top_tracks_loudness))
-        print('top_tracks_speechiness:  ' + str(top_tracks_speechiness))
-        print('top_tracks_acousticness:  ' + str(top_tracks_acousticness))
-        print('top_tracks_instrumentalness:  ' + str(top_tracks_instrumentalness))
-        print('top_tracks_valence:  ' + str(top_tracks_valence))
-        print('top_tracks_liveness:  ' + str(top_tracks_liveness))
-        print('top_tracks_tempo:  ' + str(top_tracks_tempo))
+        for i in range(len(top_tracks_names)):
+            print(str(i + 1) + '. ' + top_tracks_names[i])
 
+        # stop_server()
         return '''
         <html>
             <head>
@@ -127,6 +125,23 @@ def get_access_token():
 
 def run_server() -> None:
     """Run the bottle server."""
-    run(host='')
+    # global server
+    # server = run(host='')
+    bottle.run(app, host='')
+
+
+def stop_server():
+    # for srv in list(request.environ['bottle.server'].child_procs):
+    #     srv.terminate()
+
+    # server.shutdown()
+
+    # from multiprocessing import active_children
+    # for child in active_children():
+    #     child.terminate()
+
+    for worker in app.worker_threads:
+        worker.terminate()
+    app.server.shutdown()
 
 # run(host='')

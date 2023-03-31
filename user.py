@@ -6,7 +6,7 @@ This Python module contains ...
 
 Contributors: Manaljav Munkhbayar, Kevin Hu, Stanley Pang, Jaeyong Lee.
 """
-from decision_tree import Song
+from song import Song
 
 
 def construct_top_songs_list(top_tracks_ids: list[str], top_tracks_energy: list[float],
