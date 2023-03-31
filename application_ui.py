@@ -21,8 +21,8 @@ w_ratio = 5 / 6
 h_ratio = 7 / 11
 screen_width, screen_height = root.winfo_screenwidth(), root.winfo_screenheight()
 window_width, window_height = floor(screen_width * w_ratio), floor(screen_height * h_ratio)
-x = ceil((screen_width/2) - (window_width/2))
-y = ceil((screen_height/2) - (window_height/1.85))
+x = ceil((screen_width / 2) - (window_width / 2))
+y = ceil((screen_height / 2) - (window_height / 1.85))
 root.geometry(f'{window_width}x{window_height}+{x}+{y}')
 
 # Window Titlebar: Name and Symbol
@@ -47,7 +47,7 @@ desc = Label(root,
                   "suggest new songs that are tailored to your taste. \n MelodyMatch provides"
                   "an intuitive user experience, with a clean interface that is \neasy to navigate. Whether you're "
                   "looking to add new tracks to your favorite playlist or \nwant to explore new genres, MelodyMatch is "
-                  "the perfect tool for discovering your next \nfavorite song.\n",
+                  "the perfect tool for discovering your next \nfavorite song.\n\n",
              bg='#0b2437',
              fg='White',
              font=('Verdana', 18))
@@ -63,6 +63,7 @@ def create_label():
 def start_button_event() -> None:
     """The event that happens when the following button is pressed"""
     main.run()
+
 
 def end_button_event() -> None:
     """The event that happens when the following button is pressed"""
