@@ -392,7 +392,7 @@ def check_correctedness(decision_tree: DecisionTree) -> bool:
 def read_large_csv():
     """Read the 1.2 million spotify song dataset"""
     df = pd.read_csv('/Users/kevinhu/Downloads/tracks_features.csv')
-    return df
+    return df   # This returns everything in the csv file
 
 
 def read_and_write_csv(csv_file: str) -> None:
