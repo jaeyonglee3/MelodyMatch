@@ -7,6 +7,7 @@ This Python module contains the DecisionTree class...
 Contributors: Manaljav Munkhbayar, Kevin Hu, Stanley Pang, Jaeyong Lee.
 """
 from __future__ import annotations
+import pandas as pd   #todo: add to project requirements if needed
 import csv
 import itertools
 import random
@@ -19,13 +20,14 @@ from song import Song
 
 DECISION_TREE_ROOT = (0, 0)
 
+
 class DecisionTree:
     """A decision tree for organizing our songs.
 
     Each node in the tree either stores a range of numbers or a set of songs.
 
     Instance Attributes:
-        - value: the current range of numbers or a set of songs if its is the leaf of the tree.
+        - value: a range of floats represented as a tuple or a set of songs if it is the leaf of the decision tree.
 
     Representation Invariants:
         - all(key == self._subtrees[key].value for key in self._subtrees)
@@ -38,7 +40,7 @@ class DecisionTree:
 
     _subtrees: [list[DecisionTree]]
 
-    def __init__(self, subtrees: list, value: tuple[int, set[Song]] | tuple = DECISION_TREE_ROOT) -> None:
+    def __init__(self, subtrees: list, value: set[Song] | tuple = DECISION_TREE_ROOT) -> None:
         """Initialize a new game tree.
         """
         self.value = value
@@ -189,10 +191,10 @@ class DecisionTree:
         if depth == 9:
             if len(self._subtrees) == 0:
                 i = len(index)
-                self.add_subtree(DecisionTree(value=(i, {song}), subtrees=[]))
+                self.add_subtree(DecisionTree(value={song}, subtrees=[]))
                 index.append(0)
             else:
-                self._subtrees[0].value[1].add(song)
+                self._subtrees[0].value.add(song)
         else:
             if depth == 1:
                 score = song.danceability
@@ -296,22 +298,22 @@ class DecisionTree:
 #             decision_tree.add_subtree(subtree)
 #
 #         return decision_tree
+#
 
-
-def generate_decision_tree(value: tuple[int, set[Song]] | tuple, depth: int = 1) \
-        -> DecisionTree:
+def generate_decision_tree(value: set[Song] | tuple, depth: int = 1) -> DecisionTree:
     """Add all the tuples and empty song sets into the decision tree.
 
     >>> tree = generate_decision_tree((0,0), 1)
     >>> get_song_sets(tree)
-    >>> read_and_write_csv("/Users/jaeyonglee/Desktop/csc111-group-project/data/songs_normalize.csv")
+    >>> read_and_write_csv("/Users/kevinhu/PycharmProjects/csc111-group-project/data/songs_normalize.csv")
     >>> songs = songs_final_csv_to_songs()
     >>> songs = list(songs)
     >>> tree = generate_decision_tree((0,0), 1)
     >>> tree.insert_songs(songs)
     >>> list_of_leafs = get_song_sets(tree)
-    >>> songs = [tuple[1] for tuple in list_of_leafs if tuple[1] != set()]
-    >>> sum([len(set) for set in songs])
+    >>> len(list_of_leafs)
+    352
+    >>> len(songs)
     """
     decision_tree = DecisionTree(value=value, subtrees=[])
 
@@ -356,15 +358,15 @@ def get_song_sets(decision_tree: DecisionTree) -> list:
     >>> song4 = Song('I love IMM250', 1.0, 1.0, 10, 1.0, 1.0, 1.0, 1.0, 1.0)
     >>> tree.insert_songs([song1, song4])
     >>> l = get_song_sets(tree)
-    >>> [song for song in l[0][1]][0].name
+    >>> [song for song in l[0]][0].name
     'I hate MAT137'
-    >>> [song for song in l[1][1]][0].name
+    >>> [song for song in l[1]][0].name
     'I love IMM250'
 
     """
     song_sets = []
 
-    if not decision_tree.get_subtrees() and isinstance(decision_tree.value[1], set):
+    if not decision_tree.get_subtrees() and isinstance(decision_tree.value, set):
         song_sets.append(decision_tree.value)
     else:
         for subtree in decision_tree.get_subtrees():
@@ -385,6 +387,12 @@ def check_correctedness(decision_tree: DecisionTree) -> bool:
         value += 1
 
     return True
+
+
+def read_large_csv():
+    """Read the 1.2 million spotify song dataset"""
+    df = pd.read_csv('/Users/kevinhu/Downloads/tracks_features.csv')
+    return df
 
 
 def read_and_write_csv(csv_file: str) -> None:
