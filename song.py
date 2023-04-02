@@ -6,7 +6,7 @@ This Python module contains the Song class ...
 
 Contributors: Manaljav Munkhbayar, Kevin Hu, Stanley Pang, Jaeyong Lee.
 """
-from typing import Optional, Any
+from typing import Optional
 import csv
 
 

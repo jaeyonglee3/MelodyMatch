@@ -8,7 +8,7 @@ log in with their Spotify account credentials.
 Notes
 ===============================
 This file contains code borrowed directly from the Spotipy library documentation, which
-can be found at the following link.
+can be found at this link:
     - https://spotipy.readthedocs.io/en/2.22.1/#
 
 Contributors: Manaljav Munkhbayar, Kevin Hu, Stanley Pang, Jaeyong Lee.

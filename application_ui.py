@@ -1,19 +1,15 @@
 """
-CSC111 Winter 2023 Project:
-MelodyMatch: Tailored Music Recommendations Derived From Your Spotify Habits
-
-This Python module contains ...
-
-Contributors: Manaljav Munkhbayar, Kevin Hu, Stanley Pang, Jaeyong Lee.
+BRUH ...
 """
 from math import ceil, floor
 from tkinter import *
 from PIL import ImageTk, Image
+from song import Song
 
 import user_data
 
 
-def create_window():
+def create_window(results: list[Song]):
     root = Tk()
 
     w_ratio = 5 / 6
@@ -37,28 +33,12 @@ def create_window():
     full_logo_label.pack(pady=window_height * 0.05)
 
     # Description
+    one_song = results[0].artist
     desc = Label(root,
-                 text='Welcome to MelodyMatch! \n\n'
-                      "MelodyMatch is a personalized music recommendation app that analyzes your spotify "
-                      "\nlistening history to suggest new songs that match your individual taste. By connecting "
-                      "\nyour Spotify account, MelodyMatch will access your listening history. MelodyMatch then "
-                      "\nanalyzes your data to suggest new songs that are tailored to your taste. \n MelodyMatch "
-                      "provides an intuitive user experience, with a clean interface that is \neasy to navigate. "
-                      "Whether you're looking to add new tracks to your favorite playlist or \nwant to explore new "
-                      "genres, MelodyMatch is the perfect tool for discovering your next \nfavorite song.\n",
+                 text=one_song,
                  bg='#0b2437',
                  fg='White',
                  font=('Verdana', 18))
     desc.pack()
 
-    button = Button(root, text='Start', font=('Verdana', 12), command=start_button_event)
-    button.pack()
-    button.config(width=10, height=2)
-
     root.mainloop()
-
-
-def start_button_event() -> None:
-    """The event that happens when the following button is pressed"""
-    # main.run_program()
-    user_data.run_server()
