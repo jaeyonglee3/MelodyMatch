@@ -7,20 +7,42 @@ This Python module contains ...
 Contributors: Manaljav Munkhbayar, Kevin Hu, Stanley Pang, Jaeyong Lee.
 """
 from song import Song
+import csv
 
 
-def construct_top_songs_list(top_tracks_ids: list[str], top_tracks_energy: list[float],
-                             top_tracks_danceability: list[float], top_tracks_loudness: list[float],
-                             top_tracks_speechiness: list[float], top_tracks_acousticness: list[float],
-                             top_tracks_instrumentalness: list[float], top_tracks_valence: list[float],
-                             top_tracks_liveness: list[float]
-                             ) -> list[Song]:
-    """Construct a list of Song objects from the user top tracks csv file, later ot be used for
-    song recommendation algorithm.
-    """
+def read_top_songs_csv():
+    """... read the user's top songs csv that has all the attributes. return a list of Song objects constructed
+    using the songs from the csv file, to be used later for the song recommendation algorithm"""
+    top_tracks_ids = []
+    top_tracks_names = []
+    top_tracks_danceability = []
+    top_tracks_energy = []
+    top_tracks_loudness = []
+    top_tracks_speechiness = []
+    top_tracks_acousticness = []
+    top_tracks_instrumentalness = []
+    top_tracks_valence = []
+    top_tracks_liveness = []
+    top_tracks_tempo = []
+
+    with open('data/user_top_songs.csv', mode='r') as csv_file:
+        reader = csv.reader(csv_file)
+        for row in reader:
+            top_tracks_ids.append(row[0])
+            top_tracks_names.append(row[1])
+            top_tracks_danceability.append(float(row[2]))
+            top_tracks_energy.append(float(row[3]))
+            top_tracks_loudness.append(float(row[4]))
+            top_tracks_speechiness.append(float(row[5]))
+            top_tracks_acousticness.append(float(row[6]))
+            top_tracks_instrumentalness.append(float(row[7]))
+            top_tracks_valence.append(float(row[8]))
+            top_tracks_liveness.append(float(row[9]))
+            top_tracks_tempo.append(float(row[10]))
+
     top_songs = []
     for i in range(len(top_tracks_ids)):
-        song = Song(name=top_tracks_ids[i], danceability=top_tracks_danceability[i], energy=top_tracks_energy[i],
+        song = Song(name=top_tracks_names[i], danceability=top_tracks_danceability[i], energy=top_tracks_energy[i],
                     loudness=top_tracks_loudness[i], speechiness=top_tracks_speechiness[i],
                     acousticness=top_tracks_acousticness[i], instrumentalness=top_tracks_instrumentalness[i],
                     valence=top_tracks_valence[i], liveness=top_tracks_liveness[i])
@@ -109,3 +131,13 @@ class User:
         self.user_instrumentalness = total_instrumentalness / len(self.top_listened_songs)
         self.user_valence = total_valence / len(self.top_listened_songs)
         self.user_liveness = total_liveness / len(self.top_listened_songs)
+
+
+def generate_user() -> User:
+    """ This function ....
+
+    After retrieving all necessary information, this function returns an instance of the User class.
+    """
+    top_songs = read_top_songs_csv()
+    user_profile = User(top_songs)  # Create an instance of the "User" class
+    return user_profile

@@ -18,7 +18,7 @@ from bottle import route, run, request
 from spotipy import oauth2
 import spotipy
 import csv
-from user import User, construct_top_songs_list
+from user import User, read_top_songs_csv
 
 import bottle
 
@@ -148,18 +148,3 @@ def write_to_csv() -> None:
                             top_tracks_loudness[i], top_tracks_speechiness[i], top_tracks_acousticness[i],
                             top_tracks_instrumentalness[i], top_tracks_valence[i], top_tracks_liveness[i],
                             top_tracks_tempo[i]])
-
-
-def generate_user() -> User:
-    """ This function ....
-
-    After retrieving all necessary information, this function returns an instance of the User class.
-    """
-    top_songs = construct_top_songs_list(top_tracks_ids, top_tracks_energy,
-                                         top_tracks_danceability, top_tracks_loudness,
-                                         top_tracks_speechiness, top_tracks_acousticness,
-                                         top_tracks_instrumentalness, top_tracks_valence,
-                                         top_tracks_liveness)
-
-    user_profile = User(top_songs)  # Create an instance of the "User" class
-    return user_profile
