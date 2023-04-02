@@ -11,7 +11,7 @@ log in with their Spotify account credentials.
 Notes
 ===============================
 This file contains code borrowed directly from the Spotipy library documentation, which
-can be found at the following link.
+can be found at this link:
     - https://spotipy.readthedocs.io/en/2.22.1/#
 
 Contributors: Manaljav Munkhbayar, Kevin Hu, Stanley Pang, Jaeyong Lee.
@@ -27,16 +27,14 @@ please consult our Course Syllabus.
 
 This file is Copyright (c) 2023 Manaljav Munkhbayar, Kevin Hu, Stanley Pang, Jaeyong Lee.
 """
-
-from bottle import route, run, request
+from bottle import route, request
 from spotipy import oauth2
-import spotipy
 
+import spotipy
+import csv
 import bottle
 
 app = bottle.default_app()
-
-# global server
 
 # The Spotify OAuth object contains the access token and refresh
 # token required to make authenticated requests to the Spotify Web API
@@ -95,6 +93,8 @@ def get_access_token():
         top_tracks_ids = [track['id'] for track in top_tracks['items']]
         audio_features = sp.audio_features(top_tracks_ids)  # Load the audio features of every song using its ID
 
+        print(type(top_tracks))
+
         for i in range(len(top_tracks_ids)):
             top_tracks_danceability.append(audio_features[i]['danceability'])
             top_tracks_energy.append(audio_features[i]['energy'])
@@ -106,8 +106,11 @@ def get_access_token():
             top_tracks_liveness.append(audio_features[i]['liveness'])
             top_tracks_tempo.append(audio_features[i]['tempo'])
 
+        # todo delete this
         for i in range(len(top_tracks_names)):
-            print(str(i + 1) + '. ' + top_tracks_names[i])
+            print(str(i + 1) + '. ' + str(top_tracks_names[i]))
+
+        write_to_csv()
 
         # stop_server()
         return '''
@@ -144,18 +147,14 @@ def run_server() -> None:
     bottle.run(app, host='')
 
 
-def stop_server():
-    # for srv in list(request.environ['bottle.server'].child_procs):
-    #     srv.terminate()
+def write_to_csv() -> None:
+    """Writes the attributes of the top songs belonging to the user in a new CSV file
+    """
+    with open('data/user_top_songs.csv', 'w', newline='') as output_file:
+        writer = csv.writer(output_file, delimiter=',')
 
-    # server.shutdown()
-
-    # from multiprocessing import active_children
-    # for child in active_children():
-    #     child.terminate()
-
-    for worker in app.worker_threads:
-        worker.terminate()
-    app.server.shutdown()
-
-# run(host='')
+        for i in range(len(top_tracks_ids)):
+            writer.writerow([top_tracks_ids[i], top_tracks_names[i], top_tracks_danceability[i], top_tracks_energy[i],
+                            top_tracks_loudness[i], top_tracks_speechiness[i], top_tracks_acousticness[i],
+                            top_tracks_instrumentalness[i], top_tracks_valence[i], top_tracks_liveness[i],
+                            top_tracks_tempo[i]])
