@@ -49,14 +49,20 @@ class DecisionTree:
     # Private Instance Attributes:
     #  - _subtrees:
     #      the subtrees of this tree, which represent the decision trees after sorting the song by its attribute value.
+    #      The decision trees are stored in a list.
 
-    _subtrees: [list[DecisionTree]]
+    _subtrees: list[DecisionTree]
 
     def __init__(self, subtrees: list, value: set | tuple = DECISION_TREE_ROOT) -> None:
         """Initialize a new game tree.
         """
         self.value = value
         self._subtrees = subtrees
+
+    def __str__(self) -> str:
+        """Return a string representation of this tree.
+        """
+        return self._str_indented(0)
 
     def is_empty(self):
         """Return whether the tree is empty or not"""
@@ -79,11 +85,6 @@ class DecisionTree:
                 str_so_far += subtree._str_indented(depth + 1)
             return str_so_far
 
-    def __str__(self) -> str:
-        """Return a string representation of this tree.
-        """
-        return self._str_indented(0)
-
     def __len__(self) -> int:
         """Return the number of items contained in this tree.
         """
@@ -93,7 +94,7 @@ class DecisionTree:
             return 1 + sum(subtree.__len__() for subtree in self._subtrees)
 
     def get_subtrees(self) -> list[DecisionTree]:
-        """Return the subtrees of a Decision Tree"""
+        """Return the subtrees of a Decision Tree."""
         return self._subtrees
 
     def add_subtree(self, subtree: DecisionTree) -> None:
