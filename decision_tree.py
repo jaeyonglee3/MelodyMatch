@@ -2,7 +2,11 @@
 CSC111 Winter 2023 Project:
 MelodyMatch: Tailored Music Recommendations Derived From Your Spotify Habits
 
-This Python module contains the DecisionTree class and a collection
+Module Description
+==================
+
+This Python module contains the DecisionTree class and a collection of functions that helps with the sorting songs
+into the decision tree and returning the recommended songs tailored to the user's preferences
 
 Contributors: Manaljav Munkhbayar, Kevin Hu, Stanley Pang, Jaeyong Lee.
 
@@ -10,7 +14,7 @@ Copyright and Usage Information
 ===============================
 
 This file is provided solely for the personal and private use of students
-and faculty members at the University of Toronto St. George campus. All forms of
+and faculty members who are part of CSC111 at the University of Toronto St. George campus. All forms of
 distribution of this code, whether as given or with any changes, are
 expressly prohibited. For more information on copyright for CSC111 materials,
 please consult our Course Syllabus.
@@ -38,9 +42,10 @@ class DecisionTree:
         - value: a range of floats represented as a tuple or a set of songs if it is the leaf of the decision tree.
 
     Representation Invariants:
-        - all(key == self._subtrees[key].value for key in self._subtrees)
+        - isinstance(self.value, set) or isinstance(self.value, tuple) or self.value is None
+        - self._value is not None or self._subtrees == []
     """
-    value: Optional[set[Song] | tuple]
+    value: Optional[set | tuple]
 
     # Private Instance Attributes:
     #  - _subtrees:
@@ -48,7 +53,7 @@ class DecisionTree:
 
     _subtrees: [list[DecisionTree]]
 
-    def __init__(self, subtrees: list, value: set[Song] | tuple = DECISION_TREE_ROOT) -> None:
+    def __init__(self, subtrees: list, value: set | tuple = DECISION_TREE_ROOT) -> None:
         """Initialize a new game tree.
         """
         self.value = value
@@ -62,6 +67,9 @@ class DecisionTree:
         """Return an indented string representation of this tree.
 
         The indentation level is specified by the <depth> parameter.
+
+        Preconditions:
+            - depth >= 0
         """
         if self.is_empty():
             return ''
@@ -93,8 +101,12 @@ class DecisionTree:
         """Add a subtree to this game tree."""
         self._subtrees.append(subtree)
 
-    def find_songs_for_user(self, tree: DecisionTree, user: User, depth: int = 1) -> set[Song]: # add tree attribute
+    def find_songs_for_user(self, tree: DecisionTree, user: User, depth: int = 1) -> set[Song]:
         """Return a set of songs tailored to the User's calculated preference values.
+
+        Preconditions:
+            - depth >= 1
+
         >>> user = User(None)
         >>> user.user_acousticness = 0.5
         >>> user.user_danceability = 0.5
@@ -133,6 +145,7 @@ class DecisionTree:
         >>> tree.find_songs_for_user(tree, user, 1)
         >>> len(tree.find_songs_for_user(tree, user, 1))
         10
+        >>> [(song.name, song.artist) for song in l]
         """
         score = 0
 
@@ -186,17 +199,6 @@ class DecisionTree:
             else:
                 return self._subtrees[3].find_songs_for_user(tree, user, depth + 1)
 
-    # def insert_songs(self, list_songs: list[Song]) -> None:
-    #     """Insert a list of songs into the decision tree so that each song gets sorted into a specific song set.
-    #     >>> tree = generate_decision_tree([0], (0,0), 1)
-    #     >>> song1 = Song('I hate MAT137', 0, 0, -60, 0, 0, 0, 0, 0)
-    #     >>> song2 = Song('I hate MAT223', 0.5, 0.3, -8, 1.0, 0.9, 0.4, 0.3, 0.2)
-    #     >>> song3 = Song('I hate IMM250', 0.5, 0.3, -8, 1.0, 0.9, 0.4, 0.3, 0.2)
-    #     >>> tree.insert_songs([song1, song2, song3])
-    #     """
-    #     for song in list_songs:
-    #         self.insert_song(song, 1)
-
     def insert_songs(self, list_songs: list[Song]) -> None:
         """Insert a list of songs into the decision tree so that each song gets sorted into a specific song set.
         >>> tree = generate_decision_tree((0,0), 1)
@@ -210,89 +212,29 @@ class DecisionTree:
         >>> [song for song in l[1][1]][0].name
         'I love IMM250'
         """
-        i = [0]
         for song in list_songs:
-            self.insert_song(i, song, 1)
+            self.insert_song(song, 1)
 
-    # def insert_song(self, song: Song, depth: int = 1) -> None:
-    #     """Insert a song into the decision tree by recursing through the tree until it gets added to a specific song
-    #     set.
-    #
-    #     >>> tree = generate_decision_tree([0], (0,0), 1)
-    #     >>> song1 = Song('I hate MAT137', 0, 0, -60, 0, 0, 0, 0, 0)
-    #     >>> tree.insert_song(song1, 1)
-    #     >>> song2 = Song('I hate MAT223', 0.5, 0.3, -8, 1.0, 0.9, 0.4, 0.3, 0.2)
-    #     >>> tree.insert_song(song2, 1)
-    #     >>> song3 = Song('I hate IMM250', 0.5, 0.3, -8, 1.0, 0.9, 0.4, 0.3, 0.2)
-    #     >>> tree.insert_song(song3, 1)
-    #     """
-    #     score = 0
-    #
-    #     if depth == 10:
-    #         self.value[1].add(song)
-    #     else:
-    #         if depth == 1:
-    #             score = song.danceability
-    #
-    #         elif depth == 2:
-    #             score = song.energy
-    #
-    #         elif depth == 3:
-    #             score = song.loudness
-    #
-    #             if -60 <= score <= -42.5:
-    #                 self._subtrees[0].insert_song(song, depth + 1)
-    #             elif -42.4 <= score <= -25:
-    #                 self._subtrees[1].insert_song(song, depth + 1)
-    #             elif -24.9 <= score <= -7.5:
-    #                 self._subtrees[2].insert_song(song, depth + 1)
-    #             else:
-    #                 self._subtrees[3].insert_song(song, depth + 1)
-    #
-    #         elif depth == 4:
-    #             score = song.speechiness
-    #
-    #         elif depth == 5:
-    #             score = song.acousticness
-    #
-    #         elif depth == 6:
-    #             score = song.instrumentalness
-    #
-    #         elif depth == 7:
-    #             score = song.valence
-    #
-    #         elif depth == 8:
-    #             score = song.liveness
-    #
-    #     if depth != 3 and depth <= 9:
-    #         if 0 <= score <= 0.25:
-    #             self._subtrees[0].insert_song(song, depth + 1)
-    #         elif 0.26 <= score <= 0.5:
-    #             self._subtrees[1].insert_song(song, depth + 1)
-    #         elif 0.51 <= score <= 0.75:
-    #             self._subtrees[2].insert_song(song, depth + 1)
-    #         else:
-    #             self._subtrees[3].insert_song(song, depth + 1)
-
-    #todo: remove index attribute
-    def insert_song(self, index: list, song: Song, depth: int = 1) -> None:
+    def insert_song(self, song: Song, depth: int = 1) -> None:
         """Insert a song into the decision tree by recursing through the tree until it gets added to a specific song
         set.
 
+        Preconditions:
+            - depth >= 1
+
         >>> tree = generate_decision_tree((0,0), 1)
         >>> song1 = Song('I hate MAT137', 0, 0, -60, 0, 0, 0, 0, 0)
-        >>> tree.insert_song([0], song1, 1)
+        >>> tree.insert_song(song1, 1)
         >>> song2 = Song('I hate MAT223', 0.5, 0.3, -8, 1.0, 0.9, 0.4, 0.3, 0.2)
-        >>> tree.insert_song([0], song2, 1)
+        >>> tree.insert_song(song2, 1)
         >>> song3 = Song('I hate IMM250', 0.5, 0.3, -8, 1.0, 0.9, 0.4, 0.3, 0.2)
-        >>> tree.insert_song([0], song3, 1)
+        >>> tree.insert_song(song3, 1)
         """
         score = 0
 
         if depth == 9:
             if len(self._subtrees) == 0:
                 self.add_subtree(DecisionTree(value={song}, subtrees=[]))
-                index.append(0)
             else:
                 self._subtrees[0].value.add(song)
         else:
@@ -306,13 +248,13 @@ class DecisionTree:
                 score = song.loudness
 
                 if -60 <= score <= -42.5:
-                    self._subtrees[0].insert_song(index, song, depth + 1)
+                    self._subtrees[0].insert_song(song, depth + 1)
                 elif -42.4 <= score <= -25:
-                    self._subtrees[1].insert_song(index, song, depth + 1)
+                    self._subtrees[1].insert_song(song, depth + 1)
                 elif -24.9 <= score <= -7.5:
-                    self._subtrees[2].insert_song(index, song, depth + 1)
+                    self._subtrees[2].insert_song(song, depth + 1)
                 else:
-                    self._subtrees[3].insert_song(index, song, depth + 1)
+                    self._subtrees[3].insert_song(song, depth + 1)
 
             elif depth == 4:
                 score = song.speechiness
@@ -329,15 +271,15 @@ class DecisionTree:
             elif depth == 8:
                 score = song.liveness
 
-        if depth != 3 and depth <= 8:  # changed from 9 to 8
+        if depth != 3 and depth <= 8:
             if 0 <= score <= 0.25:
-                self._subtrees[0].insert_song(index, song, depth + 1)
+                self._subtrees[0].insert_song(song, depth + 1)
             elif 0.26 <= score <= 0.5:
-                self._subtrees[1].insert_song(index, song, depth + 1)
+                self._subtrees[1].insert_song(song, depth + 1)
             elif 0.51 <= score <= 0.75:
-                self._subtrees[2].insert_song(index, song, depth + 1)
+                self._subtrees[2].insert_song(song, depth + 1)
             else:
-                self._subtrees[3].insert_song(index, song, depth + 1)
+                self._subtrees[3].insert_song(song, depth + 1)
 
     def return_songs(self, songs_to_return: set, tree: DecisionTree) -> set[Song]:
         """Return a set of songs with length 10"""
@@ -370,69 +312,12 @@ class DecisionTree:
         index = all_songs.index(current_set)
         return index + 1
 
-# Generate decision tree but without index numbers for the leaves!
-# def generate_decision_tree(value: tuple[int, set[Song]] | tuple, depth: int = 1, i: int = 0) -> DecisionTree:
-#     """Add all the tuples and empty song sets into the decision tree."""
-#     decision_tree = DecisionTree(value=value, subtrees=[])
-#
-#     if depth == 9:
-#         decision_tree.add_subtree(DecisionTree(value=(i, set()), subtrees=[]))
-#         return decision_tree
-#     else:
-#         if depth == 3:  # Loudness
-#             ranges = [(-60.0, -42.5), (-42.4, -25.0), (-24.9, -7.50), (-7.40, 10.0)]
-#             subtrees = [generate_decision_tree(value, depth + 1) for value in ranges]
-#
-#         else:  # Everything else
-#             ranges = [(0.00, 0.25), (0.26, 0.50), (0.51, 0.75), (0.76, 1.00)]
-#             subtrees = [generate_decision_tree(value, depth + 1) for value in ranges]
-#
-#         for subtree in subtrees:
-#             decision_tree.add_subtree(subtree)
-#
-#         return decision_tree
-
-
-# def generate_decision_tree(indexes_so_far: list, value: tuple[int, set[Song]] | tuple, depth: int = 1) \
-#         -> DecisionTree:
-#     """Add all the tuples and empty song sets into the decision tree.
-#
-#     >>> tree = generate_decision_tree([0], (0,0), 1, 0)
-#     >>> get_song_sets(tree)
-#
-#     >>> read_and_write_csv("/Users/jaeyonglee/Desktop/csc111-group-project/data/songs_normalize.csv")
-#     >>> songs = songs_final_csv_to_songs()
-#     >>> songs = list(songs)
-#     >>> tree = generate_decision_tree([0], (0,0), 1)
-#     >>> tree.insert_songs(songs)
-#     >>> list_of_leafs = get_song_sets(tree)
-#     >>> songs = [tuple[1] for tuple in list_of_leafs if tuple[1] != set()]
-#     >>> sum([len(set) for set in songs])
-#     """
-#     decision_tree = DecisionTree(value=value, subtrees=[])
-#
-#     if depth == 9:
-#         index = indexes_so_far[len(indexes_so_far) - 1] + 1
-#         indexes_so_far.append(index)
-#         decision_tree.add_subtree(DecisionTree(value=(index, set()), subtrees=[]))
-#         return decision_tree
-#     else:
-#         if depth == 3:  # Loudness
-#             ranges = [(-60.0, -42.5), (-42.4, -25.0), (-24.9, -7.50), (-7.40, 10.0)]
-#             subtrees = [generate_decision_tree(indexes_so_far, value, depth + 1) for value in ranges]
-#
-#         else:  # Everything else
-#             ranges = [(0.00, 0.25), (0.26, 0.50), (0.51, 0.75), (0.76, 1.00)]
-#             subtrees = [generate_decision_tree(indexes_so_far, value, depth + 1) for value in ranges]
-#
-#         for subtree in subtrees:
-#             decision_tree.add_subtree(subtree)
-#
-#         return decision_tree
-#
 
 def generate_decision_tree(value: set[Song] | tuple, depth: int = 1) -> DecisionTree:
     """Add all the tuples and empty song sets into the decision tree.
+
+    Preconditions:
+        - depth >= 1
 
     >>> tree = generate_decision_tree((0,0), 1)
     >>> get_song_sets(tree)
@@ -464,19 +349,6 @@ def generate_decision_tree(value: set[Song] | tuple, depth: int = 1) -> Decision
 
         return decision_tree
 
-
-# def get_song_sets(decision_tree: DecisionTree) -> list:
-#     """Return a list of all the leaf values in the decision tree which are sets of Song objects
-#     that have been sorted."""
-#     song_sets = []
-#
-#     if decision_tree.get_subtrees() == []:
-#         song_sets.append(decision_tree.value)
-#     else:
-#         for subtree in decision_tree.get_subtrees():
-#             song_sets.extend(get_song_sets(subtree))
-#
-#     return song_sets
 
 def get_song_sets(decision_tree: DecisionTree) -> list[set]:
     """Return a list of all the leaf values in the decision tree which are sets of Song objects
