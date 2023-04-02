@@ -124,10 +124,14 @@ def read_and_write_csv(csv_file: str) -> None:
         # Skips the Header
         next(reader)
 
+        names_so_far = set()
         for row in reader:
-            row_to_write = [row[1], row[17], row[0], row[6], row[7], row[9],
-                            row[11], row[12], row[13], row[15], row[14]]
-            writer.writerow(row_to_write)
+            # Avoids Duplicate Songs
+            if row[1] not in names_so_far:
+                names_so_far.add(row[1])
+                row_to_write = [row[1], row[17], row[0], row[6], row[7], row[9],
+                                row[11], row[12], row[13], row[15], row[14]]
+                writer.writerow(row_to_write)
 
 
 def read_and_write_large_csv() -> None:
