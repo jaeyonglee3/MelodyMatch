@@ -13,18 +13,14 @@ can be found at this link:
 
 Contributors: Manaljav Munkhbayar, Kevin Hu, Stanley Pang, Jaeyong Lee.
 """
-
-from bottle import route, run, request
+from bottle import route, request
 from spotipy import oauth2
+
 import spotipy
 import csv
-from user import User, read_top_songs_csv
-
 import bottle
 
 app = bottle.default_app()
-
-# global server
 
 # The Spotify OAuth object contains the access token and refresh
 # token required to make authenticated requests to the Spotify Web API

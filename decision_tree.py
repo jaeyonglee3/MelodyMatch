@@ -22,7 +22,6 @@ please consult our Course Syllabus.
 This file is Copyright (c) 2023 Manaljav Munkhbayar, Kevin Hu, Stanley Pang, Jaeyong Lee.
 """
 from __future__ import annotations
-import csv
 import random
 from user import User
 from typing import Optional

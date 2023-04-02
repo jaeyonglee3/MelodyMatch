@@ -6,8 +6,6 @@ from tkinter import *
 from PIL import ImageTk, Image
 from song import Song
 
-import user_data
-
 
 def create_window(results: list[Song]):
     root = Tk()
