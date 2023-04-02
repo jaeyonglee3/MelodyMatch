@@ -18,7 +18,6 @@ please consult our Course Syllabus.
 This file is Copyright (c) 2023 Manaljav Munkhbayar, Kevin Hu, Stanley Pang, Jaeyong Lee.
 """
 from __future__ import annotations
-import pandas as pd   #todo: add to project requirements if needed
 import csv
 import random
 from user import User
@@ -519,12 +518,6 @@ def check_correctedness(decision_tree: DecisionTree) -> bool:
         value += 1
 
     return True
-
-
-def read_large_csv():
-    """Read the 1.2 million spotify song dataset"""
-    df = pd.read_csv('/Users/kevinhu/Downloads/tracks_features.csv') # may need to change this depending on user's file path
-    return df   # This returns everything in the csv file
 
 
 def read_and_write_csv(csv_file: str) -> None:
