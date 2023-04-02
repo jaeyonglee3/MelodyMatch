@@ -135,7 +135,7 @@ def read_and_write_large_csv() -> None:
     large_songs_final.csv will include only the songs and catergories we plan to use.
     """
     with open('data/tracks_features.csv', errors='ignore') as input_file, \
-            open('data/large_songs_final.csv', 'w', newline='') as output_file:
+            open('data/songs_normalize.csv', 'w', newline='') as output_file:
         reader = csv.reader(input_file)
         writer = csv.writer(output_file, delimiter=',')
         # Writes the Header
@@ -183,6 +183,6 @@ def songs_final_csv_to_songs() -> set[Song]:
 
 def load_songs() -> list[Song]:
     """NEW ... returns a list of songs from read from the csv"""
-    read_and_write_csv("/Users/jaeyonglee/Desktop/csc111-group-project/data/songs_normalize.csv")
+    read_and_write_large_csv()
     songs = list(songs_final_csv_to_songs())
     return songs

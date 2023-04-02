@@ -26,7 +26,7 @@ import random
 from user import User
 from typing import Optional
 
-from song import Song
+from song import Song, read_and_write_csv, songs_final_csv_to_songs
 
 
 DECISION_TREE_ROOT = (0, 0)
@@ -203,10 +203,11 @@ class DecisionTree:
     def insert_songs(self, list_songs: list[Song]) -> None:
         """Insert a list of songs into the decision tree so that each song gets sorted into a specific song set.
         >>> tree = generate_decision_tree((0,0), 1)
-        >>> song1 = Song('I hate MAT137', 0, 0, -60, 0, 0, 0, 0, 0)
-        >>> song2 = Song('I hate MAT223', 0.5, 0.3, -8, 1.0, 0.9, 0.4, 0.3, 0.2)
-        >>> song3 = Song('I hate IMM250', 0.5, 0.3, -8, 1.0, 0.9, 0.4, 0.3, 0.2)
-        >>> tree.insert_songs([song1, song2, song3])
+        >>> song1 = Song('I love MAT137', 0, 0, -60, 0, 0, 0, 0, 0)
+        >>> song2 = Song('I love MAT223', 0.5, 0.3, -8, 1.0, 0.9, 0.4, 0.3, 0.2)
+        >>> song3 = Song('I love IMM250', 0.5, 0.3, -8, 1.0, 0.9, 0.4, 0.3, 0.2)
+        >>> song4 = Song('I love CSC111', 1, 1, 10, 1, 1, 1, 1, 1)
+        >>> tree.insert_songs([song1, song2, song3, song4])
         >>> l = get_song_sets(tree)
         >>> [song for song in l[0][1]][0].name
         'I hate MAT137'
@@ -283,7 +284,45 @@ class DecisionTree:
                 self._subtrees[3].insert_song(song, depth + 1)
 
     def return_songs(self, songs_to_return: set, tree: DecisionTree) -> set[Song]:
-        """Return a set of songs with length 10"""
+        """Return a set of songs with length 10
+
+        >>> user = User(None)
+        >>> user.user_acousticness = 1
+        >>> user.user_danceability = 1
+        >>> user.user_energy = 1
+        >>> user.user_instrumentalness = 1
+        >>> user.user_liveness = 1
+        >>> user.user_loudness = 10
+        >>> user.user_speechiness = 1
+        >>> user.user_valence = 1
+        >>> tree = generate_decision_tree((0,0), 1)
+        >>> song1 = Song('I love 1', 0, 0, -60, 0, 0, 0, 0, 0)
+        >>> song2 = Song('I love 2', 0.5, 0.3, -8, 1.0, 0.9, 0.4, 0.3, 0.2)
+        >>> song3 = Song('I love 3', 0.5, 0.3, -8, 1.0, 0.9, 0.4, 0.3, 0.2)
+        >>> song4 = Song('I love 4', 1, 1, -10, 1, 1, 1, 1, 1)
+        >>> song5 = Song('I love 5', 0.5, 0.5, -25, 0.5, 0.5, 0.5, 0.5, 0.5)
+        >>> song6 = Song('I love 6', 0, 1, 10, 1, 1, 1, 1, 1)
+        >>> song7 = Song('I love 7', 1, 1, 10, 1, 1, 1, 1, 1)
+        >>> song8 = Song('I love 8', 0.2, 1, 10, 1, 1, 1, 1, 1)
+        >>> song9 = Song('I love 9', 1, 0.6, -30, 1, 1, 1, 1, 1)
+        >>> song10 = Song('I love 10', 1, 1, -10, 0.3, 1, 0.01, 0.35, 1)
+        >>> tree.insert_songs([song1, song2, song3, song4, song5, song6, song7, song8, song9, song10])
+        >>> l = get_song_sets(tree)
+        >>> [song for song in l[0]][0].name
+        >>> [song for song in l[1]][0].name
+        >>> [song for song in l[2]][0].name
+        >>> [song for song in l[3]][0].name
+        >>> [song for song in l[4]][0].name
+        >>> [song for song in l[5]][0].name
+        >>> [song for song in l[6]][0].name
+        >>> [song for song in l[7]][0].name
+        >>> [song for song in l[8]][0].name
+        >>> [song for song in l[9]][0].name
+        >>> user_songs = tree.find_songs_for_user(tree, user, 1)
+        >>> [(song.name, song.artist) for song in user_songs]
+        >>> len(tree.find_songs_for_user(tree, user, 1))
+        10
+        """
         if len(songs_to_return) == 10:
             return songs_to_return
         elif len(songs_to_return) > 10:
@@ -291,9 +330,11 @@ class DecisionTree:
             for _ in range(0, 10):
                 song = random.choice(list(songs_to_return))
                 new_songs.add(song)
+                songs_to_return.remove(song)
             return new_songs
         else:
             all_songs = get_song_sets(tree)  # returns a list of all song sets in the tree
+            leaf_index = self.find_index_of_next_song_set(all_songs, songs_to_return) - 1
             next_leaf_index = self.find_index_of_next_song_set(all_songs, songs_to_return)
             while len(songs_to_return) != 10:
                 additional_songs = self.find_next_song_set(all_songs, next_leaf_index)
@@ -301,7 +342,13 @@ class DecisionTree:
                     songs_to_return.add(random.choice(list(additional_songs)))
                     if len(songs_to_return) == 10:
                         return songs_to_return
-                next_leaf_index += 1
+
+                if next_leaf_index < leaf_index:
+                    next_leaf_index -= 1
+                else:
+                    next_leaf_index += 1
+                if next_leaf_index == len(all_songs):
+                    next_leaf_index = leaf_index - 1
 
     def find_next_song_set(self, all_songs: list[set], index: int) -> set:
         """Return the next leaf of the tree that is a set of songs"""
