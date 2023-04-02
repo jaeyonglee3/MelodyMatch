@@ -7,7 +7,7 @@ This Python module contains the DecisionTree class...
 Contributors: Manaljav Munkhbayar, Kevin Hu, Stanley Pang, Jaeyong Lee.
 """
 from __future__ import annotations
-import csv
+
 import itertools
 import random
 from user import User
@@ -237,6 +237,61 @@ class DecisionTree:
             else:
                 self._subtrees[3].insert_song(index, song, depth + 1)
 
+    def find_songs_for_user(self, user: User, depth: int = 1) -> list[Song]:
+        """Return a list of songs tailored to the User's calculated preference values.
+        >>> tree = generate_decision_tree((0,0), 1)
+        >>> user =
+        >>> self.find_songs_for_user(user)
+        """
+        score = 0
+
+        if depth == 10:
+            return list(self.value[1])
+        else:
+            if depth == 1:
+                score = user.user_danceability
+
+            elif depth == 2:
+                score = user.user_energy
+
+            elif depth == 3:
+                score = user.user_loudness
+
+                if -60 <= score <= -42.5:
+                    return self._subtrees[0].find_songs_for_user(user, depth + 1)
+                elif -42.4 <= score <= -25:
+                    return self._subtrees[1].find_songs_for_user(user, depth + 1)
+                elif -24.9 <= score <= -7.5:
+                    return self._subtrees[2].find_songs_for_user(user, depth + 1)
+                else:
+                    return self._subtrees[3].find_songs_for_user(user, depth + 1)
+
+            elif depth == 4:
+                score = user.user_speechiness
+
+            elif depth == 5:
+                score = user.user_acousticness
+
+            elif depth == 6:
+                score = user.user_instrumentalness
+
+            elif depth == 7:
+                score = user.user_valence
+
+            elif depth == 8:
+                score = user.user_liveness
+
+        if depth != 3 and depth <= 9:
+            if 0 <= score <= 0.25:
+                return self._subtrees[0].find_songs_for_user(user, depth + 1)
+            elif 0.26 <= score <= 0.5:
+                return self._subtrees[1].find_songs_for_user(user, depth + 1)
+            elif 0.51 <= score <= 0.75:
+                return self._subtrees[2].find_songs_for_user(user, depth + 1)
+            else:
+                return self._subtrees[3].find_songs_for_user(user, depth + 1)
+
+
 # Generate decision tree but without index numbers for the leaves!
 # def generate_decision_tree(value: tuple[int, set[Song]] | tuple, depth: int = 1, i: int = 0) -> DecisionTree:
 #     """Add all the tuples and empty song sets into the decision tree."""
@@ -345,6 +400,13 @@ def generate_decision_tree(value: tuple[int, set[Song]] | tuple, depth: int = 1)
 #
 #     return song_sets
 
+def load_tree_with_songs(songs: list[Song]) -> DecisionTree:
+    """Generate a tree and insert the given songs"""
+    tree = generate_decision_tree((0, 0), 1)
+    tree.insert_songs(songs)
+    return tree
+
+
 def get_song_sets(decision_tree: DecisionTree) -> list:
     """Return a list of all the leaf values in the decision tree which are sets of Song objects
     that have been sorted.
@@ -385,52 +447,3 @@ def check_correctedness(decision_tree: DecisionTree) -> bool:
         value += 1
 
     return True
-
-
-def read_and_write_csv(csv_file: str) -> None:
-    """Loads data from a CSV file, and writes a new CSV file called songs_final.csv.
-    songs_final.csv will include only the songs and catergories we plan to use.
-
-    Preconditions:
-       - csv_file refers to a valid CSV file in the format described in the project proposal
-    """
-    with open(csv_file) as input_file, open('data/songs_final.csv', 'w', newline='') as output_file:
-        reader = csv.reader(input_file)
-        writer = csv.writer(output_file, delimiter=',')
-        # Writes the Header
-        writer.writerow(['Name', 'Genre', 'Artist', 'Danceability', 'Energy', 'Loudness', 'Speechiness', 'Acousticness',
-                         'Instrumentalness', 'Valence', 'Liveness'])
-        # Skips the Header
-        next(reader)
-
-        for row in reader:
-            row_to_write = [row[1], row[17], row[0], row[6], row[7], row[9],
-                            row[11], row[12], row[13], row[15], row[14]]
-            writer.writerow(row_to_write)
-
-
-def songs_final_csv_to_songs() -> set[Song]:
-    """Reads rows from songs_final.csv and converts each row into a Song object.
-    All Song objects will be put into a set."""
-    with open('data/songs_final.csv') as file:
-        final_csv_reader = csv.reader(file)
-
-        # Skips Header
-        next(final_csv_reader)
-
-        songs_so_far = set()
-        for song in final_csv_reader:
-            songs_so_far.add(Song(name=song[0],
-                                  danceability=round(float(song[3]), 2),
-                                  energy=round(float(song[4]), 2),
-                                  loudness=round(float(song[5]), 1),
-                                  speechiness=round(float(song[6]), 2),
-                                  acousticness=round(float(song[7]), 2),
-                                  instrumentalness=round(float(song[8]), 2),
-                                  valence=round(float(song[9]), 2),
-                                  liveness=round(float(song[10]), 2),
-                                  genre=song[1],
-                                  artist=song[2]
-                                  )
-                             )
-        return songs_so_far

@@ -17,6 +17,8 @@ Contributors: Manaljav Munkhbayar, Kevin Hu, Stanley Pang, Jaeyong Lee.
 from bottle import route, run, request
 from spotipy import oauth2
 import spotipy
+import csv
+from user import User, construct_top_songs_list
 
 import bottle
 
@@ -81,6 +83,8 @@ def get_access_token():
         top_tracks_ids = [track['id'] for track in top_tracks['items']]
         audio_features = sp.audio_features(top_tracks_ids)  # Load the audio features of every song using its ID
 
+        print(type(top_tracks))
+
         for i in range(len(top_tracks_ids)):
             top_tracks_danceability.append(audio_features[i]['danceability'])
             top_tracks_energy.append(audio_features[i]['energy'])
@@ -92,8 +96,11 @@ def get_access_token():
             top_tracks_liveness.append(audio_features[i]['liveness'])
             top_tracks_tempo.append(audio_features[i]['tempo'])
 
+        # todo delete this
         for i in range(len(top_tracks_names)):
-            print(str(i + 1) + '. ' + top_tracks_names[i])
+            print(str(i + 1) + '. ' + str(top_tracks_names[i]))
+
+        write_to_csv()
 
         # stop_server()
         return '''
@@ -130,18 +137,29 @@ def run_server() -> None:
     bottle.run(app, host='')
 
 
-def stop_server():
-    # for srv in list(request.environ['bottle.server'].child_procs):
-    #     srv.terminate()
+def write_to_csv() -> None:
+    """Writes the attributes of the top songs belonging to the user in a new CSV file
+    """
+    with open('data/user_top_songs.csv', 'w', newline='') as output_file:
+        writer = csv.writer(output_file, delimiter=',')
 
-    # server.shutdown()
+        for i in range(len(top_tracks_ids)):
+            writer.writerow([top_tracks_ids[i], top_tracks_names[i], top_tracks_danceability[i], top_tracks_energy[i],
+                            top_tracks_loudness[i], top_tracks_speechiness[i], top_tracks_acousticness[i],
+                            top_tracks_instrumentalness[i], top_tracks_valence[i], top_tracks_liveness[i],
+                            top_tracks_tempo[i]])
 
-    # from multiprocessing import active_children
-    # for child in active_children():
-    #     child.terminate()
 
-    for worker in app.worker_threads:
-        worker.terminate()
-    app.server.shutdown()
+def generate_user() -> User:
+    """ This function ....
 
-# run(host='')
+    After retrieving all necessary information, this function returns an instance of the User class.
+    """
+    top_songs = construct_top_songs_list(top_tracks_ids, top_tracks_energy,
+                                         top_tracks_danceability, top_tracks_loudness,
+                                         top_tracks_speechiness, top_tracks_acousticness,
+                                         top_tracks_instrumentalness, top_tracks_valence,
+                                         top_tracks_liveness)
+
+    user_profile = User(top_songs)  # Create an instance of the "User" class
+    return user_profile

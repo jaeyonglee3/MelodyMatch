@@ -15,7 +15,7 @@ def construct_top_songs_list(top_tracks_ids: list[str], top_tracks_energy: list[
                              top_tracks_instrumentalness: list[float], top_tracks_valence: list[float],
                              top_tracks_liveness: list[float]
                              ) -> list[Song]:
-    """Construct a list of Song objects from the top tracks of the user, later ot be used for
+    """Construct a list of Song objects from the user top tracks csv file, later ot be used for
     song recommendation algorithm.
     """
     top_songs = []
