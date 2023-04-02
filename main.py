@@ -8,7 +8,8 @@ Contributors: Manaljav Munkhbayar, Kevin Hu, Stanley Pang, Jaeyong Lee.
 """
 from user import User, construct_top_songs_list
 import decision_tree
-from decision_tree import Song, read_and_write_csv, songs_final_csv_to_songs, generate_decision_tree
+from decision_tree import read_and_write_csv, songs_final_csv_to_songs, generate_decision_tree
+from song import Song
 
 
 def load_user() -> User:
@@ -29,16 +30,17 @@ def load_user() -> User:
     return user_profile
 
 
-def run() -> list[Song]:
+def run() -> set[Song]:
     """The function (for now) to run and test the whole program
 
     >>> songs = run()
     >>> list = [(song.artist, song.name) for song in songs]  # this makes a list of (artist, title) of recommended songs
     """
-    read_and_write_csv("/Users/jaeyonglee/Desktop/csc111-group-project/data/songs_normalize.csv")
+    # read_and_write_csv("/Users/jaeyonglee/Desktop/csc111-group-project/data/songs_normalize.csv")
+    read_and_write_csv("/Users/kevinhu/PycharmProjects/csc111-group-project/data/songs_normalize.csv")
     songs = songs_final_csv_to_songs()
     songs = list(songs)
-    tree = generate_decision_tree([0], (0, 0), 1)
+    tree = generate_decision_tree((0, 0), 1)
     tree.insert_songs(songs)
 
     user = load_user()
