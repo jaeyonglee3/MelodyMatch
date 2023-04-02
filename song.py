@@ -130,6 +130,30 @@ def read_and_write_csv(csv_file: str) -> None:
             writer.writerow(row_to_write)
 
 
+def read_and_write_large_csv() -> None:
+    """Loads and formats data from data/tracks_features.csv, and writes a new CSV file called large_songs_final.csv.
+    large_songs_final.csv will include only the songs and catergories we plan to use.
+    """
+    with open('data/tracks_features.csv', errors='ignore') as input_file, \
+            open('data/large_songs_final.csv', 'w', newline='') as output_file:
+        reader = csv.reader(input_file)
+        writer = csv.writer(output_file, delimiter=',')
+        # Writes the Header
+        writer.writerow(['Name', 'Genre', 'Artist', 'Danceability', 'Energy', 'Loudness', 'Speechiness', 'Acousticness',
+                         'Instrumentalness', 'Valence', 'Liveness'])
+        # Skips the Header
+        next(reader)
+
+        names_so_far = set()
+        for row in reader:
+            # Avoids Duplicate Songs
+            if row[1] not in names_so_far:
+                names_so_far.add(row[1])
+                row_to_write = [row[1], 'N/A', row[4].split("'")[1], row[9], row[10], row[12],
+                                row[14], row[15], row[16], row[18], row[17]]
+                writer.writerow(row_to_write)
+
+
 def songs_final_csv_to_songs() -> set[Song]:
     """Reads rows from songs_final.csv and converts each row into a Song object.
     All Song objects will be put into a set."""
