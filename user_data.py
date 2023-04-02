@@ -2,6 +2,9 @@
 CSC111 Winter 2023 Project:
 MelodyMatch: Tailored Music Recommendations Derived From Your Spotify Habits
 
+Module Description
+==================
+
 This Python module contains the code that will run the local server used by the user to
 log in with their Spotify account credentials.
 
@@ -12,6 +15,17 @@ can be found at this link:
     - https://spotipy.readthedocs.io/en/2.22.1/#
 
 Contributors: Manaljav Munkhbayar, Kevin Hu, Stanley Pang, Jaeyong Lee.
+
+Copyright and Usage Information
+===============================
+
+This file is provided solely for the personal and private use of students
+and faculty members who are part of CSC111 at the University of Toronto St. George campus. All forms of
+distribution of this code, whether as given or with any changes, are
+expressly prohibited. For more information on copyright for CSC111 materials,
+please consult our Course Syllabus.
+
+This file is Copyright (c) 2023 Manaljav Munkhbayar, Kevin Hu, Stanley Pang, Jaeyong Lee.
 """
 from bottle import route, request
 from spotipy import oauth2

@@ -2,10 +2,26 @@
 CSC111 Winter 2023 Project:
 MelodyMatch: Tailored Music Recommendations Derived From Your Spotify Habits
 
-This Python module contains the user class ...
+Module Description
+==================
+
+This Python module contains the Song class.
 
 Contributors: Manaljav Munkhbayar, Kevin Hu, Stanley Pang, Jaeyong Lee.
+
+Copyright and Usage Information
+===============================
+
+This file is provided solely for the personal and private use of students
+and faculty members who are part of CSC111 at the University of Toronto St. George campus. All forms of
+distribution of this code, whether as given or with any changes, are
+expressly prohibited. For more information on copyright for CSC111 materials,
+please consult our Course Syllabus.
+
+This file is Copyright (c) 2023 Manaljav Munkhbayar, Kevin Hu, Stanley Pang, Jaeyong Lee.
 """
+from typing import Optional
+
 from song import Song
 import csv
 
@@ -86,7 +102,7 @@ class User:
         - 0.0 <= self.user_valence <= 1.0
         - 0.0 <= self.user_liveness <= 1.0
     """
-    top_listened_songs: list[Song]
+    top_listened_songs: Optional[list[Song]]
     user_danceability: float
     user_energy: float
     user_loudness: float
@@ -96,11 +112,12 @@ class User:
     user_valence: float
     user_liveness: float
 
-    def __init__(self, top_listened_songs: list[Song]) -> None:
+    def __init__(self, top_listened_songs: Optional[list[Song]]) -> None:
         """Initialize a new user with given Spotify username
         """
         self.top_listened_songs = top_listened_songs
-        self.create_user_profile()
+        if self.top_listened_songs is not None:
+            self.create_user_profile()
 
     def create_user_profile(self) -> None:
         """Create the user's profile by finding the average values of the 50 most-listened songs of the user"""
