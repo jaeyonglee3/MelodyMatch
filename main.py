@@ -20,8 +20,11 @@ def get_spotify_data() -> None:
 
 
 def run() -> None:
-    songs = load_songs()
-    tree = load_tree_with_songs(songs)
-    user = generate_user()
-    results = tree.find_songs_for_user(tree, user)
-    application_ui.create_window(list(results))
+    try:
+        songs = load_songs()
+        tree = load_tree_with_songs(songs)
+        user = generate_user()
+        results = tree.find_songs_for_user(tree, user)
+        application_ui.create_window(list(results))
+    except FileNotFoundError:
+        print('The necessary data could not be found! Make sure you run get_spotify_data() first.')

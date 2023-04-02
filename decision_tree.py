@@ -297,9 +297,9 @@ class DecisionTree:
                 additional_songs = self.find_next_song_set(all_songs, next_leaf_index)
                 for _ in range(0, len(additional_songs)):
                     songs_to_return.add(random.choice(list(additional_songs)))
+                    if len(songs_to_return) == 10:
+                        return songs_to_return
                 next_leaf_index += 1
-
-            return songs_to_return
 
     def find_next_song_set(self, all_songs: list[set], index: int) -> set:
         """Return the next leaf of the tree that is a set of songs"""
