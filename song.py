@@ -155,3 +155,12 @@ def load_songs() -> list[Song]:
     read_and_write_csv()
     songs = list(songs_final_csv_to_songs())
     return songs
+
+
+if __name__ == '__main__':
+    import doctest
+    doctest.testmod(verbose=True)
+    import python_ta
+    python_ta.check_all(config={
+        'max-line-length': 120
+    })

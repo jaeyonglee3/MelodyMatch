@@ -56,3 +56,12 @@ def create_application_window(results: list[Song]) -> None:
         title.pack()
 
     root.mainloop()
+
+
+if __name__ == '__main__':
+    import doctest
+    doctest.testmod(verbose=True)
+    import python_ta
+    python_ta.check_all(config={
+        'max-line-length': 120
+    })

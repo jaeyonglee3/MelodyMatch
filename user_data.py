@@ -146,3 +146,13 @@ def write_to_csv() -> None:
                             top_tracks_loudness[i], top_tracks_speechiness[i], top_tracks_acousticness[i],
                             top_tracks_instrumentalness[i], top_tracks_valence[i], top_tracks_liveness[i],
                             top_tracks_tempo[i]])
+
+
+if __name__ == '__main__':
+    import doctest
+    doctest.testmod(verbose=True)
+    import python_ta
+    python_ta.check_all(config={
+        'max-line-length': 120
+    })
+

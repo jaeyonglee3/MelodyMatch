@@ -43,3 +43,12 @@ def run(use_example_data: bool) -> None:
         print('The necessary data could not be found! Make sure you run get_spotify_data() first. \n'
               'Did you want to use our provided example dataset? \n'
               'Then, make sure to call run() with the boolean argument True.')
+
+
+if __name__ == '__main__':
+    import doctest
+    doctest.testmod(verbose=True)
+    import python_ta
+    python_ta.check_all(config={
+        'max-line-length': 120
+    })

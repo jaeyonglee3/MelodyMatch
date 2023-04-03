@@ -166,3 +166,12 @@ def generate_user(example_dataset: bool) -> User:
 
     user_profile = User(top_songs)
     return user_profile
+
+
+if __name__ == '__main__':
+    import doctest
+    doctest.testmod(verbose=True)
+    import python_ta
+    python_ta.check_all(config={
+        'max-line-length': 120
+    })

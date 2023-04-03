@@ -316,3 +316,12 @@ def load_tree_with_songs(songs: list[Song]) -> DecisionTree:
     tree = generate_decision_tree((0, 0), 1)
     tree.insert_songs(songs)
     return tree
+
+
+if __name__ == '__main__':
+    import doctest
+    doctest.testmod(verbose=True)
+    import python_ta
+    python_ta.check_all(config={
+        'max-line-length': 120
+    })

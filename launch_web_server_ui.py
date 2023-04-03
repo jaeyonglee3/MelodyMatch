@@ -110,3 +110,12 @@ def create_instructions_window() -> None:
     label = Label(window, image=img)
     label.image = img
     label.pack()
+
+
+if __name__ == '__main__':
+    import doctest
+    doctest.testmod(verbose=True)
+    import python_ta
+    python_ta.check_all(config={
+        'max-line-length': 120
+    })
