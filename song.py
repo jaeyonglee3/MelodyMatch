@@ -115,7 +115,7 @@ def read_and_write_csv(csv_file: str) -> None:
     Preconditions:
        - csv_file refers to a valid CSV file in the format described in the project proposal
     """
-    with open(csv_file) as input_file, open('data/songs_final.csv', 'w', newline='') as output_file:
+    with open(csv_file, errors='ignore') as input_file, open('data/songs_final.csv', 'w', newline='') as output_file:
         reader = csv.reader(input_file)
         writer = csv.writer(output_file, delimiter=',')
         # Writes the Header
