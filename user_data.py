@@ -96,7 +96,6 @@ def get_access_token() -> str:
             top_tracks_liveness.append(audio_features[i]['liveness'])
             top_tracks_tempo.append(audio_features[i]['tempo'])
 
-        # todo delete this
         for i in range(len(top_tracks_names)):
             print(str(i + 1) + '. ' + str(top_tracks_names[i]))
 
@@ -155,4 +154,3 @@ if __name__ == '__main__':
     python_ta.check_all(config={
         'max-line-length': 120
     })
-

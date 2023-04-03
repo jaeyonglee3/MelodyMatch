@@ -61,7 +61,8 @@ def create_initial_window() -> None:
     desc.pack()
     desc.place(relx=.5, rely=.5, anchor=CENTER)
 
-    start_button = Button(root, text='Connect Spotify Account', font=('Verdana', 12, 'bold'), command=start_button_event)
+    start_button = Button(root, text='Connect Spotify Account', font=('Verdana', 12, 'bold'),
+                          command=start_button_event)
     start_button.pack()
     start_button.config(width=15, height=2)
     start_button.place(x=530, rely=.7, anchor=CENTER)

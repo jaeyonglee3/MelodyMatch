@@ -57,7 +57,7 @@ class DecisionTree:
         """
         return self._str_indented(0)
 
-    def is_empty(self):
+    def is_empty(self) -> bool:
         """Return whether the tree is empty or not.
         """
         return self.value is None
