@@ -111,7 +111,6 @@ def get_access_token() -> str:
         '''
 
     else:
-        # return "<a href='" + sp_oauth.get_authorize_url() + "'>Login to Spotify</a>"
         return '''
                 <html>
                     <head>
