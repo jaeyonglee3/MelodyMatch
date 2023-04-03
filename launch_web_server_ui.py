@@ -86,7 +86,7 @@ def create_instructions_window() -> None:
     """Creates the Tkinter window used to start the local web-server used to obtain authoirzation to retrieve
     the user's top 50 most-listened to songs from their Spotify account.
     """
-    image = Image.open("gui/instructions.png")
+    image = Image.open("gui/instructions.jpg")
 
     width, height = image.size
     aspect_ratio = width / height

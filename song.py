@@ -97,11 +97,11 @@ class Song:
 
 
 def read_and_write_csv() -> None:
-    """Loads and formats data from data/tracks_features.csv, and writes a new CSV file called large_songs_final.csv.
+    """Loads and formats data from tracks_features.csv, and writes a new CSV file called tracks_features_clean.csv.
     large_songs_final.csv will include only the songs and catergories we plan to use.
     """
     with open('data/tracks_features.csv', errors='ignore') as input_file, \
-            open('data/songs_normalize.csv', 'w', newline='') as output_file:
+            open('data/tracks_features_clean.csv', 'w', newline='') as output_file:
         reader = csv.reader(input_file)
         writer = csv.writer(output_file, delimiter=',')
         # Writes the Header
@@ -121,10 +121,10 @@ def read_and_write_csv() -> None:
 
 
 def songs_final_csv_to_songs() -> set[Song]:
-    """Reads rows from songs_final.csv and converts each row into a Song object.
+    """Reads rows from tracks_features_clean.csv and converts each row into a Song object.
     All Song objects will be put into a set.
     """
-    with open('data/songs_final.csv') as file:
+    with open('data/tracks_features_clean.csv') as file:
         final_csv_reader = csv.reader(file)
 
         # Skips Header
