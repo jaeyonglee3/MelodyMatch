@@ -7,8 +7,8 @@ authorization to access data from their Spotify account.
 
 Notes
 ===============================
-This file contains code borrowed directly from the Spotipy library documentation, which can be found at
-the following link:
+This file contains some code borrowed directly from examples included the Spotipy library documentation, which can be
+found at the following link:
     - https://spotipy.readthedocs.io/en/2.22.1/#
 
 Copyright and Usage Information
@@ -95,9 +95,6 @@ def get_access_token() -> str:
             top_tracks_valence.append(audio_features[i]['valence'])
             top_tracks_liveness.append(audio_features[i]['liveness'])
             top_tracks_tempo.append(audio_features[i]['tempo'])
-
-        for i in range(len(top_tracks_names)):
-            print(str(i + 1) + '. ' + str(top_tracks_names[i]))
 
         write_to_csv()
 
