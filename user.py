@@ -2,21 +2,15 @@
 CSC111 Winter 2023 Project:
 MelodyMatch: Tailored Music Recommendations Derived From Your Spotify Habits
 
-Module Description
-==================
-
-This Python module contains the Song class.
-
-Contributors: Manaljav Munkhbayar, Kevin Hu, Stanley Pang, Jaeyong Lee.
+This Python module contains the User class, which represents the user of our program
+along with all of their preferred attributes in the songs they listen to.
 
 Copyright and Usage Information
 ===============================
-
-This file is provided solely for the personal and private use of students
-and faculty members who are part of CSC111 at the University of Toronto St. George campus. All forms of
-distribution of this code, whether as given or with any changes, are
-expressly prohibited. For more information on copyright for CSC111 materials,
-please consult our Course Syllabus.
+This file is provided solely for the personal and private use by students and faculty
+of the CSC111 course department at the University of Toronto. All forms of distribution
+of this code, whether as is or with changes, are prohibited. For more information on
+copyright for this project's materials, please contact the developers directly.
 
 This file is Copyright (c) 2023 Manaljav Munkhbayar, Kevin Hu, Stanley Pang, Jaeyong Lee.
 """
@@ -26,9 +20,12 @@ from song import Song
 import csv
 
 
-def read_top_songs_csv():
-    """... read the user's top songs csv that has all the attributes. return a list of Song objects constructed
-    using the songs from the csv file, to be used later for the song recommendation algorithm"""
+def read_top_songs_csv(file_name: str):
+    """This function reads the user's top songs csv file, which contains the songs along with their attributes.
+
+    It then returns a list of Song objects contructed using the data, which will later be used for the song
+    recommendation algorithm
+    """
     top_tracks_ids = []
     top_tracks_names = []
     top_tracks_danceability = []
@@ -41,7 +38,7 @@ def read_top_songs_csv():
     top_tracks_liveness = []
     top_tracks_tempo = []
 
-    with open('data/user_top_songs.csv', mode='r') as csv_file:
+    with open(file_name, mode='r') as csv_file:
         reader = csv.reader(csv_file)
         for row in reader:
             top_tracks_ids.append(row[0])
@@ -68,7 +65,7 @@ def read_top_songs_csv():
 
 
 class User:
-    """An object that represents the user and stores its attributes
+    """A class that represents the user and stores their unique preferences
 
         Instance Attributes:
         - top_listened_songs:
@@ -113,14 +110,17 @@ class User:
     user_liveness: float
 
     def __init__(self, top_listened_songs: Optional[list[Song]]) -> None:
-        """Initialize a new user with given Spotify username
+        """Initialize a new user.
+
+        Preconditions:
+            - self.top_listened_songs is not None
         """
         self.top_listened_songs = top_listened_songs
-        if self.top_listened_songs is not None:
-            self.create_user_profile()
+        self.create_user_profile()
 
     def create_user_profile(self) -> None:
-        """Create the user's profile by finding the average values of the 50 most-listened songs of the user"""
+        """Create the user's profile by finding the average values of the 50 most-listened songs of the user.
+        """
         total_danceability = 0
         total_energy = 0
         total_loudness = 0
@@ -150,11 +150,19 @@ class User:
         self.user_liveness = total_liveness / len(self.top_listened_songs)
 
 
-def generate_user() -> User:
-    """ This function ....
+def generate_user(example_dataset: bool) -> User:
+    """This function creates an instance of the User class using the top song data generated from accessing their
+    Spotify account details.
 
     After retrieving all necessary information, this function returns an instance of the User class.
+
+    The example_dataset parameter is a boolean that is True if the user wishes to use our provided
+    example_user_top_songs.csv file rather than generating a csv file of their own via their Spotify account.
     """
-    top_songs = read_top_songs_csv()
-    user_profile = User(top_songs)  # Create an instance of the "User" class
+    if example_dataset:
+        top_songs = read_top_songs_csv('data/example_user_top_songs.csv')
+    else:
+        top_songs = read_top_songs_csv('data/user_top_songs.csv')
+
+    user_profile = User(top_songs)
     return user_profile

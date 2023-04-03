@@ -2,9 +2,17 @@
 CSC111 Winter 2023 Project:
 MelodyMatch: Tailored Music Recommendations Derived From Your Spotify Habits
 
-This Python module contains ...
+This Python module contains the tkinter GUI used for starting the web server used to obtain
+authorization to access data from the user's Spotify account.
 
-Contributors: Manaljav Munkhbayar, Kevin Hu, Stanley Pang, Jaeyong Lee.
+Copyright and Usage Information
+===============================
+This file is provided solely for the personal and private use by students and faculty
+of the CSC111 course department at the University of Toronto. All forms of distribution
+of this code, whether as is or with changes, are prohibited. For more information on
+copyright for this project's materials, please contact the developers directly.
+
+This file is Copyright (c) 2023 Manaljav Munkhbayar, Kevin Hu, Stanley Pang, Jaeyong Lee.
 """
 from math import ceil, floor
 from tkinter import *
@@ -13,7 +21,10 @@ from PIL import ImageTk, Image
 import user_data
 
 
-def create_window():
+def create_window() -> None:
+    """Creates the Tkinter window used to start the local web-server used to obtain authoirzation to retrieve
+    the user's top 50 most-listened to songs from their Spotify account.
+    """
     root = Tk()
 
     w_ratio = 5 / 6
@@ -59,6 +70,8 @@ def create_window():
 
 
 def start_button_event() -> None:
-    """The event that happens when the following button is pressed"""
-    # main.run_program()
+    """The event that happens when the "start" button on the GUI is pressed.
+
+    The button will start the local web-server.
+    """
     user_data.run_server()
