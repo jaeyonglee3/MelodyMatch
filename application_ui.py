@@ -14,13 +14,12 @@ copyright for this project's materials, please contact the developers directly.
 
 This file is Copyright (c) 2023 Manaljav Munkhbayar, Kevin Hu, Stanley Pang, Jaeyong Lee.
 """
-from math import ceil, floor
 from tkinter import *
 from PIL import ImageTk, Image
 from song import Song
 
 
-def create_window(results: list[Song]) -> None:
+def create_application_window(results: list[Song]) -> None:
     """Creates the Tkinter window used to display the results of our recommendation algorithm.
     """
     root = Tk()
@@ -29,10 +28,10 @@ def create_window(results: list[Song]) -> None:
     h_ratio = 7 / 11
 
     screen_width, screen_height = root.winfo_screenwidth(), root.winfo_screenheight()
-    window_width, window_height = floor(screen_width * w_ratio), floor(screen_height * h_ratio)
+    window_width, window_height = int(screen_width * w_ratio), int(screen_height * h_ratio)
 
-    x = ceil((screen_width / 2) - (window_width / 2))
-    y = ceil((screen_height / 2) - (window_height / 1.85))
+    x = int((screen_width / 2) - (window_width / 2))
+    y = int((screen_height / 2) - (window_height / 1.85))
 
     root.geometry(f'{window_width}x{window_height}+{x}+{y}')
     root.title('MelodyMatch')
@@ -44,6 +43,10 @@ def create_window(results: list[Song]) -> None:
     full_logo = ImageTk.PhotoImage(Image.open('gui/logo.png'))
     full_logo_label = Label(root, image=full_logo, borderwidth=0)
     full_logo_label.pack(pady=window_height * 0.05)
+
+    text_to_display = 'Here are the songs we recommend for you!'
+    text = Label(root, text=text_to_display, bg="#0b2437", fg="white", font=('Verdana', 18, 'bold'))
+    text.pack(pady=window_height * 0.05)
 
     # List out the songs
     for song in results:

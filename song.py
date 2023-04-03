@@ -96,39 +96,7 @@ class Song:
         self.artist = artist
 
 
-def read_and_write_csv(csv_file: str) -> None:
-    """Loads data from a CSV file, and writes a new CSV file called songs_final.csv.
-    songs_final.csv will include only the songs and catergories we plan to use.
-
-    Preconditions:
-       - csv_file refers to a valid CSV file in the format described in the project proposal
-    """
-    with open(csv_file, errors='ignore') as input_file, open('data/songs_final.csv', 'w', newline='') as output_file:
-        reader = csv.reader(input_file)
-        writer = csv.writer(output_file, delimiter=',')
-        # Writes the Header
-        writer.writerow(['Name', 'Genre', 'Artist', 'Danceability', 'Energy', 'Loudness', 'Speechiness', 'Acousticness',
-                         'Instrumentalness', 'Valence', 'Liveness'])
-        # Skips the Header
-        next(reader)
-
-        names_so_far = set()
-        for row in reader:
-            # Avoids Duplicate Songs
-            if row[1] not in names_so_far:
-                names_so_far.add(row[1])
-                row_to_write = [row[1], row[17], row[0], row[6], row[7], row[9],
-                                row[11], row[12], row[13], row[15], row[14]]
-                writer.writerow(row_to_write)
-            # Avoids Duplicate Songs
-            if row[1] not in names_so_far:
-                names_so_far.add(row[1])
-                row_to_write = [row[1], row[17], row[0], row[6], row[7], row[9],
-                                row[11], row[12], row[13], row[15], row[14]]
-                writer.writerow(row_to_write)
-
-
-def read_and_write_large_csv() -> None:
+def read_and_write_csv() -> None:
     """Loads and formats data from data/tracks_features.csv, and writes a new CSV file called large_songs_final.csv.
     large_songs_final.csv will include only the songs and catergories we plan to use.
     """
@@ -184,6 +152,6 @@ def load_songs() -> list[Song]:
     """Returns a list of song objects.
     The songs have been obtained from the Spotify dataset.
     """
-    read_and_write_large_csv()  # todo this is set to large
+    read_and_write_csv()
     songs = list(songs_final_csv_to_songs())
     return songs

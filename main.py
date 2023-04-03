@@ -24,7 +24,7 @@ import application_ui
 def get_spotify_data() -> None:
     """Obtains authorization to access user's Spotify data.
     """
-    launch_web_server_ui.create_window()
+    launch_web_server_ui.create_initial_window()
 
 
 def run(use_example_data: bool) -> None:
@@ -38,8 +38,8 @@ def run(use_example_data: bool) -> None:
         tree = load_tree_with_songs(songs)
         user = generate_user(use_example_data)
         results = tree.find_songs_for_user(tree, user)
-        application_ui.create_window(list(results))
+        application_ui.create_application_window(list(results))
     except FileNotFoundError:
         print('The necessary data could not be found! Make sure you run get_spotify_data() first. \n'
               'Did you want to use our provided example dataset? \n'
-              'Make sure to call run() with the boolean argument True.')
+              'Then, make sure to call run() with the boolean argument True.')

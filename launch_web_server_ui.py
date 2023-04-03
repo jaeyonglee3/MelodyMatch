@@ -21,7 +21,7 @@ from PIL import ImageTk, Image
 import user_data
 
 
-def create_window() -> None:
+def create_initial_window() -> None:
     """Creates the Tkinter window used to start the local web-server used to obtain authoirzation to retrieve
     the user's top 50 most-listened to songs from their Spotify account.
     """
@@ -51,20 +51,25 @@ def create_window() -> None:
     desc = Label(root,
                  text='Welcome to MelodyMatch! \n\n'
                       "MelodyMatch is a personalized music recommendation app that analyzes your spotify "
-                      "\nlistening history to suggest new songs that match your individual taste. By connecting "
-                      "\nyour Spotify account, MelodyMatch will access your listening history. MelodyMatch then "
-                      "\nanalyzes your data to suggest new songs that are tailored to your taste. \n MelodyMatch "
-                      "provides an intuitive user experience, with a clean interface that is \neasy to navigate. "
-                      "Whether you're looking to add new tracks to your favorite playlist or \nwant to explore new "
-                      "genres, MelodyMatch is the perfect tool for discovering your next \nfavorite song.\n",
+                      "\nlistening history to suggest new songs that match your taste. By connecting "
+                      "\nyour Spotify account, MelodyMatch will analyze your listening history\n data to suggest"
+                      "new songs that are tailored to your taste."
+                      "\n\nMelodyMatch is the perfect tool for discovering your next favorite song!\n\n",
                  bg='#0b2437',
                  fg='White',
                  font=('Verdana', 18))
     desc.pack()
+    desc.place(relx=.5, rely=.5, anchor=CENTER)
 
-    button = Button(root, text='Start', font=('Verdana', 12), command=start_button_event)
-    button.pack()
-    button.config(width=10, height=2)
+    start_button = Button(root, text='Connect Spotify Account', font=('Verdana', 12, 'bold'), command=start_button_event)
+    start_button.pack()
+    start_button.config(width=15, height=2)
+    start_button.place(x=530, rely=.7, anchor=CENTER)
+
+    inst_button = Button(root, text='How Does This Work?', font=('Verdana', 12), command=create_instructions_window)
+    inst_button.pack()
+    inst_button.config(width=15, height=2)
+    inst_button.place(x=695, rely=.7, anchor=CENTER)
 
     root.mainloop()
 
@@ -75,3 +80,33 @@ def start_button_event() -> None:
     The button will start the local web-server.
     """
     user_data.run_server()
+
+
+def create_instructions_window() -> None:
+    """Creates the Tkinter window used to start the local web-server used to obtain authoirzation to retrieve
+    the user's top 50 most-listened to songs from their Spotify account.
+    """
+    image = Image.open("gui/instructions.png")
+
+    width, height = image.size
+    aspect_ratio = width / height
+
+    # Set the maximum width and height of the image in the window
+    max_width = 650
+    max_height = 650
+
+    if width > height:
+        new_width = max_width
+        new_height = int(new_width / aspect_ratio)
+    else:
+        new_height = max_height
+        new_width = int(new_height * aspect_ratio)
+
+    image = image.resize((new_width, new_height), Image.ANTIALIAS)
+
+    window = Toplevel()
+    window.title('MelodyMatch - Instructions')
+    img = ImageTk.PhotoImage(image)
+    label = Label(window, image=img)
+    label.image = img
+    label.pack()

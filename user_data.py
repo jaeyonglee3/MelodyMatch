@@ -108,8 +108,8 @@ def get_access_token() -> str:
                 <title>MelodyMatch</title>
             </head>
             <body>
-                <h1>Got it! We've collected the data we need</h1>
-                <p>You may now close this tab and hit ctrl+c to stop the server!</p>
+                <h1>Authorization status: successful.</h1>
+                <p>You may now close this tab and enter ctrl+c to stop the local server!</p>
             </body>
         </html>
         '''
