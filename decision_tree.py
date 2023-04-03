@@ -88,7 +88,7 @@ class DecisionTree:
             return 1 + sum(subtree.__len__() for subtree in self._subtrees)
 
     def get_subtrees(self) -> list[DecisionTree]:
-        """Return the subtrees of a Decision Tree.
+        """Return the subtrees of a decision tree.
         """
         return self._subtrees
 
